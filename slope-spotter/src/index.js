@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+// import App from './App'; //Change back only did it for testing
 import reportWebVitals from './reportWebVitals';
+import SpeechTest from './SpeechTest';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <SpeechTest />
   </React.StrictMode>
 );
 
