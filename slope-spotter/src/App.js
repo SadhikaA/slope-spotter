@@ -3,11 +3,11 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Slope Spotter
-        </p>
-      </header>
+      <div className="container">
+        <h1>Slope Spotter</h1>
+        <p className="subtitle">finding a path, slope by slope</p>
+        <button>Navigate</button>
+    </div>
     </div>
   );
 }
