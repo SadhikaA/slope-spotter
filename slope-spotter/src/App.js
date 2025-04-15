@@ -1,14 +1,16 @@
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './Home';
+import Navigation from './Navigation';
 
 function App() {
   return (
-    <div className="App">
-      <div className="container">
-        <h1>Slope Spotter</h1>
-        <p className="subtitle">finding a path, slope by slope</p>
-        <button>Navigate</button>
-    </div>
-    </div>
+    <Router>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/navigation" element={<Navigation />} />
+    </Routes>
+  </Router>
   );
 }
 
