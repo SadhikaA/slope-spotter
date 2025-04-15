@@ -3,7 +3,7 @@
 .App {
   text-align: center;
   background-color: white;
-  color: white;
+  color: #010133;
   min-height: 100vh;
   max-height: 100vh;
   display: flex;
@@ -69,7 +69,7 @@ input {
   height: 100vh;
   border: 2px solid #f0f0f0;
   border-radius: 10px;
-  background-color: #002676;
+  background-color: #9FD1FF;
 }
 
 @media (max-width: 375px) {
@@ -85,19 +85,19 @@ input {
 
 .back-arrow {
   font-size: calc(10px + 1vmin);
-  background-color: #002676;
-  color: white;
+  background-color: #9FD1FF;
+  color: #010133;
   border-radius: 0px;
   padding: 0px;
   box-shadow: none;
   position: absolute;
-  top: 1px;
+  top: 0px;
   left: 4px;
   background-color: transparent; 
   width: 50px;
 }
 
 .back-arrow:hover {
-  background-color: #002676;
-  color: white;
+  background-color: #9FD1FF;
+  color: #010133;
 }
