@@ -10,11 +10,9 @@ function Settings() {
       <div className="container">
         <button className="back-arrow" onClick={() => navigate('/')}>⬅</button>
         <p>settings goes here</p>
-        {/* TODO: input text to route where you're going */}
-        {/* TODO: speech to text button */}
-        {/* TODO: mapbox map */}
-        {/* TODO: elevation viewer */}
-        {/* TODO: remaining miles, time info at the bottom */}
+        {/* TODO: add route preferences */}
+        {/* TODO: customization: wheelchair type, prefer */}
+        {/* TODO: save changes to localStorage */}
       </div>
       <BottomNav />
     </div>
