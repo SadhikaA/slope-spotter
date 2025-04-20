@@ -101,3 +101,241 @@ input {
   background-color: #9FD1FF;
   color: #010133;
 }
+
+/* Add this to your App.css */
+
+.container {
+  padding: 20px;
+  background-color: #f0f4ff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Add scroll if content overflows */
+  padding-bottom: 80px; /* Add padding for bottom nav */
+}
+
+/* Page title styling */
+.page-title {
+  text-align: center;
+  margin: 20px 0 30px;
+  font-size: 32px;
+  color: #0a0a2e;
+}
+
+/* Edit Profile specific styles */
+.edit-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-name {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #0a0a2e;
+}
+
+.profile-picture-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.profile-picture-edit {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #e0e0e0;
+  margin-bottom: 10px;
+}
+
+.profile-picture-edit img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #e0e0e0;
+  margin-bottom: 10px;
+}
+
+.profile-label {
+  font-size: 16px;
+  color: #333;
+}
+
+.edit-form {
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group label {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 8px;
+  align-self: flex-start;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: white;
+}
+
+.save-changes-button {
+  margin-top: 25px;
+  margin-bottom: 20px; /* Add margin to ensure button isn't cut off */
+  padding: 12px 25px;
+  background-color: #4369e3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+/* Profile menu styles */
+.profile-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+  margin-bottom: 24px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background-color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.menu-icon {
+  margin-right: 12px;
+  color: #002676;
+  font-size: 20px;
+}
+
+.sign-out-button {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #4369e3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  text-align: center;
+  width: 180px;
+}
+
+.back-arrow {
+  background: none;
+  border: none;
+  font-size: 24px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.section {
+  margin: 20px 0;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+  margin-bottom: 10px;
+}
+
+.slider-label {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.slider-values {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.toggle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background-color: #ccc;
+  border-radius: 22px;
+  transition: 0.4s;
+}
+
+.switch .slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+.switch input:checked + .slider {
+  background-color: #4369e3;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(18px);
+}
