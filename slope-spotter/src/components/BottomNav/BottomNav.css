@@ -13,16 +13,28 @@
 
 @media (max-width: 375px) {
     .bottom-nav {
-      width: 100%;
+        width: 100%;
     }
-  }
-  @media (min-width: 375px) {
+}
+
+@media (min-width: 375px) {
     .bottom-nav {
-      width: 375px;
+        width: 375px;
     }
-  }
+}
   
 .nav-icon {
     color: white;
     font-size: 24px;
+    transition: transform 0.2s, color 0.2s;
+    cursor: pointer;
+}
+  
+.nav-icon.active {
+    color: #00ffff;
+    transform: scale(1.2);
+}
+  
+.place-icon {
+    font-size: 28px; /* slightly larger MdPlace icon */
 }
