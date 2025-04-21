@@ -5,7 +5,7 @@ function Home() {
   const navigate = useNavigate();
   return (
     <div className="App">
-      <div className="container">
+      <div className="home-container">
         <h1>Slope Spotter</h1>
         <p className="subtitle">finding a path, slope by slope</p>
         <div className="input-section">
