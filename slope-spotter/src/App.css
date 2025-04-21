@@ -3,7 +3,7 @@
 .App {
   text-align: center;
   background-color: white;
-  color: #010133;
+  color: white;
   min-height: 100vh;
   max-height: 100vh;
   display: flex;
@@ -60,6 +60,18 @@ input {
 }
 
 
+.home-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  border: 2px solid #f0f0f0;
+  border-radius: 10px;
+  background-color: #002676;
+}
+
 .container {
   position: relative;
   display: flex;
@@ -72,14 +84,20 @@ input {
   background-color: #9FD1FF;
 }
 
-@media (max-width: 375px) {
+@media (max-width: 400px) {
   .container {
     width: 100%;
   }
+  .home-container {
+    width: 100%;
+  }
 }
-@media (min-width: 375px) {
+@media (min-width: 400px) {
   .container {
-    width: 375px;
+    width: 400px;
+  }
+  .home-container {
+    width: 400px;
   }
 }
 
@@ -102,17 +120,7 @@ input {
   color: #010133;
 }
 
-/* Add this to your App.css */
 
-.container {
-  padding: 20px;
-  background-color: #f0f4ff;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto; /* Add scroll if content overflows */
-  padding-bottom: 80px; /* Add padding for bottom nav */
-}
 
 /* Page title styling */
 .page-title {
