@@ -2,11 +2,12 @@ import "./App.css";
 
 import BottomNav from './components/BottomNav/BottomNav';
 import SpeechButton from './components/SpeechText/SpeechButton.js';
+import MapBox from "./components/MapBox/MapBox.js";
 
 import { useNavigate } from 'react-router-dom';
 /* eventually import MapBox stuff here */
 
-function Map() {
+function Navigation() {
   const navigate = useNavigate();
 
   const handleTranscript = (text) => {
@@ -25,6 +26,10 @@ function Map() {
         {/* TODO: speech to text button */}
         <SpeechButton onTranscript={handleTranscript} />
         {/* TODO: mapbox map */}
+        <div style={{ width: '100%', height: '400px', margin: '1rem 0' }}>
+          <MapBox/>
+        </div>
+        
         {/* TODO: elevation viewer */}
         {/* TODO: remaining miles, time info at the bottom */}
       </div>
@@ -33,4 +38,4 @@ function Map() {
   );
 }
 
-export default Map;
+export default Navigation;
