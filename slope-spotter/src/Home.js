@@ -12,7 +12,7 @@ function Home() {
           <input type="text" placeholder="Username" />
           <input type="text" placeholder="Password" />
         </div> 
-        <button onClick={() => navigate('/navigation')}>Navigate</button>
+        <button className="home-button" onClick={() => navigate('/navigation')}>Navigate</button>
     </div>
     </div>
   );

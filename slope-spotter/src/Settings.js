@@ -44,17 +44,17 @@ function Settings() {
           <h3 className="section-title">Route Preferences</h3><hr></hr>
 
           <label className="slider-label">
-            Maximum Slope ({settings.maxSlope}%)
-            <small>Set the steepest incline your wheelchair can handle</small>
-          </label>
-
-          <input
+            Slope: <strong>({settings.maxSlope}%)</strong>
+            {/* TODO: consider reformatting wording here to make it more accessible */}
+            <input
             type="range"
             min="0"
             max="20"
             value={settings.maxSlope}
             onChange={(e) => handleSliderChange(e, "maxSlope")}
           />
+          <small>Set the steepest incline your wheelchair can handle</small>
+          </label>
 
           <div className="select-row">
             <div className="select-group">
@@ -155,7 +155,7 @@ function Settings() {
           </div>
         </div>
 
-        <button className="save-changes-button" onClick={saveChanges}>
+        <button className="button" onClick={saveChanges}>
           Save Changes
         </button>
       </div>
