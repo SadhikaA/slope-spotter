@@ -8,7 +8,7 @@ function Places() {
   return (
     <div className="App">
       <div className="container">
-        <button className="back-arrow" onClick={() => navigate('/')}>⬅</button>
+        <button className="back-arrow" onClick={() => navigate('/main')}>⬅</button>
         <p>places goes here</p>
         {/* TODO: input text to route where you're going */}
         {/* TODO: speech to text button */}

@@ -35,7 +35,7 @@ function Profile() {
     <div className="App">
       <div className="container">
         {/* ⬅ Back Arrow */}
-        <button className="back-arrow" onClick={() => navigate('/')}>⬅</button>
+        <button className="back-arrow" onClick={() => navigate('/main')}>⬅</button>
 
         {/* View Profile Tab */}
         {activeTab === "profile" && (

@@ -36,7 +36,7 @@ function Settings() {
     <div className="App">
       <div className="container">
         <div className="page-header">
-          <button className="back-arrow" onClick={() => navigate('/')}>⬅</button>
+          <button className="back-arrow" onClick={() => navigate('/main')}>⬅</button>
           <h2 className="page-title">Settings</h2>
         </div>
         {/* Route Preferences */}

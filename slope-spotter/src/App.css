@@ -452,3 +452,9 @@ input[type="range"]::-moz-range-thumb:hover {
 .switch input:checked + .slider:before {
   transform: translateX(18px);
 }
+
+.main-button {
+  width: 80%;
+  font-size: calc(10px + 1vmin);
+  margin-top: 20px;
+}

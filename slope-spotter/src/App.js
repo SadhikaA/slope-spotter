@@ -5,6 +5,7 @@ import Navigation from './Navigation';
 import Places from './Places';
 import Profile from './Profile';
 import Settings from  './Settings';
+import Main from './Main';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/settings" element={<Settings />} />
       <Route path="/places" element={<Places />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/main" element={<Main />} />
     </Routes>
   </Router>
   );

@@ -17,8 +17,10 @@ function Map() {
   return (
     <div className="App">
       <div className="container">
-        <button className="back-arrow" onClick={() => navigate('/')}>⬅</button>
-        <p>navigation goes here</p>
+        <div className="page-header">
+          <button className="back-arrow" onClick={() => navigate('/')}>⬅</button>
+          <h2 className="page-title">Navigation</h2>
+        </div>
         {/* TODO: input text to route where you're going */}
         {/* TODO: speech to text button */}
         <SpeechButton onTranscript={handleTranscript} />
