@@ -15,6 +15,7 @@
     .bottom-nav {
         width: 100%;
     }
+}
   @media (min-width: 400px) {
     .bottom-nav {
       width: 400px;
@@ -24,12 +25,12 @@
 .nav-icon {
     color: white;
     font-size: 24px;
-    transition: transform 0.2s, color 0.2s;
+    transition: transform 0.5s, color 0.2s;
     cursor: pointer;
 }
   
 .nav-icon.active {
-    color: #00ffff;
+    color: #FFC31B;
     transform: scale(1.2);
 }
   

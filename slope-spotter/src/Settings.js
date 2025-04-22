@@ -35,12 +35,13 @@ function Settings() {
   return (
     <div className="App">
       <div className="container">
-        <button className="back-arrow" onClick={() => navigate('/')}>⬅</button>
-        <h2 className="page-title">Settings</h2>
-
+        <div className="page-header">
+          <button className="back-arrow" onClick={() => navigate('/')}>⬅</button>
+          <h2 className="page-title">Settings</h2>
+        </div>
         {/* Route Preferences */}
         <div className="section">
-          <h3 className="section-title">Route Preferences</h3>
+          <h3 className="section-title">Route Preferences</h3><hr></hr>
 
           <label className="slider-label">
             Maximum Slope ({settings.maxSlope}%)
@@ -82,7 +83,7 @@ function Settings() {
 
         {/* Accessibility Options */}
         <div className="section">
-          <h3 className="section-title">Accessibility Options</h3>
+          <h3 className="section-title">Accessibility Options</h3><hr></hr>
 
           <label className="slider-label">
             Font Size: ({settings.fontSize}px)
