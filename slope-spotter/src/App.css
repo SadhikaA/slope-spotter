@@ -458,3 +458,13 @@ input[type="range"]::-moz-range-thumb:hover {
   font-size: calc(10px + 1vmin);
   margin-top: 20px;
 }
+/* Profile Page Styling */
+.profile-content,
+.profile-content h3,
+.profile-content p,
+.profile-content .menu-item span,
+.profile-content .profile-label,
+.profile-content .profile-name,
+.profile-content .page-title {
+  color: #002676;
+}
