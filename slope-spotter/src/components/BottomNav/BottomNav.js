@@ -25,6 +25,7 @@ const BottomNav = () => {
   }, [location.pathname]);
 
   return (
+  <div className="App">
     <div className="bottom-nav">
     <div className="nav-item" onClick={() => navigate('/navigation')}>
       <FaMap className={`nav-icon ${activeTab === 'map' ? 'active' : ''}`} />
@@ -42,6 +43,7 @@ const BottomNav = () => {
       <FaCog className={`nav-icon ${activeTab === 'settings' ? 'active' : ''}`} />
       <span className={`nav-label ${activeTab === 'settings' ? 'active' : ''}`}>Settings</span>
     </div>
+  </div>
   </div>
   );
 };

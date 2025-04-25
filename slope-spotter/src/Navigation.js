@@ -19,7 +19,10 @@ function Navigation() {
     <div className="App">
       <div className="container">
         <Header title="Navigation"/>
-        {/* TODO: input text to route where you're going */}
+        <div className="input-section">
+          <input type="text" placeholder="Start" />
+          <input type="text" placeholder="End" />
+        </div> 
         {/* TODO: speech to text button */}
         <SpeechButton onTranscript={handleTranscript} />
         {/* TODO: mapbox map */}

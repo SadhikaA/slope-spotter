@@ -16,8 +16,8 @@ function Places() {
         {/* TODO: mapbox map */}
         {/* TODO: elevation viewer */}
         {/* TODO: remaining miles, time info at the bottom */}
+        <BottomNav />
       </div>
-      <BottomNav />
     </div>
   );
 }
