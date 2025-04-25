@@ -1,40 +1,59 @@
-// src/components/MapBox/MapBox.js
-
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 const MapBox = ({
-  longitude = -122.2585,
-  latitude  = 37.8719,
-  zoom      = 14,
-  style     = 'mapbox://styles/mapbox/streets-v11',
-  height    = '400px',
+  zoom   = 14,
+  style  = 'mapbox://styles/mapbox/streets-v11',
+  height = '400px',
 }) => {
-  const mapRef = useRef()
-  const mapContainerRef = useRef()
+  const mapRef = useRef(null);
+  const containerRef = useRef();
+  const [center, setCenter] = useState([-122.2585, 37.8719]);
 
+  // default center is Berkeley, CA, stored in a ref
+  const initialCenterRef = useRef(center);
+
+  // 1) ask for user location
   useEffect(() => {
-    mapRef.current = new mapboxgl.Map({
-      container: mapContainerRef.current,
-      center: [longitude, latitude],
-      zoom: zoom,
+    if (!navigator.geolocation) return;
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => setCenter([coords.longitude, coords.latitude]),
+      err => console.warn('Geolocation failed:', err)
+    );
+  }, []);
+
+  // 2) initialize map
+  useEffect(() => {
+    const map = new mapboxgl.Map({
+      container: containerRef.current,
+      style,
+      center: initialCenterRef.current,
+      zoom,
     });
+    mapRef.current = map;
 
     return () => {
-      mapRef.current.remove()
+      map.remove();
+      mapRef.current = null;
+    };
+  }, [style, zoom]);
+
+  // change center on user location
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.easeTo({ center, duration: 1000 });
     }
-  }, [longitude, latitude, zoom, style]);
+  }, [center]);
 
   return (
-    <>
-      <div id='map-container' 
-      ref={mapContainerRef}
-      style={{ width: '100%', height }}/>
-    </>
-  )
+    <div
+      ref={containerRef}
+      style={{ width: '100%', height }}
+    />
+  );
 };
 
 export default MapBox;
