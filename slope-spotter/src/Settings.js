@@ -11,11 +11,11 @@ function Settings() {
     wheelchairType: "Manual",
     prefer: "Least Steep",
     fontSize: 16,
-    altText: true,
+    altText: false,
     highContrast: false,
-    voiceNav: true,
+    voiceNav: false,
     showSlope: false,
-    indoorNav: true
+    indoorNav: false
   });
 
   const handleToggle = (key) => {
@@ -44,21 +44,25 @@ function Settings() {
           <h3 className="section-title">Route Preferences</h3><hr></hr>
 
           <label className="slider-label">
-            Slope: <strong>({settings.maxSlope}%)</strong>
-            {/* TODO: consider reformatting wording here to make it more accessible */}
+            <label htmlFor="slopeRange" className="heading-2">Max Slope Incline</label>
+            <div aria-live="polite">Currently set to: {settings.maxSlope}%</div>
             <input
-            type="range"
-            min="0"
-            max="20"
-            value={settings.maxSlope}
-            onChange={(e) => handleSliderChange(e, "maxSlope")}
-          />
-          <small>Set the steepest incline your wheelchair can handle</small>
+              id="slopeRange"
+              type="range"
+              min="0"
+              max="20"
+              value={settings.maxSlope}
+              onChange={(e) => handleSliderChange(e, "maxSlope")}
+            />
+            <small>Set the steepest incline your wheelchair can handle</small>
           </label>
 
+
           <div className="select-row">
+            
             <div className="select-group">
-              <label>Wheelchair Type</label>
+              <label className="heading-2">Wheelchair Type</label>
+              <br></br>
               <select
                 value={settings.wheelchairType}
                 onChange={(e) => setSettings({ ...settings, wheelchairType: e.target.value })}
@@ -69,7 +73,8 @@ function Settings() {
             </div>
 
             <div className="select-group">
-              <label>Prefer</label>
+              <label className="heading-2">Prefer</label>
+              <br></br>
               <select
                 value={settings.prefer}
                 onChange={(e) => setSettings({ ...settings, prefer: e.target.value })}
@@ -84,6 +89,7 @@ function Settings() {
         {/* Accessibility Options */}
         <div className="section">
           <h3 className="section-title">Accessibility Options</h3><hr></hr>
+          {/* TODO: set all slider labels to false*/}
 
           <label className="slider-label">
             Font Size: ({settings.fontSize}px)

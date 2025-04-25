@@ -3,7 +3,7 @@ import "./App.css";
 import BottomNav from './components/BottomNav/BottomNav';
 import SpeechButton from './components/SpeechText/SpeechButton.js';
 import MapBox from "./components/MapBox/MapBox.js";
-
+import Header from "./components/Header/Header.js";
 import { useNavigate } from 'react-router-dom';
 /* eventually import MapBox stuff here */
 
@@ -18,10 +18,7 @@ function Navigation() {
   return (
     <div className="App">
       <div className="container">
-        <div className="page-header">
-          <button className="back-arrow" onClick={() => navigate('/')}>⬅</button>
-          <h2 className="page-title">Navigation</h2>
-        </div>
+        <Header title="Navigation"/>
         {/* TODO: input text to route where you're going */}
         {/* TODO: speech to text button */}
         <SpeechButton onTranscript={handleTranscript} />

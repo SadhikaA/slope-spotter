@@ -1,41 +1,34 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+Pro:wght@400;600&display=swap");
 
-.App {
+/* GLOBAL STYLES */
+body, .App {
+  margin: 0;
+  padding: 0;
   text-align: center;
   background-color: white;
   min-height: 100vh;
-  max-height: 100vh;
+  font-family: "Inter", "Sans Serif", sans-serif;
+  font-size: calc(10px + 2vmin);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  margin: 0;
-  font-family: "Inter", "Sans Serif", sans-serif;
 }
 
 h1 {
   margin-bottom: 0;
   font-size: calc(16px + 3vmin);
+  color: #004AAE;
 }
 
-h3 {
-  color: #010133;
-  margin-bottom: 0;
-  letter-spacing: 0.3px;
-  line-height: 130%;
-}
-
-p {
+h3, p, label {
   color: #010133;
   letter-spacing: 0.3px;
   line-height: 130%;
 }
 
 label {
-  font-family: "Inter", "Sans Serif", sans-serif;
   font-size: calc(10px + 1vmin);
-  color: #010133;
   font-weight: 600;
   margin-bottom: 10px;
 }
@@ -44,162 +37,135 @@ label {
   margin-top: 0px;
   font-size: calc(10px + 1vmin);
   font-weight: 600;
-  color: white;
+  color: #004AAE;
   font-style: italic;
   letter-spacing: 0.3px;
   line-height: 130%;
 }
 
-.home-button {
+/* BUTTONS */
+button, .home-button, .sign-out-button {
   font-family: "Inter", "Sans Serif", sans-serif;
-  font-weight: 600;
-  font-size: calc(10px + 1vmin);
-  background-color: #f0f0f0;
-  color: #002676;
-  border: none;
-  border-radius: 10px;
-  padding: 8px 20px;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: background-color 0.3s, color 0.3s;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  outline: none;
-}
-
-button {
-  margin-bottom: 10px; 
-  padding: 8px 20px;
-  background-color: #002676;
-  color: white;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   font-weight: 500;
+  transition: background-color 0.3s, color 0.3s;
+  padding: 8px 20px;
+  outline: none;
+}
+
+button {
+  background-color: #004AAE;
+  color: white;
   font-size: calc(6px + 1vmin);
+  margin-bottom: 10px;
 }
 
 button:hover {
   background-color: #e0e0e0;
 }
 
-input {
+.home-button {
+  background-color: #f0f0f0;
+  color: #004AAE;
+  font-size: calc(10px + 1vmin);
+  margin-top: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.sign-out-button {
+  background-color: #010133;
+  color: white;
+  margin-top: 20px;
+  width: 180px;
+  text-align: center;
+}
+
+.main-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 350px;
+  padding: 1rem 1.25rem;
+  margin: 0.5rem auto;
+  background-color: #f4f4f8;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #004AAE;
+  cursor: pointer;
+  position: relative;
+}
+
+.main-icon {
+  position: absolute;
+  left: 1.25rem;
+  font-size: 1.2rem;
+}
+
+.arrow-icon {
+  position: absolute;
+  right: 1.25rem;
+  font-size: 1.1rem;
+}
+
+.main-button span {
+  margin: 0 auto;
+  pointer-events: none;
+}
+
+/* INPUT FIELDS */
+input, select {
   font-family: "Inter", "Sans Serif", sans-serif;
   font-size: calc(10px + 0.5vmin);
   padding: 8px;
   border: 2px solid #f0f0f0;
   border-radius: 10px;
-  width: calc(100% - 100px);
-  box-sizing: border-box;
-  margin-top: 10px;
   background-color: #f0f0f0;
+  outline: none;
+  box-sizing: border-box;
 }
 
-
-.home-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  border: 2px solid #f0f0f0;
-  border-radius: 10px;
-  background-color: #002676;
-  color: white;
+input {
+  width: calc(100% - 100px);
+  margin-top: 10px;
 }
 
+select {
+  width: calc(100% - 150px);
+  color: #010133;
+  font-weight: 500;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* LAYOUT CONTAINERS */
 .container {
   position: relative;
   display: flex;
   flex-direction: column;
-  text-align: left;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  border: 2px solid #f0f0f0;
-  border-radius: 10px;
-  background-color: #F2F2F2;
+  text-align: center;
 }
 
 @media (max-width: 400px) {
   .container {
     width: 100%;
   }
-  .home-container {
-    width: 100%;
-  }
 }
+
 @media (min-width: 400px) {
   .container {
     width: 400px;
   }
-  .home-container {
-    width: 400px;
-  }
 }
 
-/* .back-arrow {
-  font-size: calc(10px + 1vmin);
-  background-color: #9FD1FF;
-  color: #010133;
-  border-radius: 0px;
-  padding: 0px;
-  box-shadow: none;
-  position: absolute;
-  top: 0px;
-  left: 4px;
-  background-color: transparent; 
-  width: 50px;
-} */
-
-.back-arrow:hover {
-  background-color: #9FD1FF;
-  color: #010133;
-}
-
-/* Page styling */
-
-/* .page-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-} */
-
-.page-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  margin-top: 0px;
-}
-
-.page-title {
-  text-align: center;
-  margin: 0px;
-  font-size: 25px;
-  color: #010133;
-}
-
-.back-arrow {
-  font-size: calc(15px + 1vmin);
-  background-color: transparent;
-  color: #010133;
-  border-radius: 0;
-  padding: 0;
-  box-shadow: none;
-  position: absolute;
-  left: -110px;
-  top: 0%;
-  transform: translateY(-50%);
-  width: 50px;
-}
-
-
-/* Page title styling */
-
+/* PROFILE */
 .edit-profile-container {
   display: flex;
   flex-direction: column;
@@ -211,7 +177,7 @@ input {
   font-weight: 500;
   margin-bottom: 20px;
   text-align: center;
-  color: #010133;;
+  color: #010133;
 }
 
 .profile-picture-container {
@@ -234,9 +200,6 @@ input {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  overflow: hidden;
-  background-color: #e0e0e0;
-  margin-bottom: 10px;
 }
 
 .profile-label {
@@ -270,17 +233,16 @@ input {
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  font-size: 16px;
   background-color: white;
+  font-size: 16px;
 }
 
-/* Profile menu styles */
+/* MENU */
 .profile-menu {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 20px;
-  margin-bottom: 24px;
+  margin: 20px 0 24px;
 }
 
 .menu-item {
@@ -288,7 +250,6 @@ input {
   align-items: center;
   padding: 12px;
   background-color: white;
-  border: none;
   border-radius: 8px;
   cursor: pointer;
   text-align: left;
@@ -301,19 +262,12 @@ input {
   font-size: 20px;
 }
 
-.sign-out-button {
-  margin-top: 20px;
-  padding: 12px;
-  background-color: #010133;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  text-align: center;
-  width: 180px;
+/* SECTION */
+.section {
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
 }
-
 
 .section-title {
   font-size: 18px;
@@ -326,10 +280,11 @@ hr {
   width: 250px;
 }
 
+/* SLIDER */
 .slider-label {
   display: flex;
   flex-direction: column;
-  margin: 10px 0;
+  margin: 20px 0;
   font-size: 14px;
   color: #010133;
   font-weight: 500;
@@ -339,12 +294,9 @@ hr {
   padding: 10px;
   background-color: #F2F2F2;
   border-radius: 10px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s, color 0.3s;
-  cursor: pointer;
-  margin-bottom: 20px;
-  margin-top: 20px;
   border: 2px solid #F2F2F2;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
 .slider-values {
@@ -364,9 +316,8 @@ input[type="range"] {
   transition: background 0.3s;
 }
 
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
+input[type="range"]::-webkit-slider-thumb,
+input[type="range"]::-moz-range-thumb {
   width: 20px;
   height: 20px;
   background: #004AAE;
@@ -376,27 +327,11 @@ input[type="range"]::-webkit-slider-thumb {
   transition: background 0.3s ease;
 }
 
-input[type="range"]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  background: #004AAE;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 0 2px #0003;
-}
-
-/* Optional: Hover effect */
 input[type="range"]:hover {
   background: #ccc;
 }
 
-input[type="range"]::-webkit-slider-thumb:hover,
-input[type="range"]::-moz-range-thumb:hover {
-  background: #004AAE;
-}
-
-
+/* TOGGLE SWITCH */
 .toggle-list {
   display: flex;
   flex-direction: column;
@@ -426,8 +361,10 @@ input[type="range"]::-moz-range-thumb:hover {
 .switch .slider {
   position: absolute;
   cursor: pointer;
-  top: 0; left: 0;
-  right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-color: #ccc;
   border-radius: 22px;
   transition: 0.4s;
@@ -453,8 +390,14 @@ input[type="range"]::-moz-range-thumb:hover {
   transform: translateX(18px);
 }
 
-.main-button {
-  width: 80%;
-  font-size: calc(10px + 1vmin);
-  margin-top: 20px;
+/* FORM SELECT */
+.select-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+}
+
+.select-group {
+  flex: 1;
 }
