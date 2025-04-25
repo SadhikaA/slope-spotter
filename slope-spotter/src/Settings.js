@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "./App.css";
 import BottomNav from './components/BottomNav/BottomNav';
+import Header from './components/Header/Header';
 import { useNavigate } from 'react-router-dom';
 
 function Settings() {
@@ -35,10 +36,7 @@ function Settings() {
   return (
     <div className="App">
       <div className="container">
-        <div className="page-header">
-          <button className="back-arrow" onClick={() => navigate('/main')}>⬅</button>
-          <h2 className="page-title">Settings</h2>
-        </div>
+        <Header title="Settings" />
         {/* Route Preferences */}
         <div className="section">
           <h3 className="section-title">Route Preferences</h3><hr></hr>

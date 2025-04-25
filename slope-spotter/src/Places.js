@@ -1,6 +1,7 @@
 import "./App.css";
 import BottomNav from './components/BottomNav/BottomNav';
 import { useNavigate } from 'react-router-dom';
+import Header from "./components/Header/Header.js"; 
 /* eventually import MapBox stuff here */
 
 function Places() {
@@ -8,7 +9,7 @@ function Places() {
   return (
     <div className="App">
       <div className="container">
-        <button className="back-arrow" onClick={() => navigate('/main')}>⬅</button>
+        <Header title="Places"/>
         <p>places goes here</p>
         {/* TODO: input text to route where you're going */}
         {/* TODO: speech to text button */}

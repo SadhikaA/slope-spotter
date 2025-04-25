@@ -26,23 +26,23 @@ const BottomNav = () => {
 
   return (
     <div className="bottom-nav">
-      <FaMap
-        className={`nav-icon ${activeTab === 'map' ? 'active' : ''}`}
-        onClick={() => navigate('/navigation')}
-      />
-      <FaUser
-        className={`nav-icon ${activeTab === 'user' ? 'active' : ''}`}
-        onClick={() => navigate('/profile')}
-      />
-      <MdPlace
-        className={`nav-icon ${activeTab === 'place' ? 'active place-icon' : 'place-icon'}`}
-        onClick={() => navigate('/places')}
-      />
-      <FaCog
-        className={`nav-icon ${activeTab === 'settings' ? 'active' : ''}`}
-        onClick={() => navigate('/settings')}
-      />
+    <div className="nav-item" onClick={() => navigate('/navigation')}>
+      <FaMap className={`nav-icon ${activeTab === 'map' ? 'active' : ''}`} />
+      <span className={`nav-label ${activeTab === 'map' ? 'active' : ''}`}>Map</span>
     </div>
+    <div className="nav-item" onClick={() => navigate('/profile')}>
+      <FaUser className={`nav-icon ${activeTab === 'user' ? 'active' : ''}`} />
+      <span className={`nav-label ${activeTab === 'user' ? 'active' : ''}`}>Profile</span>
+    </div>
+    <div className="nav-item" onClick={() => navigate('/places')}>
+      <MdPlace className={`nav-icon ${activeTab === 'place' ? 'active place-icon' : 'place-icon'}`} />
+      <span className={`nav-label ${activeTab === 'place' ? 'active' : ''}`}>Places</span>
+    </div>
+    <div className="nav-item" onClick={() => navigate('/settings')}>
+      <FaCog className={`nav-icon ${activeTab === 'settings' ? 'active' : ''}`} />
+      <span className={`nav-label ${activeTab === 'settings' ? 'active' : ''}`}>Settings</span>
+    </div>
+  </div>
   );
 };
 
