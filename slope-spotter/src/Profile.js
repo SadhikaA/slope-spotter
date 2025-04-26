@@ -73,7 +73,7 @@ function Profile() {
                 </button>
               </div>
 
-              <button className="sign-out-button">
+              <button className="sign-out-button" onClick={()=> navigate('/')}>
                 Sign Out
               </button>
             </div>

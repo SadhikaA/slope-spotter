@@ -407,3 +407,13 @@ input[type="range"]:hover {
 .select-group {
   flex: 1;
 }
+/* Profile Page Styling */
+.profile-content,
+.profile-content h3,
+.profile-content p,
+.profile-content .menu-item span,
+.profile-content .profile-label,
+.profile-content .profile-name,
+.profile-content .page-title {
+  color: #002676;
+}
