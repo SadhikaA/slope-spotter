@@ -3,6 +3,7 @@ import "./App.css";
 import BottomNav from './components/BottomNav/BottomNav';
 import { useNavigate } from 'react-router-dom';
 import { FiUser, FiMapPin, FiBookmark, FiStar } from 'react-icons/fi';
+import Header from './components/Header/Header';
 
 function Profile() {
   const navigate = useNavigate();
@@ -34,13 +35,10 @@ function Profile() {
   return (
     <div className="App">
       <div className="container">
-        {/* ⬅ Back Arrow */}
-        <button className="back-arrow" onClick={() => navigate('/main')}>⬅</button>
-
         {/* View Profile Tab */}
         {activeTab === "profile" && (
           <>
-            <h2 className="page-title">Profile</h2>
+            <Header title="Profile" />
             <div className="profile-content">
               <div className="profile-header">
                 <h3>{`${profile.firstName} ${profile.lastName}`}</h3>

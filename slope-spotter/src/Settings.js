@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "./App.css";
 import BottomNav from './components/BottomNav/BottomNav';
+import Header from './components/Header/Header';
 import { useNavigate } from 'react-router-dom';
 
 function Settings() {
@@ -11,11 +12,11 @@ function Settings() {
     wheelchairType: "Manual",
     prefer: "Least Steep",
     fontSize: 16,
-    altText: true,
+    altText: false,
     highContrast: false,
-    voiceNav: true,
+    voiceNav: false,
     showSlope: false,
-    indoorNav: true
+    indoorNav: false
   });
 
   const handleToggle = (key) => {
@@ -35,30 +36,27 @@ function Settings() {
   return (
     <div className="App">
       <div className="container">
-        <div className="page-header">
-          <button className="back-arrow" onClick={() => navigate('/main')}>⬅</button>
-          <h2 className="page-title">Settings</h2>
-        </div>
+        <Header title="Settings" />
         {/* Route Preferences */}
         <div className="section">
-          <h3 className="section-title">Route Preferences</h3><hr></hr>
-
+          <h3 className="section-title" style={{paddingTop: '30px'}}>Route Preferences</h3><hr></hr>
           <label className="slider-label">
-            Slope: <strong>({settings.maxSlope}%)</strong>
-            {/* TODO: consider reformatting wording here to make it more accessible */}
+            <label htmlFor="slopeRange">Max Slope Incline</label>
+            <div aria-live="polite">Currently set to: {settings.maxSlope}%</div>
+            <small>Set the steepest incline your wheelchair can handle</small>
             <input
-            type="range"
-            min="0"
-            max="20"
-            value={settings.maxSlope}
-            onChange={(e) => handleSliderChange(e, "maxSlope")}
-          />
-          <small>Set the steepest incline your wheelchair can handle</small>
+              id="slopeRange"
+              type="range"
+              min="0"
+              max="20"
+              value={settings.maxSlope}
+              onChange={(e) => handleSliderChange(e, "maxSlope")}
+            />
           </label>
-
           <div className="select-row">
             <div className="select-group">
               <label>Wheelchair Type</label>
+              <br></br>
               <select
                 value={settings.wheelchairType}
                 onChange={(e) => setSettings({ ...settings, wheelchairType: e.target.value })}
@@ -70,12 +68,13 @@ function Settings() {
 
             <div className="select-group">
               <label>Prefer</label>
+              <br></br>
               <select
                 value={settings.prefer}
                 onChange={(e) => setSettings({ ...settings, prefer: e.target.value })}
               >
-                <option>Least Steep</option>
-                <option>Shortest</option>
+                <option>Less Steep</option>
+                <option>Shorter Distance</option>
               </select>
             </div>
           </div>
@@ -84,7 +83,6 @@ function Settings() {
         {/* Accessibility Options */}
         <div className="section">
           <h3 className="section-title">Accessibility Options</h3><hr></hr>
-
           <label className="slider-label">
             Font Size: ({settings.fontSize}px)
             <input
@@ -155,11 +153,13 @@ function Settings() {
           </div>
         </div>
 
+        <div className="section">
         <button className="button" onClick={saveChanges}>
           Save Changes
         </button>
+          </div>
+          <BottomNav />
       </div>
-      <BottomNav />
     </div>
   );
 }
