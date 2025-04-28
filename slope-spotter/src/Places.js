@@ -1,21 +1,50 @@
 import "./App.css";
 import BottomNav from './components/BottomNav/BottomNav';
-import { useNavigate } from 'react-router-dom';
 import Header from "./components/Header/Header.js"; 
-/* eventually import MapBox stuff here */
+import { FiExternalLink } from "react-icons/fi";
+import { FaStar } from "react-icons/fa";
+import hearst from "./components/Places/hearst.jpg";
+import jacobs from "./components/Places/jacobs.jpg";
 
 function Places() {
-  const navigate = useNavigate();
   return (
     <div className="App">
       <div className="container">
-        <Header title="Places"/>
-        <p>places goes here</p>
-        {/* TODO: input text to route where you're going */}
-        {/* TODO: speech to text button */}
-        {/* TODO: mapbox map */}
-        {/* TODO: elevation viewer */}
-        {/* TODO: remaining miles, time info at the bottom */}
+        <Header title="Saved Places"/>
+        {/* HMMB */}
+        <div className="place-card">
+          <div className="place-header">
+            <h3 className="place-name">Hearst Memorial Mining Building <FiExternalLink className="external-link-icon" /></h3>
+            <div className="place-rating">
+              <FaStar className="star-icon" />
+              <FaStar className="star-icon" />
+            </div>
+          </div>
+          <p className="place-score">3.5</p>
+          <img
+            className="place-image"
+            src={hearst}
+            alt="Hearst Memorial Mining Building"
+          />
+        </div>
+
+        {/* Jacobs Hall */}
+        <div className="place-card">
+          <div className="place-header">
+            <h3 className="place-name">Jacobs Hall <FiExternalLink className="external-link-icon" /></h3>
+            <div className="place-rating">
+              <FaStar className="star-icon" />
+              <FaStar className="star-icon" />
+              <FaStar className="star-icon" />
+            </div>
+          </div>
+          <p className="place-score">5.0</p>
+          <img
+            className="place-image"
+            src={jacobs}
+            alt="Jacobs Hall"
+          />
+        </div>
         <BottomNav />
       </div>
     </div>
