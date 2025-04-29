@@ -6,6 +6,7 @@ import Places from './Places';
 import Profile from './Profile';
 import Settings from './Settings';
 import Main from './Main';
+import IndoorMap from './IndoorMap';
 
 function App() {
   
@@ -18,6 +19,7 @@ function App() {
         <Route path="/places" element={<Places />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/main" element={<Main />} />
+        <Route path="/indoor-map" element={<IndoorMap />} /> 
       </Routes>
     </Router>
   );

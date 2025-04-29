@@ -50,8 +50,10 @@ function Places() {
                   <img src={place.image} alt={place.alt} className="place-image" />
                   <h3>{place.name}</h3>
 
-                  {place.hasIndoorMap && (
-                    <button className="map-button">View Indoor Map</button>
+                  {place.name === "Doe Library" && (
+                    <button className="map-button" onClick={() => navigate("/indoor-map")}>
+                      View Indoor Map
+                    </button>
                   )}
                   {place.hasParkingInfo && (
                     <div className="parking-info">🚗 Accessible Parking Available</div>
