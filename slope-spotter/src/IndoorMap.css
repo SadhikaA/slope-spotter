@@ -1,0 +1,50 @@
+.indoor-map-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .back-button {
+    align-self: flex-start;
+    background: none;
+    border: none;
+    font-size: 24px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .floor-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .floor-button {
+    background-color: #004AAE;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .floor-button:hover {
+    background-color: #002c73;
+  }
+  
+  .floor-image {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    touch-action: none; /* ensures pan/zoom doesn’t interfere with scrolling */
+    border-radius: 8px;
+  }
+  
