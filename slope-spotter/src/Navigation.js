@@ -6,11 +6,9 @@ import BottomNav from './components/BottomNav/BottomNav';
 import SpeechButton from './components/SpeechText/SpeechButton.js';
 import MapBox from "./components/MapBox/MapBox.js";
 import Header from "./components/Header/Header.js";
-import { useNavigate } from 'react-router-dom';
 /* eventually import MapBox stuff here */
 
 function Navigation() {
-  const navigate = useNavigate();
   const mapRef = useRef();
   const [startAddr, setStartAddr] = useState('');
   const [endAddr, setEndAddr] = useState('');

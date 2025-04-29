@@ -117,7 +117,6 @@ function Places() {
           </div>
         </div>
         )}
-
         <BottomNav />
       </div>
     </div>
