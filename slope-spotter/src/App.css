@@ -44,7 +44,7 @@ label {
 }
 
 /* BUTTONS */
-button, .home-button, .sign-out-button {
+button, .home-button {
   font-family: "Inter", "Sans Serif", sans-serif;
   border: none;
   border-radius: 10px;
@@ -72,14 +72,6 @@ button:hover {
   font-size: calc(10px + 1vmin);
   margin-top: 20px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.sign-out-button {
-  background-color: #010133;
-  color: white;
-  margin-top: 20px;
-  width: 180px;
-  text-align: center;
 }
 
 .main-button {
@@ -178,7 +170,7 @@ select {
   font-weight: 500;
   margin-bottom: 20px;
   text-align: center;
-  color: #010133;
+  color: black;
 }
 
 .profile-picture-container {
@@ -201,11 +193,6 @@ select {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-}
-
-.profile-label {
-  font-size: 16px;
-  color: #333;
 }
 
 .edit-form {
@@ -415,7 +402,11 @@ input[type="range"]:hover {
 .profile-content .profile-label,
 .profile-content .profile-name,
 .profile-content .page-title {
-  color: #002676;
+  color: black;
+}
+
+span {
+  font-size: calc(10px + 0.5vmin);
 }
 
 /* PLACES */

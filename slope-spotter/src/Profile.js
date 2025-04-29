@@ -33,8 +33,7 @@ function Profile() {
   };
 
   return (
-    <div className="App">
-      <div className="container">
+    <div className="container">
         {/* View Profile Tab */}
         {activeTab === "profile" && (
           <>
@@ -47,7 +46,6 @@ function Profile() {
                   <div className="profile-picture-edit">
                     <img src="/john duo profile.png" alt="Profile" />
                   </div>
-                  <div className="profile-label">Profile</div>
                 </div>
               </div>
 
@@ -73,7 +71,7 @@ function Profile() {
                 </button>
               </div>
 
-              <button className="sign-out-button" onClick={()=> navigate('/')}>
+              <button className="button" onClick={()=> navigate('/')}>
                 Sign Out
               </button>
             </div>
@@ -145,11 +143,10 @@ function Profile() {
         {/* Saved Tab Placeholder */}
         {activeTab === "saved" && (
           <>
-            <h2 className="page-title">Saved Places</h2>
-            <p>Coming soon...</p>
+            <p>temp</p>
+            {/* TODO: this should link to places */}
           </>
         )}
-      </div>
 
       <BottomNav />
     </div>
