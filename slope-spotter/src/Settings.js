@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import "./App.css";
 import BottomNav from './components/BottomNav/BottomNav';
 import Header from './components/Header/Header';
-import { useNavigate } from 'react-router-dom';
 
 function Settings() {
-  const navigate = useNavigate();
 
   const [settings, setSettings] = useState({
     maxSlope: 10,
