@@ -43,7 +43,8 @@
   .floor-image {
     width: 100%;
     max-width: 350px;
-    border-radius: 10px;
-    object-fit: contain;
+    height: auto;
+    touch-action: none; /* ensures pan/zoom doesn’t interfere with scrolling */
+    border-radius: 8px;
   }
   
