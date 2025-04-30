@@ -1,4 +1,3 @@
-// src/components/MapBox/MapBox.js
 import React, {
   forwardRef,
   useRef,
@@ -9,36 +8,53 @@ import React, {
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-// mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
-mapboxgl.accessToken = 'pk.eyJ1IjoiZnJhbmt6aHUxNjAiLCJhIjoiY205amN4cWt2MDk1MTJqcHM2ZmxseXE4cCJ9.vmdZkfIdPVYRkaRus1_IRg';
+// Map grade angle (degrees) to warm color from yellow (flat) to red (steep)
+function getColorForAngle(angleDeg) {
+  if (angleDeg <= 1) return '#ffffb2';      // very flat
+  if (angleDeg <= 3) return '#fed976';      // gentle slope
+  if (angleDeg <= 6) return '#fd8d3c';      // moderate slope
+  return '#e31a1c';                         // steep slope
+}
 
-const MapBox = forwardRef(({ zoom = 14, style, height='400px' }, ref) => {
+const MapBox = forwardRef(({ zoom = 14, style, height = '400px' }, ref) => {
   const mapRef = useRef(null);
   const containerRef = useRef();
   const [center, setCenter] = useState([-122.2585, 37.8719]);
 
-  // 1) ask for user location
+  // center map on user location
   useEffect(() => {
     navigator.geolocation?.getCurrentPosition(
       ({ coords }) => setCenter([coords.longitude, coords.latitude]),
-      () => {}  // ignore
+      () => {}
     );
   }, []);
 
-  // 2) init map
+  // initialize map
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: containerRef.current,
       style: style || 'mapbox://styles/mapbox/streets-v11',
       center,
       zoom,
+      projection: 'mercator',
     });
 
-    // prepare an empty geojson source for the route
     map.on('load', () => {
-      map.addSource('route', {
+      // placeholder source & layer for colored route
+      map.addSource('route-color', {
         type: 'geojson',
         data: { type: 'FeatureCollection', features: [] },
+      });
+      map.addLayer({
+        id: 'route-color',
+        type: 'line',
+        source: 'route-color',
+        layout: { 'line-join': 'round', 'line-cap': 'round' },
+        paint: {
+          'line-color': ['get', 'color'],
+          'line-width': 8,
+          'line-opacity': 0.8,
+        },
       });
     });
 
@@ -46,57 +62,59 @@ const MapBox = forwardRef(({ zoom = 14, style, height='400px' }, ref) => {
     return () => map.remove();
   }, [style, zoom]);
 
-  // 3) pan when center changes
+  // animate pan when center updates
   useEffect(() => {
     mapRef.current?.easeTo({ center, duration: 1000 });
   }, [center]);
 
-  // 4) expose imperative methods
+  // expose methods via ref
   useImperativeHandle(ref, () => ({
     async getRoute(start, end) {
-      console.log('getRoute', start, end);
       const map = mapRef.current;
       if (!map) return;
 
+      // fetch route
       const res = await fetch(
-        `https://api.mapbox.com/directions/v5/mapbox/cycling/` +
-        `${start[0]},${start[1]};${end[0]},${end[1]}` +
-        `?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`
+        `https://api.mapbox.com/directions/v5/mapbox/walking/` +
+          `${start[0]},${start[1]};${end[0]},${end[1]}` +
+          `?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`
       );
       const json = await res.json();
-      const data = json.routes?.[0]?.geometry;
-      if (!data) return;
+      const leg = json.routes?.[0]?.legs?.[0];
+      if (!leg) return;
 
-      const geojson = { type: 'Feature', properties: {}, geometry: data };
+      // build colored segments per step
+      const segmentFeatures = leg.steps.map((step) => {
+        const coords = step.geometry.coordinates;
+        const startPt = coords[0];
+        const endPt = coords[coords.length - 1];
+        const elevStart = map.queryTerrainElevation(startPt) ?? 0;
+        const elevEnd = map.queryTerrainElevation(endPt) ?? 0;
+        const dist = step.distance;
+        const deltaZ = elevEnd - elevStart;
+        const angleRad = Math.atan2(deltaZ, dist);
+        const angleDeg = (angleRad * 180) / Math.PI;
+        const color = getColorForAngle(angleDeg);
+        return {
+          type: 'Feature',
+          geometry: { type: 'LineString', coordinates: coords },
+          properties: { angle: angleDeg, color },
+        };
+      });
 
-      map.getSource('route').setData(geojson);
-
-      if (!map.getLayer('route-line')) {
-        map.addLayer({
-          id: 'route-line',
-          type: 'line',
-          source: 'route',
-          layout: { 'line-join': 'round', 'line-cap': 'round' },
-          paint: {
-            'line-color': '#3887be',
-            'line-width': 5,
-            'line-opacity': 0.75,
-          },
-        });
+      // update source data immediately
+      const source = map.getSource('route-color');
+      if (source) {
+        source.setData({ type: 'FeatureCollection', features: segmentFeatures });
       }
     },
 
     stopRoute() {
-      console.log('stopRoute');
       const map = mapRef.current;
       if (!map) return;
-      if (map.getLayer('route-line')) map.removeLayer('route-line');
-      if (map.getSource('route')) {
-        map.removeSource('route');
-        map.addSource('route', {
-          type: 'geojson',
-          data: { type: 'FeatureCollection', features: [] },
-        });
+      const source = map.getSource('route-color');
+      if (source) {
+        source.setData({ type: 'FeatureCollection', features: [] });
       }
     },
   }));
