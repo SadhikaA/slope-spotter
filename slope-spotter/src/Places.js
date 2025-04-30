@@ -46,7 +46,7 @@ function Places() {
           <div className="embla__container">
             {savedPlaces.map((place) => (
               <div className="embla__slide" key={place.id}>
-                <div className="place-card">
+                <div className="place-card" onClick={() => navigate(`/place/${place.id}`)} style={{ cursor: 'pointer' }}>
                   <img src={place.image} alt={place.alt} className="place-image" />
                   <h3>{place.name}</h3>
 
