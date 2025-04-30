@@ -9,7 +9,8 @@ import React, {
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+// mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
+mapboxgl.accessToken = 'pk.eyJ1IjoiZnJhbmt6aHUxNjAiLCJhIjoiY205amN4cWt2MDk1MTJqcHM2ZmxseXE4cCJ9.vmdZkfIdPVYRkaRus1_IRg';
 
 const MapBox = forwardRef(({ zoom = 14, style, height='400px' }, ref) => {
   const mapRef = useRef(null);
