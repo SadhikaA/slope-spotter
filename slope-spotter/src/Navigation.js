@@ -71,7 +71,6 @@ function Navigation() {
             onChange={e => setEndAddr(e.target.value)}
           />
         </div>
-        {/* TODO: I put a temporary button here to start navigation, feel free to change style */}
         <div className="button-section">
           <button onClick={handleStart} disabled={loading || (!startAddr.trim() && userLocation === null)}>
             {loading ? 'Loading...' : 'Start Navigation'}
@@ -81,15 +80,11 @@ function Navigation() {
           </button>
         </div>
 
-        {/* TODO: speech to text button */}
         <SpeechButton onTranscript={handleTranscript} />
-        {/* TODO: mapbox map */}
-        <div style={{ width: '100%', height: '400px', margin: '1rem 0' }}>
+        <div style={{ width: '100%', height: '300px', margin: '1rem 0' }}>
           <MapBox ref={mapRef} />
         </div>
-
-        {/* TODO: elevation viewer */}
-        {/* TODO: remaining miles, time info at the bottom */}
+        <p>Remaining Miles</p>
       </div>
       <BottomNav />
     </div>
