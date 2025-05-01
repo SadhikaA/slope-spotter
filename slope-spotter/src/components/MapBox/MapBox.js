@@ -9,44 +9,120 @@ import React, {
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+mapboxgl.accessToken = 'pk.eyJ1IjoiZnJhbmt6aHUxNjAiLCJhIjoiY205amN4cWt2MDk1MTJqcHM2ZmxseXE4cCJ9.vmdZkfIdPVYRkaRus1_IRg'
+
 // Map slope angle (degrees) to a warm color ranging from yellow (flat) to red (steep)
 function getColorForAngle(angleDeg) {
-  if (angleDeg <= 1) return '#ffffb2';
-  if (angleDeg <= 3) return '#fed976';
-  if (angleDeg <= 6) return '#fd8d3c';
-  return '#e31a1c';
+  if (angleDeg < 0) {
+    if (angleDeg >= -1) return '#deebf7';
+    if (angleDeg >= -3) return '#9ecae1';
+    return '#3182bd';
+  } else {
+    if (angleDeg <= 1) return '#ffffb2';
+    if (angleDeg <= 3) return '#fed976';
+    if (angleDeg <= 6) return '#fd8d3c';
+    return '#e31a1c';
+  }
 }
 
-// Custom control to render the vertical "S L O P E" legend on the map
+// Custom control to render the vertical "SLOPE" legend on the map
 class LegendControl {
   onAdd(map) {
     this._map = map;
     this._container = document.createElement('div');
-    // use a new modifier class for this layout
-    this._container.className =
-      'mapboxgl-ctrl legend-control legend-vertical-list';
+    this._container.className = 'mapboxgl-ctrl legend-control legend-vertical-list';
+    this.collapsed = true;
+
+    // this._container.innerHTML = `
+    //   <div class="legend-header">
+    //     <span class="legend-title">Slope</span>
+    //     <button class="legend-toggle">▼</button>
+    //   </div>
+    //   <div class="legend-body collapsed">
+    //     <div class="legend-subtitle">Downhill</div>
+    //     <div class="legend-item">
+    //       <span class="legend-color" style="background:#deebf7"></span>
+    //       ≥ -1° Slight
+    //     </div>
+    //     <div class="legend-item">
+    //       <span class="legend-color" style="background:#9ecae1"></span>
+    //       ≥ -3° Moderate
+    //     </div>
+    //     <div class="legend-item">
+    //       <span class="legend-color" style="background:#3182bd"></span>
+    //       &lt; -3° Steep
+    //     </div>
+
+    //     <div class="legend-subtitle">Uphill</div>
+    //     <div class="legend-item">
+    //       <span class="legend-color" style="background:#ffffb2"></span>
+    //       ≤ 1° Flat
+    //     </div>
+    //     <div class="legend-item">
+    //       <span class="legend-color" style="background:#fed976"></span>
+    //       ≤ 3° Gentle
+    //     </div>
+    //     <div class="legend-item">
+    //       <span class="legend-color" style="background:#fd8d3c"></span>
+    //       ≤ 6° Moderate
+    //     </div>
+    //     <div class="legend-item">
+    //       <span class="legend-color" style="background:#e31a1c"></span>
+    //       &gt; 6° Steep
+    //     </div>
+    //   </div>
+    // `;
 
     this._container.innerHTML = `
-      <div class="legend-title">SLOPE</div>
-      <div class="legend-list">
+      <div class="legend-header">
+        <span class="legend-title">Slope</span>
+        <button class="legend-toggle">▼</button>
+      </div>
+      <div class="legend-body collapsed">
+        <div class="legend-subtitle">Downhill</div>
+        <div class="legend-item">
+          <span class="legend-color" style="background:#deebf7"></span>
+          ≥ -1°
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background:#9ecae1"></span>
+          ≥ -3°
+        </div>
+        <div class="legend-item">
+          <span class="legend-color" style="background:#3182bd"></span>
+          &lt; -3°
+        </div>
+
+        <div class="legend-subtitle">Uphill</div>
         <div class="legend-item">
           <span class="legend-color" style="background:#ffffb2"></span>
-          ≤ 1° Flat
+          ≤ 1°
         </div>
         <div class="legend-item">
           <span class="legend-color" style="background:#fed976"></span>
-          ≤ 3° Gentle
+          ≤ 3°
         </div>
         <div class="legend-item">
           <span class="legend-color" style="background:#fd8d3c"></span>
-          ≤ 6° Moderate
+          ≤ 6°
         </div>
         <div class="legend-item">
           <span class="legend-color" style="background:#e31a1c"></span>
-          > 6° Steep
+          &gt; 6
         </div>
       </div>
     `;
+
+    this._container
+      .querySelector('.legend-toggle')
+      .addEventListener('click', () => {
+        this.collapsed = !this.collapsed;
+        const body = this._container.querySelector('.legend-body');
+        body.classList.toggle('collapsed', this.collapsed);
+        this._container.querySelector('.legend-toggle').textContent =
+          this.collapsed ? '▼' : '▲';
+      });
+
     return this._container;
   }
 
@@ -58,6 +134,8 @@ class LegendControl {
 
 const MapBox = forwardRef(({ zoom = 14, style, height = '400px' }, ref) => {
   const mapRef = useRef(null);
+  const startMarkerRef = useRef(null);
+  const endMarkerRef = useRef(null);
   const containerRef = useRef();
   const [center, setCenter] = useState([-122.2585, 37.8719]);
 
@@ -148,6 +226,7 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '400px' }, ref) => {
         const dist = step.distance;
         const deltaZ = elevEnd - elevStart;
         const angleDeg = (Math.atan2(deltaZ, dist) * 180) / Math.PI;
+        // console.log(angleDeg);
         const color = getColorForAngle(angleDeg);
         return {
           type: 'Feature',
@@ -171,7 +250,19 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '400px' }, ref) => {
         [Math.max(...lons), Math.max(...lats)],
       ];
       map.fitBounds(bounds, { padding: 20, duration: 1000 });
+
+      startMarkerRef.current?.remove();
+      endMarkerRef.current?.remove();
+
+      startMarkerRef.current = new mapboxgl.Marker({ color: 'green' })
+        .setLngLat(start)
+        .addTo(map);
+
+      endMarkerRef.current = new mapboxgl.Marker({ color: 'red' })
+        .setLngLat(end)
+        .addTo(map);
     },
+
 
     stopRoute() {
       const map = mapRef.current;
@@ -181,6 +272,9 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '400px' }, ref) => {
         // Clear the route by setting an empty feature collection
         src.setData({ type: 'FeatureCollection', features: [] });
       }
+
+      startMarkerRef.current?.remove();
+      endMarkerRef.current?.remove();
     },
   }));
 
