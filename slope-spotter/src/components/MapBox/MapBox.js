@@ -22,36 +22,31 @@ class LegendControl {
   onAdd(map) {
     this._map = map;
     this._container = document.createElement('div');
-    this._container.className = 'mapboxgl-ctrl legend-control legend-vertical';
+    // use a new modifier class for this layout
+    this._container.className =
+      'mapboxgl-ctrl legend-control legend-vertical-list';
 
     this._container.innerHTML = `
-      <div class="legend-vertical-title">
-        <span>S</span>
-        <span>L</span>
-        <span>O</span>
-        <span>P</span>
-        <span>E</span>
-      </div>
-      <div class="legend-vertical-items">
+      <div class="legend-title">SLOPE</div>
+      <div class="legend-list">
         <div class="legend-item">
           <span class="legend-color" style="background:#ffffb2"></span>
-          <span class="legend-label">≤ 1° Flat</span>
+          ≤ 1° Flat
         </div>
         <div class="legend-item">
           <span class="legend-color" style="background:#fed976"></span>
-          <span class="legend-label">≤ 3° Gentle</span>
+          ≤ 3° Gentle
         </div>
         <div class="legend-item">
           <span class="legend-color" style="background:#fd8d3c"></span>
-          <span class="legend-label">≤ 6° Moderate</span>
+          ≤ 6° Moderate
         </div>
         <div class="legend-item">
           <span class="legend-color" style="background:#e31a1c"></span>
-          <span class="legend-label">> 6° Steep</span>
+          > 6° Steep
         </div>
       </div>
     `;
-
     return this._container;
   }
 
@@ -70,7 +65,7 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '400px' }, ref) => {
   useEffect(() => {
     navigator.geolocation?.getCurrentPosition(
       ({ coords }) => setCenter([coords.longitude, coords.latitude]),
-      () => {}
+      () => { }
     );
   }, []);
 
@@ -135,8 +130,8 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '400px' }, ref) => {
       // Fetch walking route with step-by-step geometry
       const res = await fetch(
         `https://api.mapbox.com/directions/v5/mapbox/walking/` +
-          `${start[0]},${start[1]};${end[0]},${end[1]}` +
-          `?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`
+        `${start[0]},${start[1]};${end[0]},${end[1]}` +
+        `?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`
       );
       const json = await res.json();
       const route = json.routes?.[0];
