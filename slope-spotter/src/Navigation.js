@@ -6,7 +6,6 @@ import BottomNav from './components/BottomNav/BottomNav';
 import SpeechButton from './components/SpeechText/SpeechButton.js';
 import MapBox from "./components/MapBox/MapBox.js";
 import Header from "./components/Header/Header.js";
-/* eventually import MapBox stuff here */
 
 function Navigation() {
   const mapRef = useRef();
@@ -99,15 +98,14 @@ function Navigation() {
             {loading ? 'Loading...' : 'Start Navigation'}
           </button>
           <button className="nav-button" onClick={handleStop}>
-            Stop Navigation
+            Clear Route
           </button>
           <SpeechButton onTranscript={handleTranscript} />
         </div>
 
-        <div style={{ width: '100%', height: '300px', margin: '1rem 0' }}>
+        <div style={{ width: '100%', height: '400px', margin: '1rem 0', borderRadius: '8px', overflow: 'hidden' }}>
           <MapBox ref={mapRef} />
         </div>
-        <p>Remaining Miles</p>
       </div>
       <BottomNav />
     </div>

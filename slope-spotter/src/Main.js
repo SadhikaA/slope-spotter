@@ -10,7 +10,7 @@ function Main() {
   return (
     <div className="App">
       <div className="container">
-        <h3>Slope Spotter</h3>
+        <h3 style={{ marginTop:'50%'}}>Slope Spotter</h3>
         <button className="main-button" onClick={() => navigate('/navigation')}>
             <FaMap className="main-icon" />
             <span>Navigation</span>
