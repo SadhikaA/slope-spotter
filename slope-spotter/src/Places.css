@@ -1,201 +1,259 @@
 /* Carousel Container */
 .embla {
-    overflow: hidden;
-    width: 100%;
-    margin-top: 30px; /* Raise cards higher on the page */
-  }
-  
-  /* Carousel Inner Container */
-  .embla__container {
-    display: flex;
-  }
-  
-  /* Each Card Slide */
-  .embla__slide {
-    flex: 0 0 85%;
-    min-width: 85%;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-  }
-  
-  /* Card Styling */
-  .place-card {
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.15);
-    padding: 15px;
-    width: 100%;
-    max-width: 300px;
-    text-align: center;
-    position: relative; 
-  }
-  
-  /* Card Image */
-  .place-image {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-  
-  /* Place Title */
-  h3 {
-    margin-top: 10px;
-    font-size: calc(12px + 1vmin);
-    font-weight: 600;
-  }
-  
-  /* Map Button */
-  .map-button {
-    margin-top: 8px;
-    padding: 5px 12px;
-    background-color: #004AAE;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: calc(8px + 0.8vmin);
-    cursor: pointer;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  /* Parking Info Text */
-  .parking-info {
-    margin-top: 6px;
-    font-size: calc(8px + 0.8vmin);
-    color: #555;
-  }
-  
-  /* Buttons (Prev, Add, Next) */
-  .embla-buttons {
-    display: flex;
-    justify-content: space-between;
-    width: 85%;
-    max-width: 300px;
-    margin: 20px auto 40px auto;
-  }
-  
-  /* Individual Navigation Buttons */
-  .embla-buttons button {
-    padding: 12px;
-    background-color: #004AAE;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .embla-buttons button:hover {
-    background-color: #002c73;
-  }
-  
-  /* Modal Overlay */
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    overflow-y: auto;
-  }
-  
-  /* Modal Content Box */
-  .modal-content {
-    background-color: white;
-    padding: 30px 20px;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px; 
-    width: 85%;
-    max-width: 320px;
-    text-align: center;
-    align-items: center;
-  }
-  
-  /* Modal Header Section */
-  .modal-header {
-    width: 100%;
-    margin-bottom: 25px; /* Decrease to pull text up */
-  }
-  
-  .modal-header h2 {
-    font-size: calc(12px + 1vmin);
-    font-weight: 600;
-    color: #010133;
-    margin: 0;
-    text-align: center;
-    padding-bottom: 10px; /* Small padding under title */
-  }
-  
-  /* Place List inside Modal */
-  .modal-place-list {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  /* Add Place Button */
-  .add-place-button {
-    width: 100%;
-    background-color: #004AAE;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-  }
-  
-  .add-place-button:hover {
-    background-color: #002c73;
-  }
-  
-  /* Cancel Button */
-  .close-modal-button {
-    width: 100%;
-    background-color: #f1f1f1;
-    color: #333;
-    border: none;
-    border-radius: 12px;
-    padding: 10px;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-  }
-  
-  .close-modal-button:hover {
-    background-color: #ddd;
-  }
-  
-  /* Remove Button on Cards */
-  .remove-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 14px;
-    position: absolute;
-    top: -2px;
-    right: -10px;
-    cursor: pointer;
-  }
-  
-  .remove-button:hover {
-    color: #cc0000;
-  }
-  
-  
+  overflow: hidden;
+  width: 100%;
+  margin-top: 30px; /* Raise cards higher on the page */
+}
+
+/* Carousel Inner Container */
+.embla__container {
+  display: flex;
+}
+
+/* Each Card Slide */
+.embla__slide {
+  flex: 0 0 85%;
+  min-width: 85%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Card Styling */
+.place-card {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+  padding: 15px;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.place-card:hover,
+.place-card:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Content Section */
+.place-card-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card Image */
+.place-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Place Title */
+h3 {
+  margin-top: 10px;
+  font-size: calc(12px + 1vmin);
+  font-weight: 600;
+}
+
+/* Primary Buttons */
+.primary-button {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background-color: #004aae;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  max-width: 220px;
+  text-align: center;
+}
+.primary-button:disabled {
+  opacity: 1;
+  background-color: #004aae;
+  color: white;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Button Group Container */
+.button-group {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Parking Info Text */
+.parking-info {
+  margin-top: 6px;
+  font-size: calc(8px + 0.8vmin);
+  color: #555;
+}
+
+/* Buttons (Prev, Add, Next) */
+.embla-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
+  max-width: 300px;
+  margin: 20px auto 40px auto;
+}
+
+/* Individual Navigation Buttons */
+.embla-buttons button {
+  padding: 12px;
+  background-color: #004aae;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.embla-buttons button:hover {
+  background-color: #002c73;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+/* Modal Content Box */
+.modal-content {
+  background-color: white;
+  padding: 30px 20px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 85%;
+  max-width: 320px;
+  text-align: center;
+  align-items: center;
+}
+
+/* Modal Header Section */
+.modal-header {
+  width: 100%;
+  margin-bottom: 25px; /* Decrease to pull text up */
+}
+
+.modal-header h2 {
+  font-size: calc(12px + 1vmin);
+  font-weight: 600;
+  color: #010133;
+  margin: 0;
+  text-align: center;
+  padding-bottom: 10px; /* Small padding under title */
+}
+
+/* Place List inside Modal */
+.modal-place-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Add Place Button */
+.add-place-button {
+  width: 100%;
+  background-color: #004aae;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.add-place-button:hover {
+  background-color: #002c73;
+}
+
+/* Cancel Button */
+.close-modal-button {
+  width: 100%;
+  background-color: #f1f1f1;
+  color: #333;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.close-modal-button:hover {
+  background-color: #ddd;
+}
+
+/* Remove Button on Cards */
+.remove-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.delete-icon {
+  width: 20px;
+  height: 20px;
+  fill: #333; /* or use `color` if it's a stroke-based icon */
+  transition: transform 0.2s ease, fill 0.2s ease;
+}
+
+.remove-button:hover .delete-icon {
+  transform: scale(1.1);
+  fill: #cc0000;
+}
+
+.accessibility-preview {
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: left;
+  padding: 0 12px;
+  color: #333;
+}
+
+.accessibility-preview p {
+  margin: 4px 0;
+}
+
+.place-card:active {
+  transform: scale(0.98);
+}
