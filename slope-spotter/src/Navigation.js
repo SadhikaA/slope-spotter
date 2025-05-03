@@ -78,9 +78,9 @@ function Navigation() {
           <button className="nav-button" onClick={handleStop}>
             Stop Navigation
           </button>
+          <SpeechButton onTranscript={handleTranscript} />
         </div>
 
-        <SpeechButton onTranscript={handleTranscript} />
         <div style={{ width: '100%', height: '300px', margin: '1rem 0' }}>
           <MapBox ref={mapRef} />
         </div>
