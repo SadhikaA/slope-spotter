@@ -109,6 +109,21 @@ button:hover {
   pointer-events: none;
 }
 
+.button-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.button-section button {
+  flex-shrink: 0;
+}
+
+.speech-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
 /* INPUT FIELDS */
 input, select {
   font-family: "Inter", "Sans Serif", sans-serif;

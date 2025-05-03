@@ -15,9 +15,32 @@ function Navigation() {
   const [loading, setLoading] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
 
-  const handleTranscript = (text) => {
-    console.log('🗣️ Transcript:', text);
-    // Here you can handle the transcript, e.g., send it to your backend or process it further
+  const handleTranscript = async (text) => {
+    // console.log('🗣️ Transcript:', text);
+    try {
+      const url = `https://noggin.rea.gent/quickest-cat-9424`
+        + `?key=rg_v1_9n82jzc2cl821cr8t6n77pmg4cilsx5dcfmy_ngk`
+        + `&request=${encodeURIComponent(text)}`;
+  
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Reagent error:${res.status}`);
+      const addresses = await res.json();
+      // expect Reagent a list of addresses
+      if (Array.isArray(addresses) && addresses.length >= 2) {
+        const [origin, destination] = addresses;
+        if (origin.trim().toLowerCase() === '') {
+          setStartAddr('');
+        } else {
+          setStartAddr(origin);
+        }
+        setEndAddr(destination);
+      } else {
+        throw new Error('Wrong response from Reagent');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error getting address from Speech, please try to be more specific or use text input');
+    }
   };
 
   useEffect(() => {
@@ -78,9 +101,9 @@ function Navigation() {
           <button className="nav-button" onClick={handleStop}>
             Stop Navigation
           </button>
+          <SpeechButton onTranscript={handleTranscript} />
         </div>
 
-        <SpeechButton onTranscript={handleTranscript} />
         <div style={{ width: '100%', height: '300px', margin: '1rem 0' }}>
           <MapBox ref={mapRef} />
         </div>
@@ -92,7 +115,7 @@ function Navigation() {
 }
 
 async function geocode(address) {
-  console.log('geocode', address);
+  // console.log('geocode', address);
   const encoded = encodeURIComponent(address);
   const res = await fetch(
     `https://api.mapbox.com/geocoding/v5/mapbox.places/` +
@@ -100,6 +123,7 @@ async function geocode(address) {
   );
   const json = await res.json();
   if (!json.features?.length) throw new Error("Cannot find location");
+  // console.log('geocode result', json.features[0].center);
   return json.features[0].center;
 }
 
