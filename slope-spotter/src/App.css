@@ -559,7 +559,7 @@ input[type="range"]:hover {
 }
 
 span {
-  font-size: calc(10px + 0.5vmin);
+  font-size: calc(12px + 0.5vmin);
 }
 
 /* PLACES */
