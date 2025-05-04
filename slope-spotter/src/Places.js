@@ -186,7 +186,7 @@ function Places() {
           <div className="modal-overlay">
             <div className="modal-content">
               <div className="modal-header">
-                <h2>Select a place to add:</h2>
+                <h2>Add a Place:</h2>
               </div>
 
               <div className="modal-place-list">
@@ -201,12 +201,14 @@ function Places() {
                 ))}
               </div>
 
-              <button
-                className="close-modal-button"
-                onClick={() => setIsModalOpen(false)}
-              >
-                Cancel
-              </button>
+              <div className="modal-cancel-wrapper">
+                <button
+                  className="close-modal-button"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         )}

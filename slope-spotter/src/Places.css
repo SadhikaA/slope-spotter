@@ -1,16 +1,14 @@
-/* Carousel Container */
+/* ========== Carousel Layout ========== */
 .embla {
   overflow: hidden;
   width: 100%;
-  margin-top: 30px; /* Raise cards higher on the page */
+  margin-top: 30px;
 }
 
-/* Carousel Inner Container */
 .embla__container {
   display: flex;
 }
 
-/* Each Card Slide */
 .embla__slide {
   flex: 0 0 85%;
   min-width: 85%;
@@ -19,36 +17,39 @@
   justify-content: center;
 }
 
-/* Card Styling */
+/* ========== Place Card ========== */
 .place-card {
-  background-color: white;
+  background: #fff;
   border-radius: 15px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
   padding: 15px;
   width: 100%;
   max-width: 300px;
   text-align: center;
-  position: relative;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  position: relative;
 }
+
 .place-card:hover,
 .place-card:focus-within {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Card Content Section */
+.place-card:active {
+  transform: scale(0.98);
+}
+
 .place-card-content {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* Card Image */
 .place-image {
   width: 100%;
   height: 180px;
@@ -56,190 +57,16 @@
   border-radius: 10px;
 }
 
-/* Place Title */
 h3 {
   margin-top: 10px;
   font-size: calc(12px + 1vmin);
   font-weight: 600;
 }
 
-/* Primary Buttons */
-.primary-button {
-  margin-top: 12px;
-  padding: 12px 16px;
-  background-color: #004aae;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
-  max-width: 220px;
-  text-align: center;
-}
-.primary-button:disabled {
-  opacity: 1;
-  background-color: #004aae;
-  color: white;
-  cursor: default;
-  pointer-events: none;
-}
-
-/* Button Group Container */
-.button-group {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-/* Parking Info Text */
 .parking-info {
   margin-top: 6px;
   font-size: calc(8px + 0.8vmin);
   color: #555;
-}
-
-/* Buttons (Prev, Add, Next) */
-.embla-buttons {
-  display: flex;
-  justify-content: space-between;
-  width: 85%;
-  max-width: 300px;
-  margin: 20px auto 40px auto;
-}
-
-/* Individual Navigation Buttons */
-.embla-buttons button {
-  padding: 12px;
-  background-color: #004aae;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.embla-buttons button:hover {
-  background-color: #002c73;
-}
-
-/* Modal Overlay */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  overflow-y: auto;
-}
-
-/* Modal Content Box */
-.modal-content {
-  background-color: white;
-  padding: 30px 20px;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 85%;
-  max-width: 320px;
-  text-align: center;
-  align-items: center;
-}
-
-/* Modal Header Section */
-.modal-header {
-  width: 100%;
-  margin-bottom: 25px; /* Decrease to pull text up */
-}
-
-.modal-header h2 {
-  font-size: calc(12px + 1vmin);
-  font-weight: 600;
-  color: #010133;
-  margin: 0;
-  text-align: center;
-  padding-bottom: 10px; /* Small padding under title */
-}
-
-/* Place List inside Modal */
-.modal-place-list {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* Add Place Button */
-.add-place-button {
-  width: 100%;
-  background-color: #004aae;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 12px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.add-place-button:hover {
-  background-color: #002c73;
-}
-
-/* Cancel Button */
-.close-modal-button {
-  width: 100%;
-  background-color: #f1f1f1;
-  color: #333;
-  border: none;
-  border-radius: 12px;
-  padding: 10px;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.close-modal-button:hover {
-  background-color: #ddd;
-}
-
-/* Remove Button on Cards */
-.remove-button {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: transparent;
-  border: none;
-  padding: 4px;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.delete-icon {
-  width: 20px;
-  height: 20px;
-  fill: #333; /* or use `color` if it's a stroke-based icon */
-  transition: transform 0.2s ease, fill 0.2s ease;
-}
-
-.remove-button:hover .delete-icon {
-  transform: scale(1.1);
-  fill: #cc0000;
 }
 
 .accessibility-preview {
@@ -254,9 +81,6 @@ h3 {
   margin: 4px 0;
 }
 
-.place-card:active {
-  transform: scale(0.98);
-}
 .detail-row {
   display: flex;
   align-items: flex-start;
@@ -276,6 +100,172 @@ h3 {
 .detail-row .text {
   flex: 1;
 }
+
+/* ========== Button Groups ========== */
+.button-group {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.primary-button,
+.add-place-button,
+.close-modal-button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  word-wrap: break-word;
+  white-space: normal;
+  position: relative;
+  z-index: 0;
+}
+
+.primary-button {
+  background-color: #004aae;
+  color: white;
+  border: none;
+  margin-top: 12px;
+  width: 80%;
+  max-width: 220px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.primary-button:disabled {
+  opacity: 1;
+  cursor: default;
+  pointer-events: none;
+}
+
+.embla-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
+  max-width: 300px;
+  margin: 20px auto 40px;
+}
+
+.embla-buttons button {
+  padding: 12px;
+  width: 60px;
+  height: 60px;
+  background-color: #004aae;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.embla-buttons button:hover,
+.add-place-button:hover {
+  background-color: #002c73;
+}
+
+.close-modal-button {
+  background-color: #f1f1f1;
+  color: #333;
+  border: none;
+}
+
+.close-modal-button:hover {
+  background-color: #ddd;
+}
+
+/* ========== Modal Layout ========== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px 20px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 85%;
+  max-width: 320px;
+  text-align: center;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  gap: 16px;
+}
+
+.modal-header {
+  width: 100%;
+  padding: 5px 0;
+  padding-bottom: 20px;
+  overflow: visible;
+  height: auto;
+}
+
+.modal-header h2 {
+  font-size: calc(12px + 1vmin);
+  font-weight: 600;
+  color: #010133;
+  margin: 0;
+  text-align: center;
+  padding-bottom: 10px;
+  line-height: 1.3;
+}
+
+.modal-place-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.modal-cancel-wrapper {
+  margin-top: 24px;
+  width: 100%;
+}
+
+/* ========== Card Controls ========== */
+.remove-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.delete-icon {
+  width: 20px;
+  height: 20px;
+  fill: #333;
+  transition: transform 0.2s, fill 0.2s;
+}
+
+.remove-button:hover .delete-icon {
+  transform: scale(1.1);
+  fill: #cc0000;
+}
+
+/* ========== Responsive ========== */
 @media (max-width: 480px) {
   .place-card h3,
   .accessibility-preview .text,
@@ -286,19 +276,17 @@ h3 {
   .hours-dropdown p,
   .hours-dropdown li,
   .toggle-hours,
-  .primary-button {
-    font-size: 16px !important;
-  }
-
+  .primary-button,
   .detail-row {
     font-size: 16px !important;
   }
 
-  .modal-header h2 {
-    font-size: 20px !important;
-  }
-
   .primary-button {
     padding: 10px 16px !important;
+  }
+
+  .modal-content {
+    max-height: 85vh;
+    width: 90%;
   }
 }
