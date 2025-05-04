@@ -20,10 +20,10 @@ function Navigation() {
       const url = `https://noggin.rea.gent/immediate-swallow-7716`
         + `?key=rg_v1_qvtwpohfqmwaamnevl9sntvw4824a5ew70dj_ngk`
         + `&request=${encodeURIComponent(text)}`;
-  
+
       const res = await fetch(url);
       if (!res.ok) throw new Error(`Reagent error: ${res.status}`);
-  
+
       const data = await res.json();
       // expect Reagent to return an object: { Origin: "...", Destination: "..." }
       if (
@@ -34,7 +34,7 @@ function Navigation() {
       ) {
         const origin = data.Origin.trim();
         const destination = data.Destination.trim();
-  
+
         // if Origin is empty string, clear the startAddr to show placeholder
         setStartAddr(origin === '' ? '' : origin);
         setEndAddr(destination);
@@ -46,7 +46,6 @@ function Navigation() {
       alert('Error getting address from speech. Please try to be more specific or use text input.');
     }
   };
-  
 
   useEffect(() => {
     if (!navigator.geolocation) { return; }
@@ -59,25 +58,63 @@ function Navigation() {
       }
     );
   }, []);
+
+  const REAGENT_URL = 'https://noggin.rea.gent/joint-aardvark-1976';
+  const API_KEY = 'rg_v1_66frrzepnpcp5yqgm1o8pp08qtf3a0mwazxm_ngk';
+
   const handleStart = async () => {
+    // 1. Validate destination
     if (!endAddr.trim()) {
-      alert("Please enter a destination");
+      alert('Please enter a destination');
       return;
     }
+
+    // 2. Validate origin or geolocation
+    if (!startAddr.trim() && !userLocation) {
+      alert('Please enter a start address or enable location services');
+      return;
+    }
+
     setLoading(true);
     try {
-      // use user location if startAddr is empty
-      const startCoords = startAddr.trim()
-        ? await geocode(startAddr)
-        : userLocation ?? (() => { throw new Error("Please enter start address"); })();
-      const endCoords = await geocode(endAddr);
-      mapRef.current?.getRoute(startCoords, endCoords);
+      let normalizedOrigin = '';
+      let normalizedDestination = '';
+
+      // 3. Normalize addresses via Reagent (individually)
+      if (startAddr.trim()) {
+        const originUrl = `${REAGENT_URL}?key=${API_KEY}&address=${encodeURIComponent(startAddr)}`;
+        const originRes = await fetch(originUrl);
+        if (!originRes.ok) throw new Error(`Failed to normalize origin: ${originRes.status}`);
+        normalizedOrigin = await originRes.text();
+      }
+
+      const destUrl = `${REAGENT_URL}?key=${API_KEY}&address=${encodeURIComponent(endAddr)}`;
+      const destRes = await fetch(destUrl);
+      if (!destRes.ok) throw new Error(`Failed to normalize destination: ${destRes.status}`);
+      normalizedDestination = await destRes.text();
+      console.log('Normalized Origin:', normalizedOrigin);
+      console.log('Normalized Destination:', normalizedDestination);
+
+      // 4. Geocode
+      const originCoords = normalizedOrigin
+        ? await geocode(normalizedOrigin)
+        : userLocation;
+      const destCoords = await geocode(normalizedDestination);
+
+      console.log('Origin:', originCoords);
+      console.log('Destination:', destCoords);
+
+      // 5. Trigger navigation
+      mapRef.current?.getRoute(originCoords, destCoords);
+
     } catch (err) {
+      console.error(err);
       alert(err.message);
     } finally {
       setLoading(false);
     }
   };
+
 
   const handleStop = () => mapRef.current?.stopRoute();
 
