@@ -4,7 +4,7 @@ import BottomNav from "./components/BottomNav/BottomNav";
 import { useNavigate } from "react-router-dom";
 import Header from "./components/Header/Header.js";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { ReactComponent as ZoomInIcon } from "./assets/zoom-in.svg";
 import { ReactComponent as ZoomOutIcon } from "./assets/zoom-out.svg";
 import { ReactComponent as ResetIcon } from "./assets/reset.svg";
@@ -20,16 +20,19 @@ const floorImages = [
 export default function IndoorMap() {
   const navigate = useNavigate();
   const [floorIndex, setFloorIndex] = useState(1);
+  const resetZoomRef = useRef(() => {});
 
   const goUp = () => {
     if (floorIndex < floorImages.length - 1) {
       setFloorIndex(floorIndex + 1);
+      resetZoomRef.current();
     }
   };
 
   const goDown = () => {
     if (floorIndex > 0) {
       setFloorIndex(floorIndex - 1);
+      resetZoomRef.current();
     }
   };
 
@@ -54,34 +57,37 @@ export default function IndoorMap() {
               pinch={{ disabled: false }}
               zoomAnimation={{ disabled: true }}
             >
-              {({ zoomIn, zoomOut, resetTransform }) => (
-                <>
-                  <div className="zoom-controls">
-                    <button className="zoom-button" onClick={() => zoomIn()}>
-                      <ZoomInIcon />
-                    </button>
+              {({ zoomIn, zoomOut, resetTransform }) => {
+                resetZoomRef.current = resetTransform;
+                return (
+                  <>
+                    <div className="zoom-controls">
+                      <button className="zoom-button" onClick={() => zoomIn()}>
+                        <ZoomInIcon />
+                      </button>
 
-                    <button className="zoom-button" onClick={() => zoomOut()}>
-                      <ZoomOutIcon />
-                    </button>
+                      <button className="zoom-button" onClick={() => zoomOut()}>
+                        <ZoomOutIcon />
+                      </button>
 
-                    <button
-                      className="zoom-button"
-                      onClick={() => setTimeout(() => resetTransform(), 100)}
-                    >
-                      <ResetIcon />
-                    </button>
-                  </div>
+                      <button
+                        className="zoom-button"
+                        onClick={() => resetTransform()}
+                      >
+                        <ResetIcon />
+                      </button>
+                    </div>
 
-                  <TransformComponent>
-                    <img
-                      src={floorImages[floorIndex].src}
-                      alt={floorImages[floorIndex].name}
-                      className="floor-image"
-                    />
-                  </TransformComponent>
-                </>
-              )}
+                    <TransformComponent>
+                      <img
+                        src={floorImages[floorIndex].src}
+                        alt={floorImages[floorIndex].name}
+                        className="floor-image"
+                      />
+                    </TransformComponent>
+                  </>
+                );
+              }}
             </TransformWrapper>
           </div>
 

@@ -61,12 +61,27 @@ function Places() {
 
                   {/* Accessibility Preview Info */}
                   <div className="accessibility-preview">
-                    {place.accessibility && <p>♿ {place.accessibility}</p>}
+                    {place.accessibility && (
+                      <div className="detail-row">
+                        <span className="icon">♿</span>
+                        <span className="text">{place.accessibility}</span>
+                      </div>
+                    )}
                     {place.entrance && (
-                      <p>🚪 Accessible entrance: {place.entrance}</p>
+                      <div className="detail-row">
+                        <span className="icon">🚪</span>
+                        <span className="text">
+                          Accessible entrance: {place.entrance}
+                        </span>
+                      </div>
                     )}
                     {place.hasParkingInfo && (
-                      <p>🚗 Accessible Parking Available</p>
+                      <div className="detail-row">
+                        <span className="icon">🚗</span>
+                        <span className="text">
+                          Accessible Parking Available
+                        </span>
+                      </div>
                     )}
                   </div>
                   {place.name === "Doe Library" && (

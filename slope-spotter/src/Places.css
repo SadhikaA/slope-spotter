@@ -257,3 +257,48 @@ h3 {
 .place-card:active {
   transform: scale(0.98);
 }
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.detail-row .icon {
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.detail-row .text {
+  flex: 1;
+}
+@media (max-width: 480px) {
+  .place-card h3,
+  .accessibility-preview .text,
+  .modal-content p,
+  .modal-content li,
+  .modal-header h2,
+  .modal-description,
+  .hours-dropdown p,
+  .hours-dropdown li,
+  .toggle-hours,
+  .primary-button {
+    font-size: 16px !important;
+  }
+
+  .detail-row {
+    font-size: 16px !important;
+  }
+
+  .modal-header h2 {
+    font-size: 20px !important;
+  }
+
+  .primary-button {
+    padding: 10px 16px !important;
+  }
+}
