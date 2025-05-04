@@ -16,32 +16,37 @@ function Navigation() {
   const [userLocation, setUserLocation] = useState(null);
 
   const handleTranscript = async (text) => {
-    // console.log('🗣️ Transcript:', text);
     try {
-      const url = `https://noggin.rea.gent/quickest-cat-9424`
-        + `?key=rg_v1_9n82jzc2cl821cr8t6n77pmg4cilsx5dcfmy_ngk`
+      const url = `https://noggin.rea.gent/immediate-swallow-7716`
+        + `?key=rg_v1_qvtwpohfqmwaamnevl9sntvw4824a5ew70dj_ngk`
         + `&request=${encodeURIComponent(text)}`;
   
       const res = await fetch(url);
-      if (!res.ok) throw new Error(`Reagent error:${res.status}`);
-      const addresses = await res.json();
-      // expect Reagent a list of addresses
-      if (Array.isArray(addresses) && addresses.length >= 2) {
-        const [origin, destination] = addresses;
-        if (origin.trim().toLowerCase() === '') {
-          setStartAddr('');
-        } else {
-          setStartAddr(origin);
-        }
+      if (!res.ok) throw new Error(`Reagent error: ${res.status}`);
+  
+      const data = await res.json();
+      // expect Reagent to return an object: { Origin: "...", Destination: "..." }
+      if (
+        data &&
+        typeof data === 'object' &&
+        'Origin' in data &&
+        'Destination' in data
+      ) {
+        const origin = data.Origin.trim();
+        const destination = data.Destination.trim();
+  
+        // if Origin is empty string, clear the startAddr to show placeholder
+        setStartAddr(origin === '' ? '' : origin);
         setEndAddr(destination);
       } else {
-        throw new Error('Wrong response from Reagent');
+        throw new Error('Unexpected response shape from Reagent');
       }
     } catch (err) {
       console.error(err);
-      alert('Error getting address from Speech, please try to be more specific or use text input');
+      alert('Error getting address from speech. Please try to be more specific or use text input.');
     }
   };
+  
 
   useEffect(() => {
     if (!navigator.geolocation) { return; }
