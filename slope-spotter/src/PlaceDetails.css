@@ -4,15 +4,14 @@
   border-radius: 16px;
   padding: 24px;
   max-width: 360px;
-  max-height: 600px;
   width: 90%;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  overflow-y: auto;
-  gap: 0;
+  overflow-y: visible;
+  max-height: none;
 }
 
 .place-image {
@@ -148,9 +147,8 @@
 .detail-row .text {
   flex: 1;
 }
+
 @media (max-width: 480px) {
-  .place-card h3,
-  .accessibility-preview .text,
   .modal-content p,
   .modal-content li,
   .modal-header h2,
@@ -158,19 +156,38 @@
   .hours-dropdown p,
   .hours-dropdown li,
   .toggle-hours,
-  .primary-button {
+  .primary-button,
+  .detail-row,
+  .detail-row .text {
     font-size: 16px !important;
+    line-height: 1.6;
   }
 
   .detail-row {
-    font-size: 16px !important;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .detail-row .icon {
+    font-size: 18px;
+    width: 24px;
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  .detail-row .text {
+    flex: 1;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .modal-header h2 {
-    font-size: 20px !important;
+    font-size: 22px !important;
   }
 
-  .primary-button {
-    padding: 10px 16px !important;
+  .place-image {
+    width: 100%;
+    max-height: 240px;
   }
 }
