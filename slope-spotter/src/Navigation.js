@@ -103,9 +103,10 @@ function Navigation() {
           <SpeechButton onTranscript={handleTranscript} />
         </div>
 
-        <div style={{ width: '100%', height: '400px', margin: '1rem 0', borderRadius: '8px', overflow: 'hidden' }}>
+        <div style={{ width: '100%', height: '500px', margin: '1rem 0', borderRadius: '8px', overflow: 'hidden' }}>
           <MapBox ref={mapRef} />
         </div>
+
       </div>
       <BottomNav />
     </div>

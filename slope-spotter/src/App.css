@@ -1268,3 +1268,30 @@ input[type="range"]::-moz-range-thumb {
   padding: 10px;
 }
 
+/* HIGH CONTRAST MODE */
+.high-contrast {
+  background-color: black;
+  color: yellow;
+}
+
+.high-contrast h1,
+.high-contrast h3,
+.high-contrast p,
+.high-contrast label,
+.high-contrast .profile-name,
+.high-contrast .place-name,
+.high-contrast .place-score {
+  color: yellow !important;
+}
+
+.high-contrast button {
+  background-color: yellow !important;
+  color: black !important;
+}
+
+.high-contrast input,
+.high-contrast select {
+  background-color: black !important;
+  color: yellow !important;
+  border: 2px solid yellow !important;
+}

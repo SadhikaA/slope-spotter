@@ -34,7 +34,7 @@ function Settings() {
   };
 
   return (
-    <div className="App">
+    <div className={`App ${settings.highContrast ? 'high-contrast' : ''}`}>
       <div className="container">
         <Header title="Settings" />
 
