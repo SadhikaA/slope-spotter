@@ -39,14 +39,21 @@ function PlaceDetails({ place, onClose }) {
           <span className="icon">📍</span>
           <span className="text">{place.address}</span>
         </div>
-        <div className="detail-row">
-          <span className="icon">♿</span>
-          <span className="text">{place.accessibility}</span>
-        </div>
-        <div className="detail-row">
-          <span className="icon">🚪</span>
-          <span className="text">Accessible entrance: {place.entrance}</span>
-        </div>
+        {place.hasParkingInfo && (
+          <div className="detail-row">
+            <span className="icon">🅿️</span>
+            <span className="text">
+              Accessible Parkings:
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '4px' }}>
+                {place.parkings.map((parking, index) => (
+                  <span key={index} style={{ backgroundColor: '#E0E0E0', borderRadius: '12px', padding: '4px 10px', fontSize: '0.85rem',}}>
+                    {parking}
+                  </span>
+                ))}
+              </div>
+            </span>
+          </div>
+        )}
         <div className="detail-row">
           <span className="icon">📞</span>
           <span className="text">{place.phone}</span>

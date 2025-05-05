@@ -18,7 +18,8 @@ export const allPlaces = [
         Saturday: "9 AM–10 PM",
         Sunday: "1–6 PM"
       },
-      entrance: "North side of the building"
+      entrance: "North side of the building",
+      parkings: ["Lower Sproul Garage", "Lower Hearst Garage", "RSF Garage"]
     },
     {
       id: 2,
@@ -39,7 +40,8 @@ export const allPlaces = [
         Saturday: "Closed",
         Sunday: "Closed"
       },
-      entrance: "SW side of 1st floor and NW side of 2nd floor"
+      entrance: "SW side of 1st floor and NW side of 2nd floor",
+      parkings: ["Upper Hearst Parking Structure"]
     },
     {
       id: 3,
@@ -60,7 +62,8 @@ export const allPlaces = [
         Saturday: "Closed",
         Sunday: "Closed"
       },
-      entrance: "North side (Level B) and east side (Level D)"
+      entrance: "North side (Level B) and east side (Level D)",
+      parkings: ["Lower Sproul Garage", "Telegraph Channing Garage", "RSF Garage"]
     },
     {
       id: 4,
@@ -89,7 +92,7 @@ export const allPlaces = [
       image: "https://dac.berkeley.edu/sites/default/files/styles/panopoly_image_spotlight/public/buildings-2/buildings-2/Wurster-Building.jpg?itok=9CrQJm-P",
       alt: "Bauer Wurster Hall exterior",
       hasIndoorMap: false,
-      hasParkingInfo: true,
+      hasParkingInfo: false,
       address: "230 Bauer Wurster Hall #1820, Berkeley, CA 94720-1820",
       phone: "+1 (510) 642-4943",
       accessibility: "Fully wheelchair accessible",
