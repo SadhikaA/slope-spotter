@@ -11,9 +11,9 @@ function Settings() {
     fontSize: 16,
     altText: false,
     highContrast: false,
-    voiceNav: false,
-    showSlope: false,
-    indoorNav: false
+    voiceNav: true,
+    showSlope: true,
+    indoorNav: true
   });
 
   const [saved, setSaved] = useState(false);
@@ -69,8 +69,8 @@ function Settings() {
                 />
               </label>
               
-              <div className="select-group">
-                <label className="select-label">Wheelchair Type</label>
+              <div className="select-group" >
+                <label className="select-label" >Wheelchair Type</label>
                 <select
                   value={settings.wheelchairType}
                   onChange={(e) => setSettings({ ...settings, wheelchairType: e.target.value })}
@@ -94,7 +94,7 @@ function Settings() {
           </div>
 
           {/* Accessibility Options Section */}
-          <div className="section">
+          <div className="section" style={{ marginTop: "0px" }}>
             <div className="section-header">
               <div className="settings-compact-box">
                 <h3 className="section-title">Accessibility Options</h3>
@@ -123,7 +123,7 @@ function Settings() {
                   { label: "Indoor Navigation", key: "indoorNav" }
                 ].map(({ label, key }) => (
                   <div className="toggle-row" key={key}>
-                    <span>{label}:</span>
+                    <span className="toggle-span">{label}:</span>
                     <label className="switch">
                       <input
                         type="checkbox"
