@@ -49,7 +49,7 @@ function Places() {
               <div className="embla__slide" key={place.id}>
                 <div
                   className="place-card"
-                  onClick={() => setSelectedPlace(place)}
+                  onClick={() => setSelectedPlace(place.id)}
                   style={{ cursor: "pointer" }}
                 >
                   <img
@@ -175,7 +175,7 @@ function Places() {
         {selectedPlace && (
           <div className="modal-overlay" onClick={() => setSelectedPlace(null)}>
             <PlaceDetails
-              place={selectedPlace}
+              placeId={selectedPlace}
               onClose={() => setSelectedPlace(null)}
             />
           </div>
