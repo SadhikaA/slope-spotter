@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import "./PlaceDetails.css";
 import { ReactComponent as CloseIcon } from "./assets/exit.svg";
+import { allPlaces } from "./data/placesData";
 
-function PlaceDetails({ place, onClose }) {
+function PlaceDetails({ placeId, onClose }) {
   const [showAllHours, setShowAllHours] = useState(false);
 
+  const place = allPlaces.find((p) => p.id === placeId);
   if (!place) return null;
 
   const getToday = () => {
@@ -38,6 +40,14 @@ function PlaceDetails({ place, onClose }) {
         <div className="detail-row">
           <span className="icon">📍</span>
           <span className="text">{place.address}</span>
+        </div>
+        <div className="detail-row">
+          <span className="icon">♿</span>
+          <span className="text">{place.accessibility}</span>
+        </div>
+        <div className="detail-row">
+          <span className="icon">🚪</span>
+          <span className="text">Accessible entrance: {place.entrance}</span>
         </div>
         {place.hasParkingInfo && (
           <div className="detail-row">

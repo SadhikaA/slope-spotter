@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { FiUser, FiMapPin, FiBookmark, FiStar, FiArrowLeft, FiShare2, FiCopy, FiCheck } from 'react-icons/fi';
 import Header from './components/Header/Header';
 import MapBox from './components/MapBox/MapBox';
+import PlaceDetails from "./PlaceDetails";
 
 function Profile() {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ function Profile() {
   });
 
   const [editForm, setEditForm] = useState({ ...profile });
+  const [selectedPlace, setSelectedPlace] = useState(null);
 
   // Get user location when the location tab is active
   useEffect(() => {
@@ -433,7 +435,7 @@ function Profile() {
             <div className="places-scroll-container">
               {savedPlaces.length > 0 ? (
                 savedPlaces.map((place) => (
-                  <div className="place-card" key={place.id}>
+                  <div className="place-card" key={place.id} onClick={() => setSelectedPlace(place.id)}>
                     <div className="place-card-content">
                       <img 
                         src={place.image} 
@@ -482,6 +484,16 @@ function Profile() {
               )}
             </div>
           </>
+        )}
+
+        {/* Place Details Modal */}
+        {selectedPlace && (
+          <div className="modal-overlay" onClick={() => setSelectedPlace(null)}>
+            <PlaceDetails
+              placeId={selectedPlace}
+              onClose={() => setSelectedPlace(null)}
+            />
+          </div>
         )}
 
         {/* Reviews Tab */}
