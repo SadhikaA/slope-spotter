@@ -438,10 +438,10 @@ function Profile() {
                       <img 
                         src={place.image} 
                         alt={place.alt} 
-                        className="place-image"
+                        className="saved-place-image"
                       />
                       
-                      <h3 className="place-name">{place.name}</h3>
+                      <h3 className="saved-place-name">{place.name}</h3>
                       
                       {place.hasIndoorMap && (
                         <button 
