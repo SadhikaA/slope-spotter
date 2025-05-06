@@ -63,6 +63,12 @@ button,
 }
 
 button {
+  color: white;
+  font-size: calc(6px + 1vmin);
+  margin-bottom: 0px;
+}
+
+.blue-button {
   background-color: #004aae;
   color: white;
   font-size: calc(6px + 1vmin);
