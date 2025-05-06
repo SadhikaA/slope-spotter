@@ -103,55 +103,58 @@ function Navigation() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
+      {/* Scrollable content excluding BottomNav */}
       <div className="flex flex-col flex-grow px-4 max-w-md w-full mx-auto">
         <Header title="Navigation" />
-        <div className="h-4" />
+        <div className="h-10" />
 
-        <div className="mt-6 space-y-4">
-          <input
-            type="text"
-            placeholder="Your Location"
-            value={startAddr}
-            onChange={(e) => setStartAddr(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="text"
-            placeholder="Enter Destination"
-            value={endAddr}
-            onChange={(e) => setEndAddr(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        <div className="mt-4 flex flex-col gap-3">
-          <button
-            onClick={handleStart}
-            disabled={loading || (!startAddr.trim() && userLocation === null)}
-            className="bg-[#004aae] text-white font-semibold py-3 rounded-xl hover:bg-[#00367a] transition disabled:opacity-50"
-          >
-            {loading ? "Loading..." : "Start Navigation"}
-          </button>
-
-          <button
-            onClick={handleStop}
-            className="bg-gray-200 text-gray-800 font-medium py-3 rounded-xl hover:bg-gray-300 transition"
-          >
-            Clear Route
-          </button>
-
-          <div className="flex justify-center mt-2">
-            <SpeechButton
-              onTranscript={handleTranscript}
-              className="bg-[#004aae] text-white font-semibold py-3 px-6 rounded-xl hover:bg-[#00367a] transition"
+        {/* Inner flex column (inputs + map) */}
+        <div className="flex flex-col flex-grow gap-3 py-4">
+          {/* Inputs and buttons */}
+          <div className="flex flex-col gap-3 flex-grow-[4]">
+            <input
+              type="text"
+              placeholder="Your Location"
+              value={startAddr}
+              onChange={(e) => setStartAddr(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+            <input
+              type="text"
+              placeholder="Enter Destination"
+              value={endAddr}
+              onChange={(e) => setEndAddr(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <div className="flex justify-center">
+              <SpeechButton
+                onTranscript={handleTranscript}
+                className="bg-[#004aae] text-white font-semibold py-3 px-6 rounded-xl hover:bg-[#00367a] transition"
+              />
+            </div>
+            <button
+              onClick={handleStop}
+              className="bg-gray-200 text-gray-800 font-medium py-3 rounded-xl hover:bg-gray-300 transition"
+            >
+              Clear Route
+            </button>
+            <button
+              onClick={handleStart}
+              disabled={loading || (!startAddr.trim() && userLocation === null)}
+              className="bg-[#004aae] text-white font-semibold py-3 rounded-xl hover:bg-[#00367a] transition disabled:opacity-50"
+            >
+              {loading ? "Loading..." : "Start Navigation"}
+            </button>
+          </div>
+
+          {/* Map */}
+          <div className="flex-grow-[6] min-h-[300px]">
+            <MapBox ref={mapRef} height="100%" />
           </div>
         </div>
-
-        <div className="mt-6 w-full h-[500px] rounded-xl overflow-hidden shadow-md">
-          <MapBox ref={mapRef} />
-        </div>
       </div>
+
+      {/* Persistent bottom nav */}
       <BottomNav />
     </div>
   );
