@@ -1290,3 +1290,16 @@ input[type="range"]::-moz-range-thumb {
   color: yellow !important;
   border: 2px solid yellow !important;
 }
+
+.route-details {
+  flex: 3;
+  font-size: calc(6px + 1vmin);
+  margin: 2px;
+  border-right: 2px solid #004AAE; 
+}
+
+.route-info {
+  width: calc(100% - 20px);
+  display: flex;
+  flex-direction: row;
+}
