@@ -44,7 +44,7 @@ function Places() {
         <Header title="Places" />
 
         {/* Cards should grow */}
-        <div className="flex-grow overflow-hidden mt-10" ref={emblaRef}>
+        <div className="flex-grow overflow-hidden mt-14" ref={emblaRef}>
           <div
             className="flex gap-4 ml-4"
             style={{ scrollSnapType: "x mandatory" }}
@@ -52,16 +52,16 @@ function Places() {
             {savedPlaces.map((place) => (
               <div
                 key={place.id}
-                className="flex-shrink-0 w-full max-w-xs snap-start px-2"
+                className="flex-shrink-0 w-full max-w-sm snap-start px-4 sm:px-6"
               >
                 <div
-                  className="bg-white rounded-2xl shadow-md p-4 flex flex-col relative hover:shadow-lg transition w-full"
+                  className="bg-white rounded-2xl shadow-md p-6 h-[500px] flex flex-col justify-between relative hover:shadow-lg transition w-full"
                   onClick={() => setSelectedPlace(place.id)}
                 >
                   <img
                     src={place.image}
                     alt={place.alt}
-                    className="rounded-lg object-cover h-40 w-full"
+                    className="rounded-lg object-cover h-52 w-full"
                   />
                   <h3 className="mt-3 text-lg font-semibold text-center">
                     {place.name}
