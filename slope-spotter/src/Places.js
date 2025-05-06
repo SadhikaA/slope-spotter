@@ -7,6 +7,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { allPlaces } from "./data/placesData";
 import PlaceDetails from "./PlaceDetails";
 import { ReactComponent as DeleteIcon } from "./assets/deleta.svg";
+import PageContainer from "./components/BottomNav/PageContainer";
 
 function Places() {
   const navigate = useNavigate();
@@ -39,10 +40,11 @@ function Places() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      <div className="w-full max-w-md mx-auto px-4 pt-6 pb-[72px]">
+      <PageContainer className="flex flex-col flex-grow">
         <Header title="Places" />
 
-        <div className="overflow-hidden mt-10" ref={emblaRef}>
+        {/* Cards should grow */}
+        <div className="flex-grow overflow-hidden mt-10" ref={emblaRef}>
           <div
             className="flex gap-4 ml-4"
             style={{ scrollSnapType: "x mandatory" }}
@@ -117,7 +119,7 @@ function Places() {
           </div>
         </div>
 
-        <div className="flex justify-between items-center mt-6 px-6 gap-4">
+        <div className="flex justify-between items-center px-6 gap-4 mt-4 mb-6">
           <button
             onClick={() => emblaApi?.scrollPrev()}
             className="w-14 h-14 bg-[#004aae] text-white rounded-xl flex items-center justify-center"
@@ -217,9 +219,8 @@ function Places() {
             </div>
           </div>
         )}
-
-        <BottomNav />
-      </div>
+      </PageContainer>
+      <BottomNav />
     </div>
   );
 }
