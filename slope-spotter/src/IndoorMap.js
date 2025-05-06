@@ -41,12 +41,13 @@ export default function IndoorMap() {
     <div className="flex flex-col min-h-screen bg-white">
       <PageContainer className="flex flex-col flex-grow pt-16 px-4">
         <Header title="Indoor Map" onBack={() => navigate("/places")} />
+        <div className="h-16" />
 
         <div className="flex flex-col flex-grow">
           {/* Top Section */}
           <div className="flex-grow-[3] flex items-center justify-center">
             <button
-              className="w-11/12 max-w-xs py-3 bg-[#004aae] text-white font-semibold text-md rounded-xl shadow hover:bg-[#003580]"
+              className="w-11/12 max-w-xs py-3 bg-[#004aae] text-white font-semibold text-lg rounded-xl shadow hover:bg-[#003580]"
               onClick={goUp}
             >
               ↑ Floor Up
@@ -100,7 +101,7 @@ export default function IndoorMap() {
           {/* Bottom Section */}
           <div className="flex-grow-[3] flex flex-col items-center justify-start gap-3">
             <button
-              className="w-11/12 max-w-xs py-3 bg-[#004aae] text-white font-semibold text-md rounded-xl shadow hover:bg-[#003580]"
+              className="w-11/12 max-w-xs py-3 bg-[#004aae] text-white font-semibold text-lg rounded-xl shadow hover:bg-[#003580]"
               onClick={goDown}
             >
               ↓ Floor Down
