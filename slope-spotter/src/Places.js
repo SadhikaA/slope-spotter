@@ -122,60 +122,65 @@ function Places() {
         </div>
 
         <div className="flex justify-between items-center px-6 gap-4 mt-4 mb-6">
+          {/* Left Arrow */}
           <button
             onClick={() => emblaApi?.scrollPrev()}
-            className="w-14 h-14 bg-[#004aae] text-white rounded-xl flex items-center justify-center"
+            className="w-16 h-16 bg-[#004aae] text-white rounded-xl flex items-center justify-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
+              className="w-8 h-8"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth="1.5"
               stroke="currentColor"
-              className="w-6 h-6"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
               />
             </svg>
           </button>
 
+          {/* Plus Button */}
           <button
             onClick={() => setIsModalOpen(true)}
-            className="w-14 h-14 bg-[#004aae] text-white rounded-xl flex items-center justify-center"
+            className="w-16 h-16 bg-[#004aae] text-white rounded-xl flex items-center justify-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              className="w-6 h-6"
-            >
-              <path
-                fillRule="evenodd"
-                d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </button>
-
-          <button
-            onClick={() => emblaApi?.scrollNext()}
-            className="w-14 h-14 bg-[#004aae] text-white rounded-xl flex items-center justify-center"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
+              className="w-8 h-8"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth="1.5"
               stroke="currentColor"
-              className="w-6 h-6"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+          </button>
+
+          {/* Right Arrow */}
+          <button
+            onClick={() => emblaApi?.scrollNext()}
+            className="w-16 h-16 bg-[#004aae] text-white rounded-xl flex items-center justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-8 h-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
               />
             </svg>
           </button>
