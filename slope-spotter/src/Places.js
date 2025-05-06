@@ -200,17 +200,17 @@ function Places() {
 
         {isModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-            <div className="bg-white w-11/12 max-w-sm p-6 rounded-2xl flex flex-col items-center space-y-4">
-              <h2 className="text-xl font-semibold text-[#010133]">
+            <div className="bg-white w-11/12 max-w-md p-8 rounded-3xl flex flex-col items-center space-y-6 shadow-lg">
+              <h2 className="text-2xl font-bold text-[#010133]">
                 Add a Place:
               </h2>
 
-              <div className="w-full flex flex-col gap-2">
+              <div className="w-full flex flex-col gap-3">
                 {availablePlaces.map((place) => (
                   <button
                     key={place.id}
                     onClick={() => addPlace(place)}
-                    className="bg-[#004aae] text-white py-2 rounded-lg font-medium hover:bg-[#002c73]"
+                    className="bg-[#004aae] text-white text-lg py-3 rounded-xl font-semibold hover:bg-[#00367a] transition"
                   >
                     {place.name}
                   </button>
@@ -218,7 +218,7 @@ function Places() {
               </div>
 
               <button
-                className="w-full mt-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 font-medium"
+                className="w-full py-3 rounded-xl bg-gray-200 text-gray-700 text-lg font-medium hover:bg-gray-300 transition"
                 onClick={() => setIsModalOpen(false)}
               >
                 Cancel
