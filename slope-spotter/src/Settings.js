@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import "./App.css";
-import BottomNav from './components/BottomNav/BottomNav';
-import Header from './components/Header/Header';
+import React, { useState } from "react";
+import BottomNav from "./components/BottomNav/BottomNav";
+import Header from "./components/Header/Header";
 
 function Settings() {
   const [settings, setSettings] = useState({
@@ -13,18 +12,18 @@ function Settings() {
     highContrast: false,
     voiceNav: true,
     showSlope: true,
-    indoorNav: true
+    indoorNav: true,
   });
 
   const [saved, setSaved] = useState(false);
 
   const handleToggle = (key) => {
-    setSettings(prev => ({ ...prev, [key]: !prev[key] }));
+    setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   const handleSliderChange = (e, key) => {
     const value = parseInt(e.target.value, 10);
-    setSettings(prev => ({ ...prev, [key]: value }));
+    setSettings((prev) => ({ ...prev, [key]: value }));
   };
 
   const saveChanges = () => {
@@ -34,125 +33,145 @@ function Settings() {
   };
 
   return (
-    <div className={`App ${settings.highContrast ? 'high-contrast' : ''}`}>
-      <div className="container">
+    <div
+      className={`min-h-screen flex flex-col items-center bg-white ${
+        settings.highContrast ? "high-contrast" : ""
+      }`}
+    >
+      <div className="w-full max-w-md flex flex-col px-4 py-6 flex-grow overflow-y-auto pb-[5.5rem]">
         <Header title="Settings" />
+        <div className="h-5" />
 
-        {/* Scrollable Settings Container */}
-        <div className="settings-scroll-container">
-          {/* Route Preferences Section */}
-          <div className="section">
-            <div className="section-header">
-              <div className="settings-compact-box">
-                <h3 className="section-title">Route Preferences</h3>
-              </div>
+        {/* Route Preferences */}
+        <div className="mb-8 mt-4">
+          <h3 className="text-xl font-semibold text-[#010133] mb-4">
+            Route Preferences
+          </h3>
+
+          {/* Max Slope Slider */}
+          <label className="block mb-4">
+            <span className="block font-medium text-[#010133] mb-1">
+              Max Slope Incline
+            </span>
+            <div className="text-sm text-gray-600 mb-1">
+              Currently set to: {settings.maxSlope}%
             </div>
-            
-            <div className="settings-group">
-              <label className="slider-label">
-                <span className="slider-title">Max Slope Incline</span>
-                <div
-                  aria-live="polite"
-                  className="slider-subtext"
-                >
-                  Currently set to: {settings.maxSlope}%
-                </div>
-                <small className="slider-description">Set the steepest incline your wheelchair can handle</small>
-                <input
-                  id="slopeRange"
-                  type="range"
-                  min="0"
-                  max="20"
-                  value={settings.maxSlope}
-                  onChange={(e) => handleSliderChange(e, "maxSlope")}
-                  style={{ "--value": settings.maxSlope / 20 }}
-                />
-              </label>
-              
-              <div className="select-group" >
-                <label className="select-label" >Wheelchair Type</label>
-                <select
-                  value={settings.wheelchairType}
-                  onChange={(e) => setSettings({ ...settings, wheelchairType: e.target.value })}
-                >
-                  <option>Manual</option>
-                  <option>Powered</option>
-                </select>
-              </div>
-              
-              <div className="select-group">
-                <label className="select-label">Route Preference</label>
-                <select
-                  value={settings.prefer}
-                  onChange={(e) => setSettings({ ...settings, prefer: e.target.value })}
-                >
-                  <option>Less Steep</option>
-                  <option>Shorter Distance</option>
-                </select>
-              </div>
-            </div>
+            <small className="text-xs text-gray-500">
+              Set the steepest incline your wheelchair can handle
+            </small>
+            <input
+              type="range"
+              min="0"
+              max="20"
+              value={settings.maxSlope}
+              onChange={(e) => handleSliderChange(e, "maxSlope")}
+              className="w-full mt-2"
+            />
+          </label>
+
+          {/* Wheelchair Type */}
+          <div className="mb-4">
+            <label className="block font-medium text-[#010133] mb-1">
+              Wheelchair Type
+            </label>
+            <select
+              value={settings.wheelchairType}
+              onChange={(e) =>
+                setSettings({ ...settings, wheelchairType: e.target.value })
+              }
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option>Manual</option>
+              <option>Powered</option>
+            </select>
           </div>
 
-          {/* Accessibility Options Section */}
-          <div className="section" style={{ marginTop: "0px" }}>
-            <div className="section-header">
-              <div className="settings-compact-box">
-                <h3 className="section-title">Accessibility Options</h3>
-              </div>
-            </div>
-            
-            <div className="settings-group">
-              <label className="slider-label">
-                <span className="slider-title">Font Size</span>
-                <div className="slider-subtext">({settings.fontSize}px)</div>
-                <input
-                  type="range"
-                  min="12"
-                  max="24"
-                  value={settings.fontSize}
-                  onChange={(e) => handleSliderChange(e, "fontSize")}
-                  style={{ "--value": (settings.fontSize - 12) / 12 }}
-                />
-              </label>
-              <div className="toggle-list">
-                {[
-                  { label: "Alt Text", key: "altText" },
-                  { label: "High Contrast", key: "highContrast" },
-                  { label: "Voice Navigation", key: "voiceNav" },
-                  { label: "Show Slope Elevation", key: "showSlope" },
-                  { label: "Indoor Navigation", key: "indoorNav" }
-                ].map(({ label, key }) => (
-                  <div className="toggle-row" key={key}>
-                    <span className="toggle-span">{label}:</span>
-                    <label className="switch">
-                      <input
-                        type="checkbox"
-                        checked={settings[key]}
-                        onChange={() => handleToggle(key)}
-                      />
-                      <span className="slider" />
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Save Button + Feedback */}
-          <div className="section">
-            <button className="button" onClick={saveChanges}>
-              Save Changes
-            </button>
-            {saved && (
-              <div style={{ color: "#28a745", marginTop: "10px", fontWeight: 500 }}>
-                ✅ Settings saved successfully!
-              </div>
-            )}
+          {/* Route Preference */}
+          <div className="mb-4">
+            <label className="block font-medium text-[#010133] mb-1">
+              Route Preference
+            </label>
+            <select
+              value={settings.prefer}
+              onChange={(e) =>
+                setSettings({ ...settings, prefer: e.target.value })
+              }
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option>Less Steep</option>
+              <option>Shorter Distance</option>
+            </select>
           </div>
         </div>
 
-        <BottomNav />
+        {/* Accessibility Options */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-[#010133] mb-4">
+            Accessibility Options
+          </h3>
+
+          {/* Font Size Slider */}
+          <label className="block mb-4">
+            <span className="block font-medium text-[#010133] mb-1">
+              Font Size
+            </span>
+            <div className="text-sm text-gray-600 mb-1">
+              ({settings.fontSize}px)
+            </div>
+            <input
+              type="range"
+              min="12"
+              max="24"
+              value={settings.fontSize}
+              onChange={(e) => handleSliderChange(e, "fontSize")}
+              className="w-full mt-2"
+            />
+          </label>
+
+          {/* Toggles */}
+          <div className="space-y-4">
+            {[
+              { label: "Alt Text", key: "altText" },
+              { label: "High Contrast", key: "highContrast" },
+              { label: "Voice Navigation", key: "voiceNav" },
+              { label: "Show Slope Elevation", key: "showSlope" },
+              { label: "Indoor Navigation", key: "indoorNav" },
+            ].map(({ label, key }) => (
+              <div className="flex items-center justify-between" key={key}>
+                <span className="text-sm font-medium text-[#010133]">
+                  {label}
+                </span>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={settings[key]}
+                    onChange={() => handleToggle(key)}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:bg-[#004aae] transition"></div>
+                </label>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Save Button */}
+        <div className="mt-6 mb-4">
+          <button
+            onClick={saveChanges}
+            className="bg-[#004aae] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#00367a] transition w-full"
+          >
+            Save Changes
+          </button>
+          {saved && (
+            <div className="text-green-600 mt-3 font-medium text-center">
+              ✅ Settings saved successfully!
+            </div>
+          )}
+        </div>
       </div>
+
+      <BottomNav />
     </div>
   );
 }
