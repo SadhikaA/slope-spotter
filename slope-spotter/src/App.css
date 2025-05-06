@@ -4,19 +4,20 @@
 @tailwind utilities;
 
 /* GLOBAL STYLES */
-body,
-.App {
+body {
   margin: 0;
   padding: 0;
-  text-align: center;
   background-color: white;
-  max-height: 100%;
   font-family: "Inter", "Sans Serif", sans-serif;
   font-size: calc(10px + 2vmin);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+#root,
+.App {
+  width: 100%;
+  height: 100%;
 }
 
 h1 {
