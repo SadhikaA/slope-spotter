@@ -88,19 +88,21 @@ function Places() {
                     )}
                   </div>
 
-                  {place.name === "Doe Library" && (
-                    <button
-                      className="bg-[#004aae] text-white mt-4 py-2 rounded-xl w-4/5 mx-auto text-sm font-medium"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate("/indoor-map");
-                      }}
-                    >
-                      View Indoor Map
-                    </button>
-                  )}
-                  <div className="bg-[#004aae] text-white mt-2 py-2 rounded-xl w-4/5 mx-auto text-sm font-medium text-center cursor-default select-none">
-                    Show More
+                  <div className="flex flex-col items-center mt-auto">
+                    {place.name === "Doe Library" && (
+                      <button
+                        className="bg-[#004aae] text-white py-2 rounded-xl w-4/5 mx-auto text-sm font-medium"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate("/indoor-map");
+                        }}
+                      >
+                        View Indoor Map
+                      </button>
+                    )}
+                    <div className="bg-[#004aae] text-white mt-2 py-2 rounded-xl w-4/5 mx-auto text-sm font-medium text-center cursor-default select-none">
+                      Show More
+                    </div>
                   </div>
 
                   <button
