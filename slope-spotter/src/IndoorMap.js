@@ -57,15 +57,11 @@ export default function IndoorMap() {
           <div className="flex-grow-[7] flex items-center justify-center relative">
             <div className="relative w-full max-w-md mx-auto flex justify-center">
               <TransformWrapper
-                limitToBounds={true}
-                centerOnInit={true}
-                smooth={false}
-                velocityEqualToMove={0.02}
-                zoomAnimation={{ disabled: true }}
+                limitToBounds
+                centerOnInit
                 panning={{ velocityDisabled: true }}
-                pinch={{ disabled: false }}
-                doubleClick={{ disabled: false }}
-                onInit={({ resetTransform }) => {
+                zoomAnimation={{ disabled: true }}
+                onInit={({ zoomIn, zoomOut, resetTransform }) => {
                   resetZoomRef.current = resetTransform;
                 }}
               >
