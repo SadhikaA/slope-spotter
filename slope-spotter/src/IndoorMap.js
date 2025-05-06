@@ -68,13 +68,18 @@ export default function IndoorMap() {
                 {({ zoomIn, zoomOut, resetTransform }) => (
                   <>
                     <div className="zoom-controls absolute top-2 right-2 bg-white rounded-xl shadow-md z-10 flex flex-col overflow-hidden">
-                      <button className="zoom-button" onClick={zoomIn}>
+                      <button className="zoom-button" onClick={() => zoomIn()}>
                         <ZoomInIcon />
                       </button>
-                      <button className="zoom-button" onClick={zoomOut}>
+
+                      <button className="zoom-button" onClick={() => zoomOut()}>
                         <ZoomOutIcon />
                       </button>
-                      <button className="zoom-button" onClick={resetTransform}>
+
+                      <button
+                        className="zoom-button"
+                        onClick={() => resetTransform()}
+                      >
                         <ResetIcon />
                       </button>
                     </div>
