@@ -54,7 +54,7 @@ function Places() {
                 className="flex-shrink-0 w-full max-w-sm snap-start px-4 sm:px-6"
               >
                 <div
-                  className="bg-white rounded-2xl shadow-md p-6 min-h-[500px] flex-grow flex flex-col justify-between relative hover:shadow-lg transition w-full"
+                  className="bg-white rounded-2xl shadow-md p-6 min-h-[550px] flex-grow flex flex-col justify-between relative hover:shadow-lg transition w-full"
                   onClick={() => setSelectedPlace(place.id)}
                 >
                   <img

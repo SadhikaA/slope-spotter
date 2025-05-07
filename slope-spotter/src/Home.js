@@ -1,19 +1,41 @@
-import './App.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const navigate = useNavigate();
+
   return (
-    <div className="App">
-      <div className="container">
-        <h1>Slope Spotter</h1>
-        <p className="subtitle">finding a path, slope by slope</p>
-        <div className="input-section">
-          <input type="text" placeholder="Username" />
-          <input type="text" placeholder="Password" />
-        </div> 
-        <button className="home-button" onClick={() => navigate('/main')}>Navigate</button>
-    </div>
+    <div className="min-h-screen flex items-center justify-center bg-white px-6">
+      <div className="w-full max-w-md bg-white p-6 flex flex-col items-center text-center">
+        {/* Title */}
+        <h1 className="text-4xl font-bold text-[#004aae] mb-2">
+          Slope Spotter
+        </h1>
+        <p className="text-blue-800 italic text-base mb-8">
+          finding a path, slope by slope
+        </p>
+
+        {/* Input Section */}
+        <div className="w-full space-y-4 mb-8">
+          <input
+            type="text"
+            placeholder="Username"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#004aae] text-base"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#004aae] text-base"
+          />
+        </div>
+
+        {/* Button */}
+        <button
+          onClick={() => navigate("/main")}
+          className="bg-[#004aae] text-white text-lg font-semibold px-6 py-3 rounded-xl w-full hover:bg-[#00367a] transition shadow"
+        >
+          Navigate
+        </button>
+      </div>
     </div>
   );
 }

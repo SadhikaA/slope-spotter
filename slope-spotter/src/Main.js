@@ -7,7 +7,7 @@ export default function Main() {
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-start pt-20 px-4 bg-white">
-      <h1 className="text-3xl font-bold text-[#010133] mb-14">Slope Spotter</h1>
+      <h1 className="text-5xl font-bold text-[#004aae] mb-14">Slope Spotter</h1>
 
       <div className="w-full max-w-md flex flex-col gap-6">
         {[
