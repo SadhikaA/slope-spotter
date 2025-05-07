@@ -11,7 +11,7 @@ export default function Main() {
 
       <div className="w-full max-w-md flex flex-col gap-6">
         {[
-          { label: "Navigation", icon: <FaMap />, route: "/navigation" },
+          { label: "Map", icon: <FaMap />, route: "/navigation" },
           { label: "Accessible Places", icon: <MdPlace />, route: "/places" },
           { label: "Profile", icon: <FaUser />, route: "/profile" },
           { label: "Settings", icon: <FaCog />, route: "/settings" },

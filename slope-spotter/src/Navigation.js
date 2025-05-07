@@ -170,7 +170,7 @@ function Navigation() {
     <div className="flex flex-col min-h-screen bg-white">
       {/* Scrollable content excluding BottomNav */}
       <div className="flex flex-col flex-grow px-4 max-w-md w-full mx-auto">
-        <Header title="Navigation" />
+        <Header title="Map" />
         <div className="h-10" />
 
         {/* Inner flex column (inputs + map) */}
