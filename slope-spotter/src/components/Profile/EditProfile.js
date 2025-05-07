@@ -1,13 +1,13 @@
 import React from "react";
-import Header from "../Header/Header";
+import ReloadingHeader from "../Header/ReloadingHeader";
+import { useNavigate } from "react-router-dom";
 
 const EditProfile = ({ editForm, handleInputChange, saveChanges, goBack }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col items-center bg-white text-[#010133] text-lg">
-      <Header
-        title="Edit Profile"
-        goBack={() => (window.location.href = "/profile")}
-      />
+      <ReloadingHeader title="Edit Profile" />
 
       {/* Constrained content, no forced screen height */}
       <div className="w-full max-w-md flex flex-col px-4 pt-6 overflow-y-auto navigation-scroll-container">
