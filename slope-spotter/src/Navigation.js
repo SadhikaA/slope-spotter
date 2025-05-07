@@ -67,21 +67,21 @@ function Navigation() {
     try {
       // Build the URL for the Mapbox Directions API (walking profile)
       const url = `https://api.mapbox.com/directions/v5/mapbox/walking/${originCoords[0]},${originCoords[1]};${destCoords[0]},${destCoords[1]}?access_token=${mapboxgl.accessToken}&geometries=geojson`;
-      
+
       const response = await fetch(url);
       if (!response.ok) throw new Error('Failed to fetch walking directions');
-      
+
       const data = await response.json();
-      
+
       if (data.routes && data.routes.length > 0) {
         const distance = data.routes[0].distance; // distance in meters
         const duration = data.routes[0].duration; // duration in seconds
-        
+
         // Convert to more readable formats
         const distanceKm = (distance / 1000).toFixed(2);
         const distanceMiles = (distance / 1609.34).toFixed(2);
         const durationMinutes = Math.round(duration / 60);
-        
+
         return {
           distanceMeters: distance,
           distanceKm,
@@ -142,21 +142,21 @@ function Navigation() {
 
       // 5. Get walking distance and duration
       const walkingInfo = await getWalkingDistance(originCoords, destCoords);
-      
+
       // 6. Trigger navigation and get mapRoute info that now includes maxSlope
       const mapRouteInfo = await mapRef.current?.getRoute(originCoords, destCoords);
-      
+
       // Wait a moment for the maxSlope property to be updated
       setTimeout(() => {
         // 7. Access the maxSlope from the MapBox component ref
         const maxSlope = mapRef.current?.maxSlope || 0;
-        
+
         // 8. Combine walking info with slope data
         const combinedRouteInfo = {
           ...walkingInfo,
           maxSlope
         };
-        
+
         setRouteInfo(combinedRouteInfo);
         console.log('Route Info:', combinedRouteInfo);
       }, 500);
@@ -172,6 +172,7 @@ function Navigation() {
   const handleStop = () => {
     mapRef.current?.stopRoute();
     setRouteInfo(null); // Clear route info when route is cleared
+    mapRef.current?.clearDraw();
   };
 
   return (
