@@ -33,46 +33,6 @@ class LegendControl {
     this._container.className = 'mapboxgl-ctrl legend-control legend-vertical-list';
     this.collapsed = true;
 
-    // this._container.innerHTML = `
-    //   <div class="legend-header">
-    //     <span class="legend-title">Slope</span>
-    //     <button class="legend-toggle">▼</button>
-    //   </div>
-    //   <div class="legend-body collapsed">
-    //     <div class="legend-subtitle">Downhill</div>
-    //     <div class="legend-item">
-    //       <span class="legend-color" style="background:#deebf7"></span>
-    //       ≥ -1° Slight
-    //     </div>
-    //     <div class="legend-item">
-    //       <span class="legend-color" style="background:#9ecae1"></span>
-    //       ≥ -3° Moderate
-    //     </div>
-    //     <div class="legend-item">
-    //       <span class="legend-color" style="background:#3182bd"></span>
-    //       &lt; -3° Steep
-    //     </div>
-
-    //     <div class="legend-subtitle">Uphill</div>
-    //     <div class="legend-item">
-    //       <span class="legend-color" style="background:#ffffb2"></span>
-    //       ≤ 1° Flat
-    //     </div>
-    //     <div class="legend-item">
-    //       <span class="legend-color" style="background:#fed976"></span>
-    //       ≤ 3° Gentle
-    //     </div>
-    //     <div class="legend-item">
-    //       <span class="legend-color" style="background:#fd8d3c"></span>
-    //       ≤ 6° Moderate
-    //     </div>
-    //     <div class="legend-item">
-    //       <span class="legend-color" style="background:#e31a1c"></span>
-    //       &gt; 6° Steep
-    //     </div>
-    //   </div>
-    // `;
-
     this._container.innerHTML = `
       <div class="legend-header">
         <span class="legend-title">Slope</span>
@@ -108,7 +68,7 @@ class LegendControl {
         </div>
         <div class="legend-item">
           <span class="legend-color" style="background:#e31a1c"></span>
-          &gt; 6
+          &gt; 6°
         </div>
       </div>
     `;
@@ -132,12 +92,13 @@ class LegendControl {
   }
 }
 
-const MapBox = forwardRef(({ zoom = 14, style, height = '400px' }, ref) => {
+const MapBox = forwardRef(({ zoom = 14, style, height = '500px' }, ref) => {
   const mapRef = useRef(null);
   const startMarkerRef = useRef(null);
   const endMarkerRef = useRef(null);
   const containerRef = useRef();
   const [center, setCenter] = useState([-122.2585, 37.8719]);
+  const [maxSlope, setMaxSlope] = useState(null); // Add state to track maxSlope
 
   // Obtain user location to center the map
   useEffect(() => {
@@ -199,11 +160,16 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '400px' }, ref) => {
     mapRef.current?.easeTo({ center, duration: 1000 });
   }, [center]);
 
-  // Expose getRoute and stopRoute methods to parent components
+  // Expose getRoute, stopRoute, and maxSlope methods to parent components
   useImperativeHandle(ref, () => ({
+    // Expose maxSlope directly in the ref
+    get maxSlope() {
+      return maxSlope;
+    },
+    
     async getRoute(start, end) {
       const map = mapRef.current;
-      if (!map) return;
+      if (!map) return null;
 
       // Fetch walking route with step-by-step geometry
       const res = await fetch(
@@ -214,7 +180,7 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '400px' }, ref) => {
       const json = await res.json();
       const route = json.routes?.[0];
       const leg = route?.legs?.[0];
-      if (!leg) return;
+      if (!leg) return null;
 
       // Build features for each step, colored by slope angle
       const segmentFeatures = leg.steps.map(step => {
@@ -226,7 +192,6 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '400px' }, ref) => {
         const dist = step.distance;
         const deltaZ = elevEnd - elevStart;
         const angleDeg = (Math.atan2(deltaZ, dist) * 180) / Math.PI;
-        // console.log(angleDeg);
         const color = getColorForAngle(angleDeg);
         return {
           type: 'Feature',
@@ -234,6 +199,16 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '400px' }, ref) => {
           properties: { angle: angleDeg, color },
         };
       });
+
+      // Determine the highest slope angle for the entire route
+      const calculatedMaxSlope = Math.max(
+        ...segmentFeatures.map(f => Math.abs(f.properties.angle))
+      );
+      
+      // Update the maxSlope state
+      setMaxSlope(parseFloat(calculatedMaxSlope.toFixed(1)));
+      
+      console.log('Max slope angle:', calculatedMaxSlope);
 
       // Update the GeoJSON source with new features
       const src = map.getSource('route-color');
@@ -261,8 +236,12 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '400px' }, ref) => {
       endMarkerRef.current = new mapboxgl.Marker({ color: 'red' })
         .setLngLat(end)
         .addTo(map);
+      
+      // Return route information with the max slope
+      return {
+        maxSlope: parseFloat(calculatedMaxSlope.toFixed(1))
+      };
     },
-
 
     stopRoute() {
       const map = mapRef.current;
@@ -275,6 +254,9 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '400px' }, ref) => {
 
       startMarkerRef.current?.remove();
       endMarkerRef.current?.remove();
+      
+      // Reset max slope when route is cleared
+      setMaxSlope(null);
     },
   }));
 

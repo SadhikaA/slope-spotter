@@ -405,6 +405,7 @@ select {
 /* SECTION */
 .section {
   width: 400px;
+  margin-top: 20px;
   padding: 10px;
   box-sizing: border-box;
 }
@@ -484,7 +485,7 @@ input[type="range"]:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 14px;
+  font-size: 8px;
 }
 
 .switch {
@@ -559,6 +560,10 @@ input[type="range"]:hover {
 
 span {
   font-size: calc(12px + 0.5vmin);
+}
+
+.toggle-span {
+  font-size: calc(10px + 0.5vmin);
 }
 
 /* PLACES */
@@ -1054,15 +1059,8 @@ span {
 /* Settings */
 .section {
   width: 100%;
-  max-width: 390px; /* Match the app width */
-  background: #ffffff;
-  padding: 15px;
-  margin: 15px 0;
   border-radius: 12px;
-}
-
-.section:hover {
-  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
+  margin-top: 30px;
 }
 
 /* New compact blue box style */
@@ -1096,13 +1094,11 @@ span {
 .settings-group {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin-top: 10px;
 }
 
 .select-group select {
   width: 100%;
-  margin-top: 8px;
+  margin-top: 0px;
 }
 
 .slider-label {
@@ -1174,14 +1170,13 @@ input[type="range"]::-moz-range-thumb {
 .settings-scroll-container {
   width: 100%;
   max-width: 100%;
-  height: calc(100vh - 140px); /* Adjust for header + BottomNav */
   overflow-y: auto;
   padding: 15px;
   box-sizing: border-box;
 }
 
 .settings-scroll-container::-webkit-scrollbar {
-  width: 6px;
+  width: 0px;
 }
 
 .settings-scroll-container::-webkit-scrollbar-track {
@@ -1294,4 +1289,17 @@ input[type="range"]::-moz-range-thumb {
   background-color: black !important;
   color: yellow !important;
   border: 2px solid yellow !important;
+}
+
+.route-details {
+  flex: 3;
+  font-size: calc(6px + 1vmin);
+  margin: 2px;
+  border-right: 2px solid #004AAE; 
+}
+
+.route-info {
+  width: calc(100% - 20px);
+  display: flex;
+  flex-direction: row;
 }
