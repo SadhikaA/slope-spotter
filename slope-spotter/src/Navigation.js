@@ -1,5 +1,6 @@
-import mapboxgl from "mapbox-gl";
-import React, { useRef, useState, useEffect } from "react";
+import "./App.css";
+import mapboxgl from 'mapbox-gl';
+import React, { useRef, useState, useEffect } from 'react';
 
 import BottomNav from "./components/BottomNav/BottomNav";
 import SpeechButton from "./components/SpeechText/SpeechButton.js";
@@ -12,6 +13,7 @@ function Navigation() {
   const [endAddr, setEndAddr] = useState("");
   const [loading, setLoading] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
+  const [routeInfo, setRouteInfo] = useState(null); // Add state for route information
 
   const handleTranscript = async (text) => {
     try {
@@ -57,6 +59,42 @@ function Navigation() {
   const REAGENT_URL = "https://noggin.rea.gent/joint-aardvark-1976";
   const API_KEY = "rg_v1_66frrzepnpcp5yqgm1o8pp08qtf3a0mwazxm_ngk";
 
+  // Function to get walking distance and duration
+  const getWalkingDistance = async (originCoords, destCoords) => {
+    try {
+      // Build the URL for the Mapbox Directions API (walking profile)
+      const url = `https://api.mapbox.com/directions/v5/mapbox/walking/${originCoords[0]},${originCoords[1]};${destCoords[0]},${destCoords[1]}?access_token=${mapboxgl.accessToken}&geometries=geojson`;
+
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Failed to fetch walking directions');
+
+      const data = await response.json();
+
+      if (data.routes && data.routes.length > 0) {
+        const distance = data.routes[0].distance; // distance in meters
+        const duration = data.routes[0].duration; // duration in seconds
+
+        // Convert to more readable formats
+        const distanceKm = (distance / 1000).toFixed(2);
+        const distanceMiles = (distance / 1609.34).toFixed(2);
+        const durationMinutes = Math.round(duration / 60);
+
+        return {
+          distanceMeters: distance,
+          distanceKm,
+          distanceMiles,
+          durationSeconds: duration,
+          durationMinutes
+        };
+      } else {
+        throw new Error('No routes found');
+      }
+    } catch (err) {
+      console.error('Error getting walking distance:', err);
+      throw err;
+    }
+  };
+
   const handleStart = async () => {
     if (!endAddr.trim()) return alert("Please enter a destination");
     if (!startAddr.trim() && !userLocation)
@@ -90,7 +128,30 @@ function Navigation() {
         : userLocation;
       const destCoords = await geocode(normalizedDestination);
 
-      mapRef.current?.getRoute(originCoords, destCoords);
+      console.log('Origin:', originCoords);
+      console.log('Destination:', destCoords);
+
+      // 5. Get walking distance and duration
+      const walkingInfo = await getWalkingDistance(originCoords, destCoords);
+
+      // 6. Trigger navigation and get mapRoute info that now includes maxSlope
+      const mapRouteInfo = await mapRef.current?.getRoute(originCoords, destCoords);
+
+      // Wait a moment for the maxSlope property to be updated
+      setTimeout(() => {
+        // 7. Access the maxSlope from the MapBox component ref
+        const maxSlope = mapRef.current?.maxSlope || 0;
+
+        // 8. Combine walking info with slope data
+        const combinedRouteInfo = {
+          ...walkingInfo,
+          maxSlope
+        };
+
+        setRouteInfo(combinedRouteInfo);
+        console.log('Route Info:', combinedRouteInfo);
+      }, 500);
+
     } catch (err) {
       console.error(err);
       alert(err.message);
@@ -99,7 +160,11 @@ function Navigation() {
     }
   };
 
-  const handleStop = () => mapRef.current?.stopRoute();
+  const handleStop = () => {
+    mapRef.current?.stopRoute();
+    setRouteInfo(null); // Clear route info when route is cleared
+    mapRef.current?.clearDraw();
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
@@ -152,6 +217,20 @@ function Navigation() {
             <MapBox ref={mapRef} height="100%" />
           </div>
         </div>
+
+        {/* Display walking distance, time, and slope information */}
+        {routeInfo && (
+          <div className="route-info" style={{ margin: '1rem 0', padding: '10px', background: '#f0f0f0', borderRadius: '8px' }}>
+            <p className="route-details">Distance <br></br><strong>{routeInfo.distanceMiles} mi</strong></p>
+            <p className="route-details">Time<br></br><strong>{routeInfo.durationMinutes} min</strong></p>
+            <p className="route-details" style={{ borderRight: '0px'}}>Max Slope <br></br><strong>{routeInfo.maxSlope}°</strong></p>
+          </div>
+        )}
+
+        <div style={{ width: '100%', height: '400px', margin: '1rem 0', borderRadius: '8px', overflow: 'hidden' }}>
+          <MapBox ref={mapRef} />
+        </div>
+
       </div>
 
       {/* Persistent bottom nav */}
