@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
 import BottomNav from "./components/BottomNav/BottomNav";
 import { useNavigate } from "react-router-dom";
 import Header from "./components/Header/Header";
@@ -35,7 +34,6 @@ function Profile() {
 
   const [savedPlaces, setSavedPlaces] = useState(allPlaces.slice(0, 4));
   const [reviews, setReviews] = useState(initialReviews);
-
   const [editForm, setEditForm] = useState({ ...profile });
   const [selectedPlace, setSelectedPlace] = useState(null);
 
@@ -91,7 +89,6 @@ function Profile() {
 
   const generateShareLink = () => {
     if (!userLocation) return "https://yourdomain.com/location";
-
     const [longitude, latitude] = userLocation;
     const baseUrl = window.location.origin || "https://yourdomain.com";
     return `${baseUrl}/location?lat=${latitude}&lng=${longitude}&name=${encodeURIComponent(
@@ -114,8 +111,6 @@ function Profile() {
 
   const handleShare = () => {
     const link = generateShareLink();
-
-    // Get active share options
     const activeOptions = shareOptions.filter((option) => option.active);
 
     if (activeOptions.length === 0) {
@@ -123,14 +118,12 @@ function Profile() {
       return;
     }
 
-    // In a real app, this would send the location to selected contacts
     alert(
       `Location shared with: ${activeOptions
         .map((o) => o.name)
         .join(", ")} for ${shareDuration} minutes`
     );
 
-    // Native share if available
     if (navigator.share) {
       navigator
         .share({
@@ -142,7 +135,7 @@ function Profile() {
     }
   };
 
-  // Function to render star rating - fixed version
+  // Function to render star rating
   const renderStars = (rating) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -150,7 +143,7 @@ function Profile() {
 
     for (let i = 0; i < fullStars; i++) {
       stars.push(
-        <span key={`star-${i}`} className="star-filled">
+        <span key={`star-${i}`} className="text-yellow-500 text-base">
           ★
         </span>
       );
@@ -158,16 +151,15 @@ function Profile() {
 
     if (hasHalfStar) {
       stars.push(
-        <span key="half-star" className="star-half">
+        <span key="half-star" className="text-yellow-400 text-base">
           ★
         </span>
       );
     }
 
-    const emptyStars = 5 - stars.length;
-    for (let i = 0; i < emptyStars; i++) {
+    for (let i = stars.length; i < 5; i++) {
       stars.push(
-        <span key={`empty-${i}`} className="star-empty">
+        <span key={`empty-${i}`} className="text-gray-300 text-base">
           ☆
         </span>
       );
@@ -177,62 +169,80 @@ function Profile() {
   };
 
   return (
-    <div className="container">
-      {/* View Profile Tab */}
-      {activeTab === "profile" && (
-        <>
-          <Header title="Profile" />
-          <div className="profile-content">
-            <ProfileView
-              profile={profile}
-              onTabChange={setActiveTab}
-              onSignOut={() => navigate("/")}
-            />
-          </div>
-        </>
-      )}
+    <div className="min-h-screen flex flex-col items-center bg-white">
+      {/* Container with standard sizing */}
+      <div className="w-full max-w-md px-4 pt-4 pb-[5.5rem] flex flex-col flex-grow text-base">
+        {/* View Profile Tab */}
+        {activeTab === "profile" && (
+          <>
+            <Header title="Profile" />
+            <div className="h-2"></div>
+            <div className="mt-6">
+              <ProfileView
+                profile={profile}
+                onTabChange={setActiveTab}
+                onSignOut={() => navigate("/")}
+              />
+            </div>
+          </>
+        )}
 
-      {/* Edit Profile Tab */}
-      {activeTab === "edit" && (
-        <EditProfile
-          editForm={editForm}
-          handleInputChange={handleInputChange}
-          saveChanges={saveChanges}
-          goBack={() => setActiveTab("profile")}
-        />
-      )}
+        {/* Edit Profile Tab */}
+        {activeTab === "edit" && (
+          <EditProfile
+            editForm={editForm}
+            handleInputChange={handleInputChange}
+            saveChanges={saveChanges}
+            goBack={() => setActiveTab("profile")}
+          />
+        )}
 
-      {/* Share Location Tab */}
-      {activeTab === "location" && (
-        <LocationShare
-          locationName={locationName}
-          userLocation={userLocation}
-          shareOptions={shareOptions}
-          shareDuration={shareDuration}
-          copySuccess={copySuccess}
-          handleDurationChange={handleDurationChange}
-          toggleShareOption={toggleShareOption}
-          generateShareLink={generateShareLink}
-          copyToClipboard={copyToClipboard}
-          handleShare={handleShare}
-          goBack={() => setActiveTab("profile")}
-        />
-      )}
+        {/* Share Location Tab */}
+        {activeTab === "location" && (
+          <LocationShare
+            locationName={locationName}
+            userLocation={userLocation}
+            shareOptions={shareOptions}
+            shareDuration={shareDuration}
+            copySuccess={copySuccess}
+            handleDurationChange={handleDurationChange}
+            toggleShareOption={toggleShareOption}
+            generateShareLink={generateShareLink}
+            copyToClipboard={copyToClipboard}
+            handleShare={handleShare}
+            goBack={() => setActiveTab("profile")}
+          />
+        )}
 
-      {/* Saved Places Tab */}
-      {activeTab === "saved" && (
-        <SavedPlaces
-          savedPlaces={savedPlaces}
-          onRemove={removePlace}
-          onSelect={setSelectedPlace}
-          goBack={() => setActiveTab("profile")}
-          navigate={navigate}
-        />
-      )}
+        {/* Saved Places Tab */}
+        {activeTab === "saved" && (
+          <SavedPlaces
+            savedPlaces={savedPlaces}
+            onRemove={removePlace}
+            onSelect={setSelectedPlace}
+            goBack={() => setActiveTab("profile")}
+            navigate={navigate}
+          />
+        )}
+
+        {/* Reviews Tab */}
+        {activeTab === "reviews" && (
+          <Reviews
+            reviews={reviews}
+            onRemove={removeReview}
+            renderStars={renderStars}
+            goBack={() => setActiveTab("profile")}
+            navigate={navigate}
+          />
+        )}
+      </div>
 
       {/* Place Details Modal */}
       {selectedPlace && (
-        <div className="modal-overlay" onClick={() => setSelectedPlace(null)}>
+        <div
+          className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+          onClick={() => setSelectedPlace(null)}
+        >
           <PlaceDetails
             placeId={selectedPlace}
             onClose={() => setSelectedPlace(null)}
@@ -240,16 +250,7 @@ function Profile() {
         </div>
       )}
 
-      {/* Reviews Tab */}
-      {activeTab === "reviews" && (
-        <Reviews
-          reviews={reviews}
-          onRemove={removeReview}
-          renderStars={renderStars}
-          goBack={() => setActiveTab("profile")}
-          navigate={navigate}
-        />
-      )}
+      {/* Persistent Navigation Bar */}
       <BottomNav />
     </div>
   );
