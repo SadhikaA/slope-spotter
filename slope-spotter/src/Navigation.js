@@ -171,28 +171,48 @@ function Navigation() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* Scrollable content excluding BottomNav */}
-      <div className="flex flex-col flex-grow px-4 max-w-md w-full mx-auto">
+      <div className="flex flex-col flex-grow px-4 max-w-md w-full mx-auto overflow-y-auto navigation-scroll-container">
         <Header title="Map" />
         <div className="h-10" />
 
         {/* Inner flex column (inputs + map) */}
         <div className="flex flex-col flex-grow gap-3 py-4">
           {/* Inputs and buttons */}
+          <div className="h-2"></div>
           <div className="flex flex-col gap-3 flex-grow-[4]">
             <input
               type="text"
               placeholder="Your Location"
               value={startAddr}
               onChange={(e) => setStartAddr(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 text-base text-center border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+
+            <div className="flex justify-center my-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 h-5 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+
             <input
               type="text"
               placeholder="Enter Destination"
               value={endAddr}
               onChange={(e) => setEndAddr(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 text-base text-center border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+
             <div className="flex justify-center">
               <SpeechButton
                 onTranscript={handleTranscript}
@@ -201,14 +221,14 @@ function Navigation() {
             </div>
             <button
               onClick={handleStop}
-              className="bg-gray-200 text-gray-800 font-medium py-3 rounded-xl hover:bg-gray-300 transition"
+              className="bg-gray-200 text-gray-800 text-base font-medium py-3 rounded-xl hover:bg-gray-300 transition"
             >
               Clear Route
             </button>
             <button
               onClick={handleStart}
               disabled={loading || (!startAddr.trim() && userLocation === null)}
-              className="bg-[#004aae] text-white font-semibold py-3 rounded-xl hover:bg-[#00367a] transition disabled:opacity-50"
+              className="bg-[#004aae] text-white text-base font-semibold py-3 rounded-xl hover:bg-[#00367a] transition disabled:opacity-50"
             >
               {loading ? "Loading..." : "Start Navigation"}
             </button>
