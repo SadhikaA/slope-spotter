@@ -89,7 +89,7 @@ function Settings() {
           </div>
 
           <div className="mb-6">
-            <label className="block text-lg font-semibold text-[#010133] mb-1">
+            <label className="text-2xl font-bold text-[#010133] text-center mb-6">
               Route Preference
             </label>
             <select

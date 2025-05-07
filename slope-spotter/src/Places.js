@@ -42,7 +42,6 @@ function Places() {
     <div className="flex flex-col min-h-screen bg-white">
       <PageContainer className="flex flex-col flex-grow">
         <Header title="Places" />
-
         {/* Cards should grow */}
         <div className="flex-grow overflow-hidden mt-14" ref={emblaRef}>
           <div
@@ -55,7 +54,7 @@ function Places() {
                 className="flex-shrink-0 w-full max-w-sm snap-start px-4 sm:px-6"
               >
                 <div
-                  className="bg-white rounded-2xl shadow-md p-6 h-[500px] flex flex-col justify-between relative hover:shadow-lg transition w-full"
+                  className="bg-white rounded-2xl shadow-md p-6 min-h-[500px] flex-grow flex flex-col justify-between relative hover:shadow-lg transition w-full"
                   onClick={() => setSelectedPlace(place.id)}
                 >
                   <img
@@ -63,11 +62,11 @@ function Places() {
                     alt={place.alt}
                     className="rounded-lg object-cover h-52 w-full"
                   />
-                  <h3 className="mt-3 text-lg font-semibold text-center">
+                  <h3 className="mt-3 text-2xl font-bold text-center pb-1">
                     {place.name}
                   </h3>
 
-                  <div className="mt-2 text-sm text-gray-700 space-y-2 text-left px-2">
+                  <div className="mt-2 text-lg text-gray-700 space-y-2 text-left px-2 pb-2">
                     {place.accessibility && (
                       <div className="flex gap-2 items-start">
                         <span>♿</span>
@@ -120,7 +119,6 @@ function Places() {
             ))}
           </div>
         </div>
-
         <div className="flex justify-between items-center px-6 gap-4 mt-4 mb-6">
           {/* Left Arrow */}
           <button
@@ -185,7 +183,6 @@ function Places() {
             </svg>
           </button>
         </div>
-
         {selectedPlace && (
           <div
             className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
@@ -197,7 +194,6 @@ function Places() {
             />
           </div>
         )}
-
         {isModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
             <div className="bg-white w-11/12 max-w-md p-8 rounded-3xl flex flex-col items-center space-y-6 shadow-lg">
