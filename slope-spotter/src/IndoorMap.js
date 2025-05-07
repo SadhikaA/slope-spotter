@@ -3,6 +3,7 @@ import "./IndoorMap.css";
 import BottomNav from "./components/BottomNav/BottomNav";
 import { useNavigate } from "react-router-dom";
 import Header from "./components/Header/Header.js";
+import PageContainer from "./components/BottomNav/PageContainer";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { useState, useRef } from "react";
 import { ReactComponent as ZoomInIcon } from "./assets/zoom-in.svg";
@@ -37,31 +38,37 @@ export default function IndoorMap() {
   };
 
   return (
-    <div className="App">
-      <div className="container">
+    <div className="flex flex-col min-h-screen bg-white">
+      <PageContainer className="flex flex-col flex-grow pt-16 px-4">
         <Header title="Indoor Map" onBack={() => navigate("/places")} />
+        <div className="h-16" />
 
-        <div className="floor-controls">
-          <button className="floor-button" onClick={goUp}>
-            ↑ Floor Up
-          </button>
-
-          <div className="image-frame-container">
-            <TransformWrapper
-              limitToBounds={true}
-              velocityEqualToMove={0.02}
-              centerOnInit={true}
-              smooth={false}
-              panning={{ velocityDisabled: true }}
-              doubleClick={{ disabled: false }}
-              pinch={{ disabled: false }}
-              zoomAnimation={{ disabled: true }}
+        <div className="flex flex-col flex-grow">
+          {/* Top Section */}
+          <div className="flex-grow-[3] flex items-center justify-center">
+            <button
+              className="w-11/12 max-w-xs py-3 bg-[#004aae] text-white font-semibold text-lg rounded-xl shadow hover:bg-[#003580]"
+              onClick={goUp}
             >
-              {({ zoomIn, zoomOut, resetTransform }) => {
-                resetZoomRef.current = resetTransform;
-                return (
+              ↑ Floor Up
+            </button>
+          </div>
+
+          {/* Middle Section */}
+          <div className="flex-grow-[7] flex items-center justify-center relative">
+            <div className="relative w-full max-w-md mx-auto flex justify-center">
+              <TransformWrapper
+                limitToBounds
+                centerOnInit
+                panning={{ velocityDisabled: true }}
+                zoomAnimation={{ disabled: true }}
+                onInit={({ zoomIn, zoomOut, resetTransform }) => {
+                  resetZoomRef.current = resetTransform;
+                }}
+              >
+                {({ zoomIn, zoomOut, resetTransform }) => (
                   <>
-                    <div className="zoom-controls">
+                    <div className="zoom-controls absolute top-2 right-2 bg-white rounded-xl shadow-md z-10 flex flex-col overflow-hidden">
                       <button className="zoom-button" onClick={() => zoomIn()}>
                         <ZoomInIcon />
                       </button>
@@ -82,24 +89,32 @@ export default function IndoorMap() {
                       <img
                         src={floorImages[floorIndex].src}
                         alt={floorImages[floorIndex].name}
-                        className="floor-image"
+                        className="rounded-xl w-full shadow-md"
                       />
                     </TransformComponent>
                   </>
-                );
-              }}
-            </TransformWrapper>
+                )}
+              </TransformWrapper>
+            </div>
           </div>
 
-          <button className="floor-button" onClick={goDown}>
-            ↓ Floor Down
-          </button>
+          {/* Bottom Section */}
+          <div className="flex-grow-[3] flex flex-col items-center justify-start gap-3">
+            <button
+              className="w-11/12 max-w-xs py-3 bg-[#004aae] text-white font-semibold text-lg rounded-xl shadow hover:bg-[#003580]"
+              onClick={goDown}
+            >
+              ↓ Floor Down
+            </button>
 
-          <h3>{floorImages[floorIndex].name}</h3>
+            <h3 className="text-lg font-semibold text-center">
+              {floorImages[floorIndex].name}
+            </h3>
+          </div>
         </div>
+      </PageContainer>
 
-        <BottomNav />
-      </div>
+      <BottomNav />
     </div>
   );
 }

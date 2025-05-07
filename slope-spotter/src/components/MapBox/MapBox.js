@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useState,
   useImperativeHandle,
+
 } from 'react';
 import distance from '@turf/distance';
 import mapboxgl from 'mapbox-gl';
@@ -14,17 +15,18 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZnJhbmt6aHUxNjAiLCJhIjoiY205amN4cWt2MDk1MTJqcHM2ZmxseXE4cCJ9.vmdZkfIdPVYRkaRus1_IRg';
 
+
 // Map slope angle (degrees) to a warm color ranging from yellow (flat) to red (steep)
 function getColorForAngle(angleDeg) {
   if (angleDeg < 0) {
-    if (angleDeg >= -1) return '#deebf7';
-    if (angleDeg >= -3) return '#9ecae1';
-    return '#3182bd';
+    if (angleDeg >= -1) return "#deebf7";
+    if (angleDeg >= -3) return "#9ecae1";
+    return "#3182bd";
   } else {
-    if (angleDeg <= 1) return '#ffffb2';
-    if (angleDeg <= 3) return '#fed976';
-    if (angleDeg <= 6) return '#fd8d3c';
-    return '#e31a1c';
+    if (angleDeg <= 1) return "#ffffb2";
+    if (angleDeg <= 3) return "#fed976";
+    if (angleDeg <= 6) return "#fd8d3c";
+    return "#e31a1c";
   }
 }
 
@@ -32,8 +34,9 @@ function getColorForAngle(angleDeg) {
 class LegendControl {
   onAdd(map) {
     this._map = map;
-    this._container = document.createElement('div');
-    this._container.className = 'mapboxgl-ctrl legend-control legend-vertical-list';
+    this._container = document.createElement("div");
+    this._container.className =
+      "mapboxgl-ctrl legend-control legend-vertical-list";
     this.collapsed = true;
 
     this._container.innerHTML = `
@@ -77,13 +80,15 @@ class LegendControl {
     `;
 
     this._container
-      .querySelector('.legend-toggle')
-      .addEventListener('click', () => {
+      .querySelector(".legend-toggle")
+      .addEventListener("click", () => {
         this.collapsed = !this.collapsed;
-        const body = this._container.querySelector('.legend-body');
-        body.classList.toggle('collapsed', this.collapsed);
-        this._container.querySelector('.legend-toggle').textContent =
-          this.collapsed ? '▼' : '▲';
+        const body = this._container.querySelector(".legend-body");
+        body.classList.toggle("collapsed", this.collapsed);
+        this._container.querySelector(".legend-toggle").textContent = this
+          .collapsed
+          ? "▼"
+          : "▲";
       });
 
     return this._container;
@@ -146,7 +151,7 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '500px', onRouteDrawn },
   useEffect(() => {
     navigator.geolocation?.getCurrentPosition(
       ({ coords }) => setCenter([coords.longitude, coords.latitude]),
-      () => { }
+      () => {}
     );
   }, []);
 
@@ -154,10 +159,10 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '500px', onRouteDrawn },
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: containerRef.current,
-      style: style || 'mapbox://styles/mapbox/streets-v11',
+      style: style || "mapbox://styles/mapbox/streets-v11",
       center,
       zoom,
-      projection: 'mercator',
+      projection: "mercator",
     });
 
     // Add navigation and legend
@@ -242,8 +247,8 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '500px', onRouteDrawn },
       // Fetch walking route with step-by-step geometry
       const res = await fetch(
         `https://api.mapbox.com/directions/v5/mapbox/walking/` +
-        `${start[0]},${start[1]};${end[0]},${end[1]}` +
-        `?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`
+          `${start[0]},${start[1]};${end[0]},${end[1]}` +
+          `?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`
       );
       const json = await res.json();
       const route = json.routes?.[0];
@@ -251,7 +256,7 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '500px', onRouteDrawn },
       if (!leg) return null;
 
       // Build features for each step, colored by slope angle
-      const segmentFeatures = leg.steps.map(step => {
+      const segmentFeatures = leg.steps.map((step) => {
         const coords = step.geometry.coordinates;
         const startPt = coords[0];
         const endPt = coords[coords.length - 1];
@@ -262,8 +267,8 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '500px', onRouteDrawn },
         const angleDeg = (Math.atan2(deltaZ, dist) * 180) / Math.PI;
         const color = getColorForAngle(angleDeg);
         return {
-          type: 'Feature',
-          geometry: { type: 'LineString', coordinates: coords },
+          type: "Feature",
+          geometry: { type: "LineString", coordinates: coords },
           properties: { angle: angleDeg, color },
         };
       });
@@ -279,15 +284,15 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '500px', onRouteDrawn },
       console.log('Max slope angle:', calculatedMaxSlope);
 
       // Update the GeoJSON source with new features
-      const src = map.getSource('route-color');
+      const src = map.getSource("route-color");
       if (src) {
-        src.setData({ type: 'FeatureCollection', features: segmentFeatures });
+        src.setData({ type: "FeatureCollection", features: segmentFeatures });
       }
 
       // Compute overall bounding box for the route and fit the view
       const allCoords = route.geometry.coordinates;
-      const lons = allCoords.map(c => c[0]);
-      const lats = allCoords.map(c => c[1]);
+      const lons = allCoords.map((c) => c[0]);
+      const lats = allCoords.map((c) => c[1]);
       const bounds = [
         [Math.min(...lons), Math.min(...lats)],
         [Math.max(...lons), Math.max(...lats)],
@@ -297,11 +302,11 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '500px', onRouteDrawn },
       startMarkerRef.current?.remove();
       endMarkerRef.current?.remove();
 
-      startMarkerRef.current = new mapboxgl.Marker({ color: 'green' })
+      startMarkerRef.current = new mapboxgl.Marker({ color: "green" })
         .setLngLat(start)
         .addTo(map);
 
-      endMarkerRef.current = new mapboxgl.Marker({ color: 'red' })
+      endMarkerRef.current = new mapboxgl.Marker({ color: "red" })
         .setLngLat(end)
         .addTo(map);
 
@@ -310,14 +315,13 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '500px', onRouteDrawn },
         maxSlope: parseFloat(calculatedMaxSlope.toFixed(1))
       };
     },
-
     stopRoute() {
       const map = mapRef.current;
       if (!map) return;
-      const src = map.getSource('route-color');
+      const src = map.getSource("route-color");
       if (src) {
         // Clear the route by setting an empty feature collection
-        src.setData({ type: 'FeatureCollection', features: [] });
+        src.setData({ type: "FeatureCollection", features: [] });
       }
 
       startMarkerRef.current?.remove();
@@ -328,7 +332,13 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '500px', onRouteDrawn },
     },
   }));
 
-  return <div ref={containerRef} style={{ width: '100%', height }} />;
+  return (
+    <div
+      ref={containerRef}
+      className="w-full h-full"
+      style={{ minHeight: "350px" }}
+    />
+  );
 });
 
 export default MapBox;

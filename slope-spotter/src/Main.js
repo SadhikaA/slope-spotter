@@ -1,43 +1,40 @@
-import './App.css';
-import { useNavigate } from 'react-router-dom';
-import { FaMap, FaUser, FaCog } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
+import { FaMap, FaUser, FaCog, FaArrowRight } from "react-icons/fa";
 import { MdPlace } from "react-icons/md";
-import { FaArrowRight } from 'react-icons/fa';
 
-
-function Main() {
+export default function Main() {
   const navigate = useNavigate();
+
   return (
-    <div className="App">
-      <div className="container">
-        <h3 style={{ marginTop:'50%'}}>Slope Spotter</h3>
-        <button className="main-button" onClick={() => navigate('/navigation')}>
-            <FaMap className="main-icon" />
-            <span>Navigation</span>
-            <FaArrowRight className="arrow-icon" />
-        </button>
-        <button className="main-button" onClick={() => navigate('/places')}>
-            <MdPlace className="main-icon" />
-            <span>Accessible Places</span>
-            <FaArrowRight className="arrow-icon" />
-        </button>
-        <button className="main-button" onClick={() => navigate('/profile')}>
-            <FaUser className="main-icon" />
-            <span>Profile</span>
-            <FaArrowRight className="arrow-icon" />
-        </button>
-        <button className="main-button" onClick={() => navigate('/settings')}>
-            <FaCog className="main-icon" />
-            <span>Settings</span>
-            <FaArrowRight className="arrow-icon" />
-        </button>
-    </div>
+    <div className="flex flex-col min-h-screen items-center justify-start pt-20 px-4 bg-white">
+      <h1 className="text-3xl font-bold text-[#010133] mb-14">Slope Spotter</h1>
+
+      <div className="w-full max-w-md flex flex-col gap-6">
+        {[
+          { label: "Navigation", icon: <FaMap />, route: "/navigation" },
+          { label: "Accessible Places", icon: <MdPlace />, route: "/places" },
+          { label: "Profile", icon: <FaUser />, route: "/profile" },
+          { label: "Settings", icon: <FaCog />, route: "/settings" },
+        ].map(({ label, icon, route }) => (
+          <button
+            key={label}
+            onClick={() => navigate(route)}
+            className="relative w-full h-[10vh] min-h-[60px] flex items-center bg-[#f4f4f8] text-[#004aae] font-semibold text-base px-6 rounded-xl shadow-sm"
+          >
+            {/* Left-aligned icon */}
+            <span className="absolute left-5 text-xl">{icon}</span>
+
+            {/* Centered label */}
+            <span className="mx-auto text-center w-full">{label}</span>
+
+            {/* Right-aligned arrow */}
+            <FaArrowRight className="absolute right-5 text-base" />
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
-
-export default Main;
-
 
 //  <FaMap
 //         className={`nav-icon ${activeTab === 'map' ? 'active' : ''}`}
