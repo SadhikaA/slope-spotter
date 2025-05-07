@@ -1,7 +1,7 @@
-// components/Profile/LocationShare.js
-import React from 'react';
-import { FiArrowLeft, FiShare2, FiCheck } from 'react-icons/fi';
-import MapBox from '../MapBox/MapBox';
+import React from "react";
+import { FiShare2, FiCheck } from "react-icons/fi";
+import MapBox from "../MapBox/MapBox";
+import ReloadingHeader from "../Header/ReloadingHeader";
 
 const LocationShare = ({
   locationName,
@@ -14,90 +14,96 @@ const LocationShare = ({
   generateShareLink,
   copyToClipboard,
   handleShare,
-  goBack
+  goBack,
 }) => {
   return (
-    <>
-      <div className="header">
-        <button className="back-button" onClick={goBack}>
-          <FiArrowLeft />
-        </button>
-        <h2>Share My Location</h2>
-      </div>
-      
-      <div className="location-scroll-container">
-        <div className="location-map-container">
-          <MapBox />
-          <div className="location-info">
-            <h3>{locationName}</h3>
-            {userLocation && (
-              <p className="location-coordinates">
-                {userLocation[1].toFixed(6)}, {userLocation[0].toFixed(6)}
-              </p>
-            )}
-          </div>
+    <div className="w-full max-w-md px-4 pt-4 pb-[5.5rem] mx-auto space-y-6">
+      <ReloadingHeader title="Share My Location" goBack={goBack} />
+
+      {/* Map Section */}
+      <div className="rounded-xl overflow-hidden shadow-md mt-2">
+        <MapBox />
+        <div className="bg-white p-4 border-t border-gray-200">
+          <h3 className="text-lg font-semibold text-[#010133]">
+            {locationName}
+          </h3>
+          {userLocation && (
+            <p className="text-gray-600 text-sm mt-1">
+              {userLocation[1].toFixed(6)}, {userLocation[0].toFixed(6)}
+            </p>
+          )}
         </div>
+      </div>
 
-        <div className="share-options-container">
-          <h3>Share with</h3>
-          <div className="share-options">
-            {shareOptions.map(option => (
-              <button 
-                key={option.id}
-                className={`share-option-button ${option.active ? 'active' : ''}`}
-                onClick={() => toggleShareOption(option.id)}
-              >
-                {option.name}
-              </button>
-            ))}
-          </div>
-
-          <div className="duration-container">
-            <h3>Share for</h3>
-            <div className="slider-container">
-              <input
-                type="range"
-                min="15"
-                max="120"
-                step="15"
-                value={shareDuration}
-                onChange={handleDurationChange}
-                className="duration-slider"
-              />
-              <div className="slider-labels">
-                <span>15m</span>
-                <span>1h</span>
-                <span>2h</span>
-              </div>
-              <p className="duration-value">{shareDuration} minutes</p>
-            </div>
-          </div>
-
-          <div className="share-link-container">
-            <input
-              type="text"
-              value={generateShareLink()}
-              readOnly
-              className="share-link-input"
-            />
-            <button 
-              className="copy-side-button"
-              onClick={copyToClipboard}
+      {/* Share Options */}
+      <div>
+        <h3 className="text-lg font-semibold text-[#010133] mb-2">
+          Share with
+        </h3>
+        <div className="flex gap-2">
+          {shareOptions.map((option) => (
+            <button
+              key={option.id}
+              onClick={() => toggleShareOption(option.id)}
+              className={`flex-1 py-2 rounded-lg text-base font-medium border ${
+                option.active
+                  ? "bg-[#004aae] text-white"
+                  : "bg-gray-100 text-gray-700"
+              } transition`}
             >
-              {copySuccess ? <FiCheck /> : "Copy Link"}
+              {option.name}
             </button>
-          </div>
-
-          <button 
-            className="share-button"
-            onClick={handleShare}
-          >
-            <FiShare2 className="share-icon" />
-            Share My Location
-          </button>
+          ))}
         </div>
       </div>
-    </>
+
+      {/* Duration Slider */}
+      <div>
+        <h3 className="text-lg font-semibold text-[#010133] mb-2">Share for</h3>
+        <input
+          type="range"
+          min="15"
+          max="120"
+          step="15"
+          value={shareDuration}
+          onChange={handleDurationChange}
+          className="w-full"
+        />
+        <div className="flex justify-between text-sm text-gray-500 mt-1">
+          <span>15m</span>
+          <span>1h</span>
+          <span>2h</span>
+        </div>
+        <p className="mt-2 text-center font-medium text-[#010133] text-lg">
+          {shareDuration} minutes
+        </p>
+      </div>
+
+      {/* Share Link */}
+      <div className="flex gap-2 items-center">
+        <input
+          type="text"
+          value={generateShareLink()}
+          readOnly
+          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm"
+        />
+        <button
+          onClick={copyToClipboard}
+          className="px-4 py-2 rounded-lg bg-[#004aae] text-white font-semibold hover:bg-[#00367a] transition"
+        >
+          {copySuccess ? <FiCheck /> : "Copy Link"}
+        </button>
+      </div>
+
+      {/* Share Button */}
+      <button
+        onClick={handleShare}
+        className="w-full py-3 mt-2 bg-[#004aae] text-white text-lg font-semibold rounded-xl flex items-center justify-center gap-2 hover:bg-[#00367a] transition"
+      >
+        <FiShare2 className="text-xl" />
+        Share My Location
+      </button>
+    </div>
   );
 };
 

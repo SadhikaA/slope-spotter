@@ -171,7 +171,7 @@ function Profile() {
   return (
     <div className="min-h-screen flex flex-col items-center bg-white">
       {/* Container with standard sizing */}
-      <div className="w-full max-w-md px-4 pt-4 pb-[5.5rem] flex flex-col flex-grow text-base">
+      <div className="w-full max-w-md px-4 pt-4 pb-[5.5rem] flex flex-col flex-grow text-base navigation-scroll-container">
         {/* View Profile Tab */}
         {activeTab === "profile" && (
           <>
