@@ -1,6 +1,6 @@
 import "./App.css";
-import mapboxgl from 'mapbox-gl';
-import React, { useRef, useState, useEffect } from 'react';
+import mapboxgl from "mapbox-gl";
+import React, { useRef, useState, useEffect } from "react";
 
 import BottomNav from "./components/BottomNav/BottomNav";
 import SpeechButton from "./components/SpeechText/SpeechButton.js";
@@ -66,7 +66,7 @@ function Navigation() {
       const url = `https://api.mapbox.com/directions/v5/mapbox/walking/${originCoords[0]},${originCoords[1]};${destCoords[0]},${destCoords[1]}?access_token=${mapboxgl.accessToken}&geometries=geojson`;
 
       const response = await fetch(url);
-      if (!response.ok) throw new Error('Failed to fetch walking directions');
+      if (!response.ok) throw new Error("Failed to fetch walking directions");
 
       const data = await response.json();
 
@@ -84,13 +84,13 @@ function Navigation() {
           distanceKm,
           distanceMiles,
           durationSeconds: duration,
-          durationMinutes
+          durationMinutes,
         };
       } else {
-        throw new Error('No routes found');
+        throw new Error("No routes found");
       }
     } catch (err) {
-      console.error('Error getting walking distance:', err);
+      console.error("Error getting walking distance:", err);
       throw err;
     }
   };
@@ -128,14 +128,17 @@ function Navigation() {
         : userLocation;
       const destCoords = await geocode(normalizedDestination);
 
-      console.log('Origin:', originCoords);
-      console.log('Destination:', destCoords);
+      console.log("Origin:", originCoords);
+      console.log("Destination:", destCoords);
 
       // 5. Get walking distance and duration
       const walkingInfo = await getWalkingDistance(originCoords, destCoords);
 
       // 6. Trigger navigation and get mapRoute info that now includes maxSlope
-      const mapRouteInfo = await mapRef.current?.getRoute(originCoords, destCoords);
+      const mapRouteInfo = await mapRef.current?.getRoute(
+        originCoords,
+        destCoords
+      );
 
       // Wait a moment for the maxSlope property to be updated
       setTimeout(() => {
@@ -145,13 +148,12 @@ function Navigation() {
         // 8. Combine walking info with slope data
         const combinedRouteInfo = {
           ...walkingInfo,
-          maxSlope
+          maxSlope,
         };
 
         setRouteInfo(combinedRouteInfo);
-        console.log('Route Info:', combinedRouteInfo);
+        console.log("Route Info:", combinedRouteInfo);
       }, 500);
-
     } catch (err) {
       console.error(err);
       alert(err.message);
@@ -220,17 +222,29 @@ function Navigation() {
 
         {/* Display walking distance, time, and slope information */}
         {routeInfo && (
-          <div className="route-info" style={{ margin: '1rem 0', padding: '10px', background: '#f0f0f0', borderRadius: '8px' }}>
-            <p className="route-details">Distance <br></br><strong>{routeInfo.distanceMiles} mi</strong></p>
-            <p className="route-details">Time<br></br><strong>{routeInfo.durationMinutes} min</strong></p>
-            <p className="route-details" style={{ borderRight: '0px'}}>Max Slope <br></br><strong>{routeInfo.maxSlope}°</strong></p>
+          <div
+            className="route-info"
+            style={{
+              margin: "1rem 0",
+              padding: "10px",
+              background: "#f0f0f0",
+              borderRadius: "8px",
+            }}
+          >
+            <p className="route-details">
+              Distance <br></br>
+              <strong>{routeInfo.distanceMiles} mi</strong>
+            </p>
+            <p className="route-details">
+              Time<br></br>
+              <strong>{routeInfo.durationMinutes} min</strong>
+            </p>
+            <p className="route-details" style={{ borderRight: "0px" }}>
+              Max Slope <br></br>
+              <strong>{routeInfo.maxSlope}°</strong>
+            </p>
           </div>
         )}
-
-        <div style={{ width: '100%', height: '400px', margin: '1rem 0', borderRadius: '8px', overflow: 'hidden' }}>
-          <MapBox ref={mapRef} />
-        </div>
-
       </div>
 
       {/* Persistent bottom nav */}
