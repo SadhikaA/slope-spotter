@@ -1325,7 +1325,7 @@ input[type="range"]::-moz-range-thumb {
   flex: 3;
   font-size: calc(6px + 1vmin);
   margin: 2px;
-  border-right: 2px solid #004AAE; 
+  border-right: 2px solid #004aae;
 }
 
 .route-info {
@@ -1381,4 +1381,27 @@ input[type="range"]::-moz-range-thumb {
 
 .navigation-scroll-container::-webkit-scrollbar-thumb:hover {
   background-color: #003580;
+}
+
+@keyframes slide-in-out {
+  0% {
+    transform: translateY(-100%) scale(0.95);
+    opacity: 0;
+  }
+  10% {
+    transform: translateY(0%) scale(1);
+    opacity: 1;
+  }
+  90% {
+    transform: translateY(0%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%) scale(0.95);
+    opacity: 0;
+  }
+}
+
+.animate-slide-in-out {
+  animation: slide-in-out 3s ease-in-out forwards;
 }

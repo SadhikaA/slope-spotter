@@ -1,46 +1,72 @@
-// components/Profile/ProfileView.js
-import React from 'react';
-import { FiUser, FiMapPin, FiBookmark, FiStar } from 'react-icons/fi';
+import React from "react";
+import { FiUser, FiMapPin, FiBookmark, FiStar } from "react-icons/fi";
 
 const ProfileView = ({ profile, onTabChange, onSignOut }) => {
   return (
-    <>
-      <div className="profile-header">
-        <h3>{`${profile.firstName} ${profile.lastName}`}</h3>
-
-        <div className="profile-picture-container">
-          <div className="profile-picture-edit">
-            <img src="/john duo profile.png" alt="Profile" />
-          </div>
+    <div className="flex flex-col items-center text-[#010133] text-base w-full flex-grow px-4">
+      {/* Top Section */}
+      <div className="flex flex-col items-center pt-4">
+        <h3 className="text-xl font-semibold mb-2">{`${profile.firstName} ${profile.lastName}`}</h3>
+        <div className="w-28 h-28 rounded-full overflow-hidden shadow mb-6">
+          <img
+            src="/john duo profile.png"
+            alt="Profile"
+            className="w-full h-full object-cover"
+          />
         </div>
       </div>
 
-      <div className="profile-menu">
-        <button className="menu-item" onClick={() => onTabChange("edit")}>
-          <FiUser className="menu-icon" />
-          <span>Edit My Profile</span>
+      {/* Middle Section (Buttons grow and center) */}
+      <div className="w-full flex flex-col gap-4 flex-grow justify-center">
+        <button
+          onClick={() => onTabChange("edit")}
+          className="flex items-center px-4 py-3 rounded-xl border border-gray-200 shadow-sm bg-white hover:bg-gray-50 transition"
+        >
+          <FiUser className="text-xl mr-3 text-[#004aae]" />
+          <span className="text-base font-medium text-[#004aae]">
+            Edit My Profile
+          </span>
         </button>
 
-        <button className="menu-item" onClick={() => onTabChange("location")}>
-          <FiMapPin className="menu-icon" />
-          <span>Share My Location</span>
+        <button
+          onClick={() => onTabChange("location")}
+          className="flex items-center px-4 py-3 rounded-xl border border-gray-200 shadow-sm bg-white hover:bg-gray-50 transition"
+        >
+          <FiMapPin className="text-xl mr-3 text-[#004aae]" />
+          <span className="text-base font-medium text-[#004aae]">
+            Share My Location
+          </span>
         </button>
 
-        <button className="menu-item" onClick={() => onTabChange("saved")}>
-          <FiBookmark className="menu-icon" />
-          <span>My Saved Places</span>
+        <button
+          onClick={() => onTabChange("saved")}
+          className="flex items-center px-4 py-3 rounded-xl border border-gray-200 shadow-sm bg-white hover:bg-gray-50 transition"
+        >
+          <FiBookmark className="text-xl mr-3 text-[#004aae]" />
+          <span className="text-base font-medium text-[#004aae]">
+            My Saved Places
+          </span>
         </button>
 
-        <button className="menu-item" onClick={() => onTabChange("reviews")}>
-          <FiStar className="menu-icon" />
-          <span>My Reviews</span>
+        <button
+          onClick={() => onTabChange("reviews")}
+          className="flex items-center px-4 py-3 rounded-xl border border-gray-200 shadow-sm bg-white hover:bg-gray-50 transition"
+        >
+          <FiStar className="text-xl mr-3 text-[#004aae]" />
+          <span className="text-base font-medium text-[#004aae]">
+            My Reviews
+          </span>
         </button>
       </div>
 
-      <button className="button" onClick={onSignOut}>
+      {/* Sign Out Button */}
+      <button
+        onClick={onSignOut}
+        className="w-full mt-6 mb-4 bg-red-600 text-white text-lg font-semibold py-3 rounded-xl shadow hover:bg-red-700 transition"
+      >
         Sign Out
       </button>
-    </>
+    </div>
   );
 };
 

@@ -38,25 +38,28 @@ function Settings() {
         settings.highContrast ? "high-contrast" : ""
       }`}
     >
-      <div className="w-full max-w-md flex flex-col px-4 py-6 flex-grow overflow-y-auto pb-[5.5rem]">
-        <Header title="Settings" />
-        <div className="h-5" />
+      {saved && (
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-[9999] bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg transition-all duration-300">
+          ✅ Settings saved successfully!
+        </div>
+      )}
 
-        {/* Route Preferences */}
-        <div className="mb-8 mt-4">
-          <h3 className="text-xl font-semibold text-[#010133] mb-4">
+      <div className="w-full max-w-md flex flex-col px-4 py-6 flex-grow pb-[5.5rem] navigation-scroll-container">
+        <Header title="Settings" />
+
+        <div className="mb-8 mt-6">
+          <h3 className="text-2xl font-bold text-[#010133] text-center mb-6">
             Route Preferences
           </h3>
 
-          {/* Max Slope Slider */}
-          <label className="block mb-4">
-            <span className="block font-medium text-[#010133] mb-1">
+          <label className="block mb-6">
+            <span className="block text-lg font-semibold text-[#010133] mb-1">
               Max Slope Incline
             </span>
-            <div className="text-sm text-gray-600 mb-1">
+            <div className="text-base text-gray-700 mb-1">
               Currently set to: {settings.maxSlope}%
             </div>
-            <small className="text-xs text-gray-500">
+            <small className="text-sm text-gray-500">
               Set the steepest incline your wheelchair can handle
             </small>
             <input
@@ -69,9 +72,8 @@ function Settings() {
             />
           </label>
 
-          {/* Wheelchair Type */}
-          <div className="mb-4">
-            <label className="block font-medium text-[#010133] mb-1">
+          <div className="mb-6">
+            <label className="block text-lg font-semibold text-[#010133] mb-1">
               Wheelchair Type
             </label>
             <select
@@ -79,16 +81,15 @@ function Settings() {
               onChange={(e) =>
                 setSettings({ ...settings, wheelchairType: e.target.value })
               }
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option>Manual</option>
               <option>Powered</option>
             </select>
           </div>
 
-          {/* Route Preference */}
-          <div className="mb-4">
-            <label className="block font-medium text-[#010133] mb-1">
+          <div className="mb-6">
+            <label className="text-2xl font-bold text-[#010133] text-center mb-6">
               Route Preference
             </label>
             <select
@@ -96,7 +97,7 @@ function Settings() {
               onChange={(e) =>
                 setSettings({ ...settings, prefer: e.target.value })
               }
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option>Less Steep</option>
               <option>Shorter Distance</option>
@@ -104,18 +105,16 @@ function Settings() {
           </div>
         </div>
 
-        {/* Accessibility Options */}
         <div className="mb-8">
-          <h3 className="text-xl font-semibold text-[#010133] mb-4">
+          <h3 className="text-2xl font-bold text-[#010133] text-center mb-6">
             Accessibility Options
           </h3>
 
-          {/* Font Size Slider */}
-          <label className="block mb-4">
-            <span className="block font-medium text-[#010133] mb-1">
+          <label className="block mb-6">
+            <span className="block text-lg font-semibold text-[#010133] mb-1">
               Font Size
             </span>
-            <div className="text-sm text-gray-600 mb-1">
+            <div className="text-base text-gray-700 mb-1">
               ({settings.fontSize}px)
             </div>
             <input
@@ -128,8 +127,7 @@ function Settings() {
             />
           </label>
 
-          {/* Toggles */}
-          <div className="space-y-4">
+          <div className="space-y-5">
             {[
               { label: "Alt Text", key: "altText" },
               { label: "High Contrast", key: "highContrast" },
@@ -138,36 +136,31 @@ function Settings() {
               { label: "Indoor Navigation", key: "indoorNav" },
             ].map(({ label, key }) => (
               <div className="flex items-center justify-between" key={key}>
-                <span className="text-sm font-medium text-[#010133]">
+                <span className="text-lg font-medium text-[#010133]">
                   {label}
                 </span>
-                <label className="relative inline-flex items-center cursor-pointer">
+                <label className="relative inline-block w-12 h-7">
                   <input
                     type="checkbox"
                     checked={settings[key]}
                     onChange={() => handleToggle(key)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:bg-[#004aae] transition"></div>
+                  <div className="absolute top-0 left-0 w-full h-full bg-gray-300 rounded-full peer-checked:bg-[#004aae] transition-colors duration-300"></div>
+                  <div className="absolute top-[2px] left-[2px] w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 peer-checked:translate-x-5"></div>
                 </label>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Save Button */}
         <div className="mt-6 mb-4">
           <button
             onClick={saveChanges}
-            className="bg-[#004aae] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#00367a] transition w-full"
+            className="bg-[#004aae] text-white text-xl px-6 py-3 rounded-xl font-semibold hover:bg-[#00367a] transition w-full"
           >
             Save Changes
           </button>
-          {saved && (
-            <div className="text-green-600 mt-3 font-medium text-center">
-              ✅ Settings saved successfully!
-            </div>
-          )}
         </div>
       </div>
 
