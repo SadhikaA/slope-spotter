@@ -6,10 +6,13 @@ import React, {
   useState,
   useImperativeHandle,
 } from 'react';
+import distance from '@turf/distance';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import MapboxDraw from '@mapbox/mapbox-gl-draw';
+import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiZnJhbmt6aHUxNjAiLCJhIjoiY205amN4cWt2MDk1MTJqcHM2ZmxseXE4cCJ9.vmdZkfIdPVYRkaRus1_IRg'
+mapboxgl.accessToken = 'pk.eyJ1IjoiZnJhbmt6aHUxNjAiLCJhIjoiY205amN4cWt2MDk1MTJqcHM2ZmxseXE4cCJ9.vmdZkfIdPVYRkaRus1_IRg';
 
 // Map slope angle (degrees) to a warm color ranging from yellow (flat) to red (steep)
 function getColorForAngle(angleDeg) {
@@ -92,15 +95,54 @@ class LegendControl {
   }
 }
 
-const MapBox = forwardRef(({ zoom = 14, style, height = '500px' }, ref) => {
+// Custom control to show a simple info icon with a click event
+class InfoControl {
+  onAdd(map) {
+    this._map = map;
+    this._container = document.createElement('div');
+    
+    this._container.className = 'mapboxgl-ctrl legend-control legend-vertical-list info-control';
+    this.collapsed = true;
+
+    this._container.innerHTML = `
+      <div class="legend-header">
+        <span class="legend-title">Draw</span>
+        <button class="legend-toggle">▼</button>
+      </div>
+      <div class="legend-body collapsed" style="white-space: pre-wrap; max-width: 200px;">
+        Draw your route using the lineString tool on top-left.
+        Draw in segments of routes; after you are done drawing, click the last point to finish drawing.
+        Click “Clear Route” to remove your drawing.
+      </div>
+    `;
+
+    this._container
+      .querySelector('.legend-toggle')
+      .addEventListener('click', () => {
+        this.collapsed = !this.collapsed;
+        const body = this._container.querySelector('.legend-body');
+        body.classList.toggle('collapsed', this.collapsed);
+        this._container.querySelector('.legend-toggle').textContent =
+          this.collapsed ? '▼' : '▲';
+      });
+
+    return this._container;
+  }
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+
+const MapBox = forwardRef(({ zoom = 14, style, height = '500px', onRouteDrawn }, ref) => {
   const mapRef = useRef(null);
   const startMarkerRef = useRef(null);
   const endMarkerRef = useRef(null);
   const containerRef = useRef();
   const [center, setCenter] = useState([-122.2585, 37.8719]);
-  const [maxSlope, setMaxSlope] = useState(null); // Add state to track maxSlope
+  const [maxSlope, setMaxSlope] = useState(null);
 
-  // Obtain user location to center the map
+  // Center map on user location
   useEffect(() => {
     navigator.geolocation?.getCurrentPosition(
       ({ coords }) => setCenter([coords.longitude, coords.latitude]),
@@ -108,7 +150,7 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '500px' }, ref) => {
     );
   }, []);
 
-  // Initialize the Mapbox map and controls
+  // Initialize map and controls
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: containerRef.current,
@@ -118,55 +160,81 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '500px' }, ref) => {
       projection: 'mercator',
     });
 
-    // Add zoom/navigation controls
+    // Add navigation and legend
     map.addControl(new mapboxgl.NavigationControl(), 'top-left');
-    // Add the custom slope legend control
     map.addControl(new LegendControl(), 'top-right');
+    map.addControl(new InfoControl(), 'top-right');
 
+    // Initialize Draw (official) and set up draw events
+    let draw;
+
+    // Prepare sources and layers after load
     map.on('load', () => {
-      // Add DEM source and enable terrain for elevation queries
-      map.addSource('raster-dem', {
-        type: 'raster-dem',
-        url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
-        tileSize: 512,
-        maxzoom: 14,
+      draw = new MapboxDraw({
+        displayControlsDefault: false,
+        controls: { line_string: true }
       });
+      map.addControl(draw, 'top-left');
+      map.on('draw.create', onDrawRoute);
+      map.on('draw.update', onDrawRoute);
+
+      map.addSource('raster-dem', { type: 'raster-dem', url: 'mapbox://mapbox.mapbox-terrain-dem-v1', tileSize: 512, maxzoom: 14 });
       map.setTerrain({ source: 'raster-dem', exaggeration: 1 });
 
-      // Prepare an empty GeoJSON source and layer for colored route segments
-      map.addSource('route-color', {
-        type: 'geojson',
-        data: { type: 'FeatureCollection', features: [] },
-      });
-      map.addLayer({
-        id: 'route-color',
-        type: 'line',
-        source: 'route-color',
-        layout: { 'line-join': 'round', 'line-cap': 'round' },
-        paint: {
-          'line-color': ['get', 'color'],
-          'line-width': 8,
-          'line-opacity': 0.8,
-        },
-      });
+      map.addSource('route-color', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+      map.addLayer({ id: 'route-color', type: 'line', source: 'route-color', layout: { 'line-join': 'round', 'line-cap': 'round' }, paint: { 'line-color': ['get', 'color'], 'line-width': 8, 'line-opacity': 0.8 } });
+
+      map.addSource('raw-route', { type: 'geojson', data: { type: 'LineString', coordinates: [] } });
+      map.addLayer({ id: 'raw-route', type: 'line', source: 'raw-route', paint: { 'line-color': '#888', 'line-width': 2, 'line-dasharray': [2, 2] } });
     });
 
     mapRef.current = map;
     return () => map.remove();
   }, [style, zoom]);
 
-  // Smoothly pan when center state changes
+  // Smooth panning when center changes
   useEffect(() => {
     mapRef.current?.easeTo({ center, duration: 1000 });
   }, [center]);
 
-  // Expose getRoute, stopRoute, and maxSlope methods to parent components
+  // Handle user-drawn route: matching, slope calc, styling
+  async function onDrawRoute(e) {
+    const map = mapRef.current;
+    const raw = e.features[0].geometry;
+    map.getSource('raw-route').setData(raw);
+
+    const coordStr = raw.coordinates.map(c => c.join(',')).join(';');
+    const url = `https://api.mapbox.com/matching/v5/mapbox/walking/${coordStr}.json?geometries=geojson&access_token=${mapboxgl.accessToken}`;
+    const res = await fetch(url);
+    const json = await res.json();
+    const matched = json.matchings[0].geometry;
+
+    const segments = [];
+    matched.coordinates.forEach((_, i, arr) => {
+      if (i === 0) return;
+      const [lng1, lat1] = arr[i - 1], [lng2, lat2] = arr[i];
+      const elev1 = map.queryTerrainElevation([lng1, lat1]) || 0;
+      const elev2 = map.queryTerrainElevation([lng2, lat2]) || 0;
+      const dist = distance([lng1, lat1], [lng2, lat2], { units: 'kilometers' }) * 1000;
+      const angle = (Math.atan2(elev2 - elev1, dist) * 180) / Math.PI;
+      segments.push({ type: 'Feature', geometry: { type: 'LineString', coordinates: [[lng1, lat1], [lng2, lat2]] }, properties: { angle, color: getColorForAngle(angle) } });
+    });
+
+    map.getSource('route-color').setData({ type: 'FeatureCollection', features: segments });
+
+    const max = Math.max(...segments.map(f => Math.abs(f.properties.angle)));
+    setMaxSlope(Number(max.toFixed(1)));
+    onRouteDrawn && onRouteDrawn({ maxSlope: Number(max.toFixed(1)) });
+
+    const all = matched.coordinates;
+    const lons = all.map(c => c[0]), lats = all.map(c => c[1]);
+    map.fitBounds([[Math.min(...lons), Math.min(...lats)], [Math.max(...lons), Math.max(...lats)]], { padding: 20, duration: 800 });
+  }
+
   useImperativeHandle(ref, () => ({
-    // Expose maxSlope directly in the ref
-    get maxSlope() {
-      return maxSlope;
-    },
-    
+    get maxSlope() { return maxSlope; },
+    startDraw() { mapRef.current && mapRef.current._controls.find(c => c instanceof MapboxDraw).changeMode('draw_line_string'); },
+    clearDraw() { mapRef.current && mapRef.current._controls.find(c => c instanceof MapboxDraw).deleteAll(); mapRef.current.getSource('raw-route').setData({ type: 'LineString', coordinates: [] }); },
     async getRoute(start, end) {
       const map = mapRef.current;
       if (!map) return null;
@@ -204,10 +272,10 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '500px' }, ref) => {
       const calculatedMaxSlope = Math.max(
         ...segmentFeatures.map(f => Math.abs(f.properties.angle))
       );
-      
+
       // Update the maxSlope state
       setMaxSlope(parseFloat(calculatedMaxSlope.toFixed(1)));
-      
+
       console.log('Max slope angle:', calculatedMaxSlope);
 
       // Update the GeoJSON source with new features
@@ -236,7 +304,7 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '500px' }, ref) => {
       endMarkerRef.current = new mapboxgl.Marker({ color: 'red' })
         .setLngLat(end)
         .addTo(map);
-      
+
       // Return route information with the max slope
       return {
         maxSlope: parseFloat(calculatedMaxSlope.toFixed(1))
@@ -254,7 +322,7 @@ const MapBox = forwardRef(({ zoom = 14, style, height = '500px' }, ref) => {
 
       startMarkerRef.current?.remove();
       endMarkerRef.current?.remove();
-      
+
       // Reset max slope when route is cleared
       setMaxSlope(null);
     },

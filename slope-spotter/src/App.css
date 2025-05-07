@@ -1303,3 +1303,25 @@ input[type="range"]::-moz-range-thumb {
   display: flex;
   flex-direction: row;
 }
+
+.info-control .legend-body {
+  text-align: left;
+  /* collapse leading spaces but keep newlines */
+  white-space: pre-line !important;
+  /* no first-line indent */
+  text-indent: 0 !important;
+  /* you can adjust margin/padding too */
+  margin: 0.25em 0 !important;
+}
+
+.legend-control.legend-vertical-list .legend-body ul,
+.legend-control.legend-vertical-list .legend-body li {
+  margin: 0.25em 0;
+  padding-left: 1em;
+  text-align: left;
+}
+
+.legend-control.legend-vertical-list .legend-header .legend-title {
+  flex: 1;
+  text-align: left;
+}
