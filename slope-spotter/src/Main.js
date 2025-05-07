@@ -25,7 +25,7 @@ export default function Main() {
             <span className="absolute left-5 text-xl">{icon}</span>
 
             {/* Centered label */}
-            <span className="mx-auto text-center w-full">{label}</span>
+            <span className="mx-auto text-center text-lg w-full">{label}</span>
 
             {/* Right-aligned arrow */}
             <FaArrowRight className="absolute right-5 text-base" />
