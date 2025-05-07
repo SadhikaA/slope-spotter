@@ -31,13 +31,13 @@ const BottomNav = () => {
       <FaMap className={`nav-icon ${activeTab === 'map' ? 'active' : ''}`} />
       <span className={`nav-label ${activeTab === 'map' ? 'active' : ''}`}>Map</span>
     </div>
-    <div className="nav-item" onClick={() => navigate('/profile')}>
-      <FaUser className={`nav-icon ${activeTab === 'user' ? 'active' : ''}`} />
-      <span className={`nav-label ${activeTab === 'user' ? 'active' : ''}`}>Profile</span>
-    </div>
     <div className="nav-item" onClick={() => navigate('/places')}>
       <MdPlace className={`nav-icon ${activeTab === 'place' ? 'active place-icon' : 'place-icon'}`} />
       <span className={`nav-label ${activeTab === 'place' ? 'active' : ''}`}>Places</span>
+    </div>
+    <div className="nav-item" onClick={() => navigate('/profile')}>
+      <FaUser className={`nav-icon ${activeTab === 'user' ? 'active' : ''}`} />
+      <span className={`nav-label ${activeTab === 'user' ? 'active' : ''}`}>Profile</span>
     </div>
     <div className="nav-item" onClick={() => navigate('/settings')}>
       <FaCog className={`nav-icon ${activeTab === 'settings' ? 'active' : ''}`} />
