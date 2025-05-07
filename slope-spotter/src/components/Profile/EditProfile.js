@@ -10,9 +10,9 @@ const EditProfile = ({ editForm, handleInputChange, saveChanges, goBack }) => {
       <ReloadingHeader title="Edit Profile" />
 
       {/* Constrained content, no forced screen height */}
-      <div className="w-full max-w-md flex flex-col px-4 pt-6 overflow-y-auto navigation-scroll-container">
+      <div className="w-full max-w-md flex flex-col px-4 pt-6 overflow-y-auto">
         {/* Name */}
-        <div className="h-2"></div>
+        <div className="h-3"></div>
         <h3 className="text-2xl font-semibold text-center mb-4">
           {`${editForm.firstName} ${editForm.lastName}`}
         </h3>

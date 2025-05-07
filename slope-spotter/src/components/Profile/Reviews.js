@@ -5,7 +5,7 @@ import { ReactComponent as DeleteIcon } from "../../assets/deleta.svg"; // Adjus
 
 const Reviews = ({ reviews, onRemove, renderStars, goBack, navigate }) => {
   return (
-    <div className="w-full max-w-md px-4 pt-4 pb-[5.5rem] mx-auto space-y-6 overflow-y-auto scrollbar">
+    <div className="w-full max-w-md px-4 pt-4 pb-[5.5rem] mx-auto space-y-6 overflow-y-auto navigation-scroll-container">
       <ReloadingHeader title="My Reviews" goBack={goBack} />
 
       {reviews.length > 0 ? (
