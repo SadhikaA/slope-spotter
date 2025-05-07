@@ -188,23 +188,6 @@ function Navigation() {
               className="w-full px-4 py-3 text-base text-center border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 
-            <div className="flex justify-center my-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </div>
-
             <input
               type="text"
               placeholder="Enter Destination"
@@ -234,13 +217,7 @@ function Navigation() {
             </button>
           </div>
 
-          {/* Map */}
-          <div className="flex-grow-[6] min-h-[300px]">
-            <MapBox ref={mapRef} height="100%" />
-          </div>
-        </div>
-
-        {/* Display walking distance, time, and slope information */}
+          {/* Display walking distance, time, and slope information */}
         {routeInfo && (
           <div
             className="route-info"
@@ -266,6 +243,14 @@ function Navigation() {
           </div>
         )}
       </div>
+
+          {/* Map */}
+          <div className="flex-grow-[6] min-h-[300px]">
+            <MapBox ref={mapRef} height="100%" />
+          </div>
+        </div>
+
+        
 
       {/* Persistent bottom nav */}
       <BottomNav />

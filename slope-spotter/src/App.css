@@ -1323,15 +1323,17 @@ input[type="range"]::-moz-range-thumb {
 
 .route-details {
   flex: 3;
-  font-size: calc(6px + 1vmin);
-  margin: 2px;
+  font-size: calc(8px + 1vmin);
+  margin: 8px;
   border-right: 2px solid #004aae;
+  justify-self: center;
 }
 
 .route-info {
-  width: calc(100% - 20px);
+  width:100%;
   display: flex;
   flex-direction: row;
+  justify-items: center;
 }
 
 .info-control .legend-body {
