@@ -50,7 +50,7 @@ const SavedPlaces = ({ savedPlaces, onRemove, onSelect, goBack, navigate }) => {
             </div>
 
             <button
-              className="absolute top-3 right-3"
+              className="absolute top-3 left-3"
               onClick={(e) => {
                 e.stopPropagation();
                 onRemove(place.id);
