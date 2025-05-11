@@ -18,10 +18,14 @@ mapboxgl.accessToken =
 function getFixedMapboxSize() {
   const width = window.innerWidth;
 
-  if (width < 640) return { width: 300, height: 300 }; // sm
-  if (width < 768) return { width: 400, height: 350 }; // md
-  if (width < 1024) return { width: 500, height: 400 }; // lg
-  return { width: 600, height: 450 }; // xl
+  if (width < 360) return { width: 320, height: 300 }; // very compact
+  if (width < 480) return { width: 360, height: 320 }; // small phones
+  if (width < 600) return { width: 400, height: 340 }; // compact (phones)
+  if (width < 720) return { width: 460, height: 380 }; // medium phones
+  if (width < 840) return { width: 500, height: 400 }; // small tablets
+  if (width < 1024) return { width: 550, height: 420 }; // tablets/large phones
+  if (width < 1280) return { width: 600, height: 450 }; // laptops
+  return { width: 700, height: 500 }; // desktops and up
 }
 
 // Map slope angle (degrees) to a warm color ranging from yellow (flat) to red (steep)
