@@ -171,86 +171,88 @@ function Navigation() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* Scrollable content excluding BottomNav */}
-      <div className="flex flex-col flex-grow px-4 max-w-md w-full mx-auto overflow-y-auto navigation-scroll-container">
+      <div className="flex flex-col md:flex-row md:items-center flex-grow w-full max-w-screen-xl mx-auto overflow-y-auto navigation-scroll-container gap-4 md:px-12">
         <Header title="Map" />
-        <div className="h-10" />
+        <div className="pt-6 md:pt-0" />
 
         {/* Inner flex column (inputs + map) */}
-        <div className="flex flex-col flex-grow gap-3 py-4">
+        <div className="flex flex-col justify-center w-full md:w-1/2 md:min-h-[450px] md:h-[450px]">
           {/* Inputs and buttons */}
           <div className="h-2"></div>
-          <div className="flex flex-col gap-3 flex-grow-[4]">
-            <input
-              type="text"
-              placeholder="Your Location"
-              value={startAddr}
-              onChange={(e) => setStartAddr(e.target.value)}
-              className="w-full px-4 py-3 text-base text-center border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-
-            <input
-              type="text"
-              placeholder="Enter Destination"
-              value={endAddr}
-              onChange={(e) => setEndAddr(e.target.value)}
-              className="w-full px-4 py-3 text-base text-center border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-
-            <div className="flex justify-center">
-              <SpeechButton
-                onTranscript={handleTranscript}
-                className="bg-[#004aae] text-white font-semibold py-3 px-6 rounded-xl hover:bg-[#00367a] transition"
+          <div className="flex flex-col flex-grow h-full justify-center">
+            <div className="flex flex-col gap-4 w-full max-w-md mx-auto h-full justify-center">
+              <input
+                type="text"
+                placeholder="Your Location"
+                value={startAddr}
+                onChange={(e) => setStartAddr(e.target.value)}
+                className="w-full px-4 py-3 text-base text-center border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+
+              <input
+                type="text"
+                placeholder="Enter Destination"
+                value={endAddr}
+                onChange={(e) => setEndAddr(e.target.value)}
+                className="w-full px-4 py-3 text-base text-center border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+              <div className="flex justify-center">
+                <SpeechButton
+                  onTranscript={handleTranscript}
+                  className="bg-[#004aae] text-white font-semibold py-3 px-6 rounded-xl hover:bg-[#00367a] transition"
+                />
+              </div>
+              <button
+                onClick={handleStop}
+                className="bg-gray-200 text-gray-800 text-base font-medium py-3 rounded-xl hover:bg-gray-300 transition"
+              >
+                Clear Route
+              </button>
+              <button
+                onClick={handleStart}
+                disabled={
+                  loading || (!startAddr.trim() && userLocation === null)
+                }
+                className="bg-[#004aae] text-white text-base font-semibold py-3 rounded-xl hover:bg-[#00367a] transition disabled:opacity-50"
+              >
+                {loading ? "Loading..." : "Start Navigation"}
+              </button>
             </div>
-            <button
-              onClick={handleStop}
-              className="bg-gray-200 text-gray-800 text-base font-medium py-3 rounded-xl hover:bg-gray-300 transition"
-            >
-              Clear Route
-            </button>
-            <button
-              onClick={handleStart}
-              disabled={loading || (!startAddr.trim() && userLocation === null)}
-              className="bg-[#004aae] text-white text-base font-semibold py-3 rounded-xl hover:bg-[#00367a] transition disabled:opacity-50"
-            >
-              {loading ? "Loading..." : "Start Navigation"}
-            </button>
-          </div>
 
-          {/* Display walking distance, time, and slope information */}
-        {routeInfo && (
-          <div
-            className="route-info"
-            style={{
-              margin: "1rem 0",
-              padding: "10px",
-              background: "#f0f0f0",
-              borderRadius: "8px",
-            }}
-          >
-            <p className="route-details">
-              Distance <br></br>
-              <strong>{routeInfo.distanceMiles} mi</strong>
-            </p>
-            <p className="route-details">
-              Time<br></br>
-              <strong>{routeInfo.durationMinutes} min</strong>
-            </p>
-            <p className="route-details" style={{ borderRight: "0px" }}>
-              Max Slope <br></br>
-              <strong>{routeInfo.maxSlope}°</strong>
-            </p>
-          </div>
-        )}
-      </div>
-
-          {/* Map */}
-          <div className="flex-grow-[6] min-h-[300px]">
-            <MapBox ref={mapRef} height="100%" />
+            {/* Display walking distance, time, and slope information */}
+            {routeInfo && (
+              <div
+                className="route-info"
+                style={{
+                  margin: "1rem 0",
+                  padding: "10px",
+                  background: "#f0f0f0",
+                  borderRadius: "8px",
+                }}
+              >
+                <p className="route-details">
+                  Distance <br></br>
+                  <strong>{routeInfo.distanceMiles} mi</strong>
+                </p>
+                <p className="route-details">
+                  Time<br></br>
+                  <strong>{routeInfo.durationMinutes} min</strong>
+                </p>
+                <p className="route-details" style={{ borderRight: "0px" }}>
+                  Max Slope <br></br>
+                  <strong>{routeInfo.maxSlope}°</strong>
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
-        
+        {/* Map */}
+        <div className="flex w-full md:w-1/2 justify-center items-center md:h-[450px]">
+          <MapBox ref={mapRef} height="100%" />
+        </div>
+      </div>
 
       {/* Persistent bottom nav */}
       <BottomNav />
